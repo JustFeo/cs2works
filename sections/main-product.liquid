@@ -1,475 +1,424 @@
-<!-- Fully custom product page for Sir Bloody Miami Darryl Figure, matching the React reference -->
+{% comment %}
+  Product Page Template for Shopify
+  Custom section to match the reference at darryl-figure-revamp.lovable.app
+{% endcomment %}
+
+<div class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+  <!-- Modern Header -->
+  <header class="bg-white/80 backdrop-blur-md border-b border-slate-200/50 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center space-x-3">
+          <div class="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg"></div>
+          <h1 class="text-2xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">
+            {{ shop.name }}
+          </h1>
+        </div>
+        <div class="flex items-center space-x-4">
+          <button class="p-2 hover:bg-slate-100 rounded-lg transition-colors">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-slate-600">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+          </button>
+          <button class="p-2 hover:bg-slate-100 rounded-lg transition-colors">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-slate-600">
+              <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+              <path d="M16 6l-4-4-4 4"/>
+              <path d="M12 2v15"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto px-6 py-12">
+    <div class="grid lg:grid-cols-2 gap-16 items-start">
+      <!-- Enhanced Image Section -->
+      <div class="space-y-6">
+        <div class="relative group">
+          <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200/50">
+            <div class="aspect-square relative">
+              <img
+                id="main-product-image"
+                src="{{ product.featured_image | img_url: '800x800' }}"
+                alt="{{ product.featured_image.alt | default: product.title }}"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
+          </div>
+          {% if product.images.size > 1 %}
+          <button
+            onclick="navigateImage('prev')"
+            class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 hover:bg-white backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center transition-all duration-200 opacity-0 group-hover:opacity-100"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-slate-700">
+              <polyline points="15,18 9,12 15,6"/>
+            </svg>
+          </button>
+          <button
+            onclick="navigateImage('next')"
+            class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 hover:bg-white backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center transition-all duration-200 opacity-0 group-hover:opacity-100"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-slate-700">
+              <polyline points="9,18 15,12 9,6"/>
+            </svg>
+          </button>
+          {% endif %}
+        </div>
+        {% if product.images.size > 1 %}
+        <div class="text-center space-y-2">
+          <div class="flex justify-center items-center space-x-2">
+            {% for image in product.images %}
+              <button
+                onclick="setCurrentImage({{ forloop.index0 }})"
+                class="image-dot w-2 h-2 rounded-full transition-all duration-200 {% if forloop.first %}bg-blue-600 w-8{% else %}bg-slate-300 hover:bg-slate-400{% endif %}"
+                data-index="{{ forloop.index0 }}"
+              ></button>
+            {% endfor %}
+          </div>
+          <p class="text-slate-600 font-medium" id="current-image-title">
+            {{ product.title }}
+          </p>
+          <p class="text-sm text-slate-500" id="image-counter">
+            1 of {{ product.images.size }}
+          </p>
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- Enhanced Product Info -->
+      <div class="space-y-8">
+        <!-- Product Header -->
+        <div class="space-y-4">
+          <div class="inline-flex items-center px-3 py-1 bg-amber-100 text-amber-800 text-sm font-medium rounded-full">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" class="mr-1">
+              <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
+            </svg>
+            Limited Edition
+          </div>
+          <h1 class="text-4xl font-bold text-slate-900 leading-tight">
+            {{ product.title }}
+          </h1>
+          <div class="text-slate-600 text-lg leading-relaxed">
+            {{ product.description }}
+          </div>
+        </div>
+
+        <!-- Pricing -->
+        <div class="bg-white rounded-xl p-6 shadow-lg border border-slate-200/50">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <p class="text-3xl font-bold text-slate-900">
+                {{ product.selected_or_first_available_variant.price | money }}
+              </p>
+              {% if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price %}
+                <p class="text-slate-500 line-through">
+                  {{ product.selected_or_first_available_variant.compare_at_price | money }}
+                </p>
+              {% endif %}
+            </div>
+            <div class="flex items-center text-emerald-600 font-medium">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="mr-2">
+                <rect x="1" y="3" width="15" height="13"/>
+                <polygon points="16,8 20,8 23,11 23,16 16,16 16,8"/>
+                <circle cx="5.5" cy="18.5" r="2.5"/>
+                <circle cx="18.5" cy="18.5" r="2.5"/>
+              </svg>
+              Free Shipping
+            </div>
+          </div>
+        </div>
+
+        <!-- Product Form -->
+        <form action="/cart/add" method="post" enctype="multipart/form-data" id="product-form">
+          <!-- Variant Selection -->
+          {% unless product.has_only_default_variant %}
+          <div class="space-y-4">
+            {% for option in product.options_with_values %}
+            <div class="space-y-4">
+              <h3 class="text-xl font-semibold text-slate-900">{{ option.name }}</h3>
+              <div class="grid gap-3">
+                {% for value in option.values %}
+                <label class="variant-option relative block p-4 border-2 rounded-xl cursor-pointer transition-all duration-200 border-slate-200 hover:border-slate-300 bg-white">
+                  <input
+                    type="radio"
+                    name="option-{{ option.position }}"
+                    value="{{ value | escape }}"
+                    class="sr-only"
+                    {% if option.selected_value == value %}checked{% endif %}
+                  />
+                  <div class="flex items-center justify-between">
+                    <span class="font-medium text-slate-900">{{ value }}</span>
+                    <div class="variant-check w-5 h-5 border-2 border-slate-300 rounded-full flex items-center justify-center opacity-0">
+                      <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    </div>
+                  </div>
+                </label>
+                {% endfor %}
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          {% endunless %}
+
+          <!-- Quantity Selection -->
+          <div class="space-y-4">
+            <h3 class="text-xl font-semibold text-slate-900">Quantity</h3>
+            <div class="flex flex-wrap gap-2">
+              {% for i in (1..5) %}
+              <button
+                type="button"
+                onclick="setQuantity({{ i }})"
+                class="quantity-btn w-12 h-12 rounded-xl font-medium transition-all duration-200 {% if i == 1 %}bg-blue-500 text-white shadow-lg scale-105{% else %}bg-white border-2 border-slate-200 text-slate-700 hover:border-slate-300 hover:shadow-md{% endif %}"
+                data-quantity="{{ i }}"
+              >
+                {{ i }}
+              </button>
+              {% endfor %}
+            </div>
+          </div>
+
+          <!-- Hidden inputs -->
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+          <input type="hidden" name="quantity" value="1" id="quantity-input">
+
+          <!-- Action Buttons -->
+          <div class="space-y-3">
+            <button 
+              type="submit"
+              class="w-full py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold text-lg rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+              {% unless product.available %}disabled{% endunless %}
+            >
+              {% if product.available %}
+                Add to Cart
+              {% else %}
+                Sold Out
+              {% endif %}
+            </button>
+            <button 
+              type="button"
+              onclick="buyNow()"
+              class="w-full py-4 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-bold text-lg rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+            >
+              Buy Now
+            </button>
+          </div>
+        </form>
+
+        <!-- Trust Badges -->
+        <div class="grid grid-cols-3 gap-4 pt-6 border-t border-slate-200">
+          <div class="text-center space-y-2">
+            <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mx-auto">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-emerald-600">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+            </div>
+            <p class="text-sm font-medium text-slate-700">Secure Payment</p>
+          </div>
+          <div class="text-center space-y-2">
+            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mx-auto">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-blue-600">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                <polyline points="3.27,6.96 12,12.01 20.73,6.96"/>
+                <line x1="12" y1="22.08" x2="12" y2="12"/>
+              </svg>
+            </div>
+            <p class="text-sm font-medium text-slate-700">Premium Packaging</p>
+          </div>
+          <div class="text-center space-y-2">
+            <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center mx-auto">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-orange-600">
+                <rect x="1" y="3" width="15" height="13"/>
+                <polygon points="16,8 20,8 23,11 23,16 16,16 16,8"/>
+                <circle cx="5.5" cy="18.5" r="2.5"/>
+                <circle cx="18.5" cy="18.5" r="2.5"/>
+              </svg>
+            </div>
+            <p class="text-sm font-medium text-slate-700">Fast Shipping</p>
+          </div>
+        </div>
+
+        <!-- Limited Edition Info -->
+        <div class="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-xl p-6">
+          <div class="flex items-center justify-center space-x-2 mb-3">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="text-amber-500">
+              <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
+            </svg>
+            <span class="font-bold text-amber-800">LIMITED EDITION</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="text-amber-500">
+              <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
+            </svg>
+          </div>
+          <p class="text-center text-sm text-amber-700">
+            Each item is uniquely numbered and comes with a certificate of authenticity.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <style>
-  body {
-    background: #fff !important;
+  .variant-option input:checked + div .variant-check {
+    opacity: 1;
+    border-color: #3b82f6;
+    background-color: #eff6ff;
   }
-  .product-main-wrap {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px 16px 80px 16px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 48px;
-    align-items: flex-start;
-    font-family: 'Inter', Arial, sans-serif;
-    background: #fff;
+  
+  .variant-option input:checked {
+    border-color: #3b82f6;
+    background-color: #eff6ff;
   }
-  .product-gallery {
-    flex: 1 1 420px;
-    min-width: 340px;
-    max-width: 480px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 24px;
-  }
-  .gallery-image-wrap {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 1/1;
-    background: #fff;
-    border-radius: 24px;
-    box-shadow: 0 4px 32px rgba(0,0,0,0.10);
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .gallery-image-wrap img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.4s cubic-bezier(.4,2,.6,1);
-  }
-  .gallery-nav-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 44px;
-    height: 44px;
-    background: rgba(255,255,255,0.92);
-    border: none;
-    border-radius: 50%;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 1.5rem;
-    opacity: 0.7;
-    transition: opacity 0.2s;
-    z-index: 2;
-  }
-  .gallery-nav-btn:hover { opacity: 1; }
-  .gallery-nav-btn.left { left: 12px; }
-  .gallery-nav-btn.right { right: 12px; }
-  .gallery-dots {
-    display: flex;
-    gap: 8px;
-    justify-content: center;
-    margin-top: 8px;
-  }
-  .gallery-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: #cbd5e1;
-    border: none;
-    cursor: pointer;
-    transition: background 0.2s, width 0.2s;
-  }
-  .gallery-dot.active {
-    background: #2563eb;
-    width: 28px;
-    border-radius: 8px;
-  }
-  .gallery-caption {
-    text-align: center;
-    color: #475569;
-    font-weight: 500;
-    font-size: 1.1rem;
-    margin-top: 6px;
-  }
-  .gallery-count {
-    text-align: center;
-    color: #64748b;
-    font-size: 0.95rem;
-    margin-top: 2px;
-  }
-  .product-info {
-    flex: 2 1 480px;
-    min-width: 340px;
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
-  }
-  .badge-limited {
-    display: inline-flex;
-    align-items: center;
-    background: #fef3c7;
-    color: #b45309;
-    font-weight: 700;
-    font-size: 1rem;
-    border-radius: 999px;
-    padding: 6px 16px;
-    margin-bottom: 8px;
-    gap: 6px;
-  }
-  .product-title {
-    font-size: 2.6rem;
-    font-weight: 800;
-    color: #1e293b;
-    margin-bottom: 0.2em;
-  }
-  .product-desc {
-    color: #475569;
-    font-size: 1.18rem;
-    margin-bottom: 0.5em;
-  }
-  .product-price-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-    padding: 18px 24px;
-    margin-bottom: 0.5em;
-  }
-  .product-price {
-    font-size: 2.1rem;
-    font-weight: 700;
-    color: #1e293b;
-  }
-  .product-shipping {
-    color: #059669;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 1.1rem;
-  }
-  .glove-select-wrap {
-    margin-bottom: 1em;
-  }
-  .glove-select-title {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: #1e293b;
-    margin-bottom: 0.5em;
-  }
-  .glove-options {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-  .glove-option {
-    flex: 1 1 120px;
-    min-width: 120px;
-    background: #fff;
-    border: 2px solid #e5e7eb;
-    border-radius: 12px;
-    padding: 14px 18px;
-    cursor: pointer;
-    font-weight: 600;
-    color: #1e293b;
-    text-align: center;
-    transition: border 0.2s, box-shadow 0.2s, background 0.2s;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.03);
-    position: relative;
-  }
-  .glove-option.selected {
-    border: 2px solid #2563eb;
-    background: #eff6ff;
-    box-shadow: 0 2px 8px rgba(37,99,235,0.08);
-  }
-  .quantity-select-wrap {
-    margin-bottom: 1em;
-  }
-  .quantity-select-title {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: #1e293b;
-    margin-bottom: 0.5em;
-  }
-  .quantity-options {
-    display: flex;
-    gap: 10px;
-  }
-  .quantity-btn {
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    border: 2px solid #e5e7eb;
-    background: #fff;
-    color: #1e293b;
-    font-weight: 600;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: border 0.2s, background 0.2s, color 0.2s;
-  }
-  .quantity-btn.selected {
-    background: #2563eb;
-    color: #fff;
-    border: 2px solid #2563eb;
-  }
-  .product-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    margin-top: 1.2em;
-  }
-  .product-btn {
-    width: 100%;
-    padding: 18px 0;
-    border: none;
-    border-radius: 14px;
-    font-size: 1.18rem;
-    font-weight: 700;
-    cursor: pointer;
-    background: linear-gradient(90deg, #2563eb 0%, #1e40af 100%);
-    color: #fff;
-    box-shadow: 0 2px 12px rgba(37,99,235,0.10);
-    transition: background 0.2s, transform 0.1s;
-  }
-  .product-btn.crypto {
-    background: linear-gradient(90deg, #a21caf 0%, #7c3aed 100%);
-  }
-  .product-btn:hover {
-    background: linear-gradient(90deg, #1e40af 0%, #2563eb 100%);
-    transform: translateY(-2px) scale(1.01);
-  }
-  .product-btn.crypto:hover {
-    background: linear-gradient(90deg, #7c3aed 0%, #a21caf 100%);
-  }
-  .trust-badges {
-    display: flex;
-    gap: 24px;
-    margin-top: 32px;
-    justify-content: space-between;
-  }
-  .trust-badge {
-    flex: 1 1 0;
-    background: #f1f5f9;
-    border-radius: 12px;
-    padding: 18px 0;
-    text-align: center;
-    color: #334155;
-    font-weight: 600;
-    font-size: 1rem;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.03);
-  }
-  .limited-edition-info {
-    background: linear-gradient(90deg, #fef3c7 0%, #fde68a 100%);
-    border: 1.5px solid #fbbf24;
-    border-radius: 14px;
-    padding: 18px 0;
-    margin-top: 32px;
-    text-align: center;
-    color: #b45309;
-    font-weight: 700;
-    font-size: 1.1rem;
-  }
-  .info-row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 32px;
-    background: #f8fafc;
-    border-radius: 16px;
-    padding: 24px 0;
-    margin-top: 48px;
-    font-size: 1.08rem;
-    color: #334155;
-    font-weight: 500;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-  }
-  .info-row-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .info-row-icon {
-    font-size: 1.5rem;
-    color: #2563eb;
-  }
-  @media (max-width: 900px) {
-    .product-main-wrap {
-      flex-direction: column;
-      gap: 32px;
-      padding: 18px 4px 40px 4px;
-    }
-    .product-gallery, .product-info {
-      min-width: 0;
-      max-width: 100%;
-    }
-    .trust-badges {
-      flex-direction: column;
-      gap: 12px;
-    }
-    .info-row {
-      flex-direction: column;
-      gap: 12px;
-      padding: 18px 0;
-    }
+  
+  .variant-option:has(input:checked) {
+    border-color: #3b82f6 !important;
+    background-color: #eff6ff !important;
   }
 </style>
-<div class="product-main-wrap">
-  <div class="product-gallery">
-    <div class="gallery-image-wrap">
-      <button class="gallery-nav-btn left" onclick="navigateImage('prev')" aria-label="Previous image">&#8592;</button>
-      <img id="mainProductImage" src="https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_PandorasBox_1.jpg?v=1750332619" alt="Sir Bloody Miami Darryl Figure" />
-      <button class="gallery-nav-btn right" onclick="navigateImage('next')" aria-label="Next image">&#8594;</button>
-    </div>
-    <div class="gallery-dots" id="galleryDots"></div>
-    <div class="gallery-caption" id="galleryCaption">Pandora's Box Gloves</div>
-    <div class="gallery-count" id="galleryCount">1 of 8</div>
-  </div>
-  <div class="product-info">
-    <div class="badge-limited">&#11088; LIMITED EDITION</div>
-    <div class="product-title">Sir Bloody Miami Darryl Figure</div>
-    <div class="product-desc">Premium collectible figure featuring interchangeable CS2 gloves and accessories. Each piece is uniquely numbered and comes with a certificate of authenticity.</div>
-    <div class="product-price-row">
-      <div class="product-price">$278.00 <span style="font-size:1rem;font-weight:400;color:#a21caf;">Pre-Order With Crypto & Save $30</span></div>
-      <div class="product-shipping">&#128666; Free Shipping</div>
-    </div>
-    <div class="glove-select-wrap">
-      <div class="glove-select-title">Choose Your Gloves</div>
-      <div class="glove-options">
-        <div class="glove-option selected" data-glove="pandora" onclick="selectGlove('pandora')">Pandora's Box Gloves</div>
-        <div class="glove-option" data-glove="vice" onclick="selectGlove('vice')">Vice Gloves</div>
-        <div class="glove-option" data-glove="hedge" onclick="selectGlove('hedge')">Hedge Maze Gloves</div>
-      </div>
-    </div>
-    <div class="quantity-select-wrap">
-      <div class="quantity-select-title">Quantity</div>
-      <div class="quantity-options">
-        <button class="quantity-btn selected" onclick="selectQuantity(1)">1</button>
-        <button class="quantity-btn" onclick="selectQuantity(2)">2</button>
-        <button class="quantity-btn" onclick="selectQuantity(3)">3</button>
-        <button class="quantity-btn" onclick="selectQuantity(4)">4</button>
-        <button class="quantity-btn" onclick="selectQuantity(5)">5</button>
-      </div>
-    </div>
-    <div class="product-actions">
-      <button class="product-btn" onclick="handlePreOrder()">Pre-Order Now</button>
-      <button class="product-btn crypto" onclick="handleCryptoOrder()">Pay with Crypto & Save $30</button>
-    </div>
-    <div class="trust-badges">
-      <div class="trust-badge">&#128274; Secure Payment</div>
-      <div class="trust-badge">&#128230; Premium Packaging</div>
-      <div class="trust-badge">&#128666; Fast Shipping</div>
-    </div>
-    <div class="limited-edition-info">&#11088; ONLY 1000 EVER MADE &#11088;<br>Each figure is individually numbered and comes with a certificate of authenticity.</div>
-  </div>
-</div>
-<div class="info-row">
-  <div class="info-row-item"><span class="info-row-icon">&#128230;</span> Premium Packaging</div>
-  <div class="info-row-item"><span class="info-row-icon">&#128274;</span> Secure Payment</div>
-  <div class="info-row-item"><span class="info-row-icon">&#128666;</span> Fast Shipping</div>
-  <div class="info-row-item"><span class="info-row-icon">&#11088;</span> Only 1000 Ever Made</div>
-</div>
+
 <script>
-// Data from React reference
-const gloves = {
-  vice: [
-    "Vice Gloves", "AWP | Fade", "AK-47 | Gold Arabesque", "M4A1-S | Hot Rod",
-    "M4A1-S | Blue Phosphor", "★ Karambit | Ruby", "★ Karambit | Emerald",
-    "★ M9 Bayonet | Sapphire"
-  ],
-  pandora: [
-    "Pandora's Box Gloves", "AWP | Fade", "AK-47 | Gold Arabesque", "M4A1-S | Hot Rod",
-    "M4A1-S | Blue Phosphor", "★ Karambit | Ruby", "★ Karambit | Emerald", 
-    "★ M9 Bayonet | Sapphire"
-  ],
-  hedge: [
-    "Hedge Maze Gloves", "AWP | Fade", "AK-47 | Gold Arabesque", "M4A1-S | Hot Rod",
-    "M4A1-S | Blue Phosphor", "★ Karambit | Ruby", "★ Karambit | Emerald",
-    "★ M9 Bayonet | Sapphire"
-  ]
-};
-const urls = {
-  vice: [
-    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_ViceGloves_1.jpg?v=1750332554",
-    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/vice_fade.jpg?v=1749907969",
-    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/vice_arabesque.jpg?v=1749907724",
-    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/vice_hotrod.jpg?v=1749907940",
-    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/vice_bluephosphor.jpg?v=1749907774",
-    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/vice_ruby.jpg?v=1749907792",
-    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/vice_emerald.jpg?v=1749908821",
-    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/vice_sapphire.jpg?v=1750008665"
-  ],
-  pandora: [
-    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_PandorasBox_1.jpg?v=1750332619",
-    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/pandora_fade.jpg?v=1749907926",
-    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/pandora_arabesque.jpg?v=1749918916",
-    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/pandora_hotrod.jpg?v=1749907952",
-    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/pandora_bluephosphor.jpg?v=1749907839",
-    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/pandora_ruby.jpg?v=1749908644",
-    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/pandora_emerald.jpg?v=1749907913",
-    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/pandora_sapphire.jpg?v=1750008691"
-  ],
-  hedge: [
-    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_HedgeMaze_1.jpg?v=1750332352",
-    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/hedge_fade.jpg?v=1749907822",
-    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/hedge_arabesque.jpg?v=1749907808",
-    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/hedge_hotrod.jpg?v=1749908427",
-    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/hedge_bluephosphor.jpg?v=1749907985",
-    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/hedge_ruby.jpg?v=1749908002",
-    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/hedge_emerald.jpg?v=1749908692",
-    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/hedge_sapphire.jpg?v=1750008689"
-  ]
-};
-let selectedGlove = 'pandora';
-let currentImageIndex = 0;
-let selectedQuantity = 1;
-function updateGallery() {
-  const images = urls[selectedGlove];
-  const names = gloves[selectedGlove];
-  document.getElementById('mainProductImage').src = images[currentImageIndex];
-  document.getElementById('mainProductImage').alt = names[currentImageIndex];
-  document.getElementById('galleryCaption').textContent = names[currentImageIndex];
-  document.getElementById('galleryCount').textContent = (currentImageIndex+1) + ' of ' + images.length;
-  // Dots
-  const dots = images.map((_, idx) => `<button class='gallery-dot${idx===currentImageIndex?' active':''}' onclick='setImageIndex(${idx})'></button>`).join('');
-  document.getElementById('galleryDots').innerHTML = dots;
-}
-function navigateImage(dir) {
-  const images = urls[selectedGlove];
-  if(dir==='prev') {
-    currentImageIndex = (currentImageIndex-1+images.length)%images.length;
-  } else {
-    currentImageIndex = (currentImageIndex+1)%images.length;
+  // Product images array
+  const productImages = [
+    {% for image in product.images %}
+    {
+      url: "{{ image | img_url: '800x800' }}",
+      alt: "{{ image.alt | default: product.title | escape }}"
+    }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ];
+  
+  let currentImageIndex = 0;
+  let selectedQuantity = 1;
+
+  // Image navigation
+  function navigateImage(direction) {
+    if (productImages.length <= 1) return;
+    
+    if (direction === 'prev') {
+      currentImageIndex = (currentImageIndex - 1 + productImages.length) % productImages.length;
+    } else {
+      currentImageIndex = (currentImageIndex + 1) % productImages.length;
+    }
+    updateImageDisplay();
   }
-  updateGallery();
-}
-function setImageIndex(idx) {
-  currentImageIndex = idx;
-  updateGallery();
-}
-function selectGlove(glove) {
-  selectedGlove = glove;
-  currentImageIndex = 0;
-  document.querySelectorAll('.glove-option').forEach(el=>el.classList.remove('selected'));
-  document.querySelector(`.glove-option[data-glove='${glove}']`).classList.add('selected');
-  updateGallery();
-}
-function selectQuantity(qty) {
-  selectedQuantity = qty;
-  document.querySelectorAll('.quantity-btn').forEach(el=>el.classList.remove('selected'));
-  document.querySelector(`.quantity-btn:nth-child(${qty})`).classList.add('selected');
-}
-function handlePreOrder() {
-  // Redirect to Shopify checkout for the product (update with actual variant ID)
-  window.location.href = '/cart/add?id=YOUR_PRODUCT_VARIANT_ID&quantity='+selectedQuantity+'&return_to=/checkout';
-}
-function handleCryptoOrder() {
-  // Redirect to crypto checkout page
-  window.location.href = '/pages/crypto-payment';
-}
-document.addEventListener('DOMContentLoaded', updateGallery);
-document.addEventListener('keydown', function(e) {
-  if(e.key==='ArrowLeft') navigateImage('prev');
-  if(e.key==='ArrowRight') navigateImage('next');
-});
+
+  function setCurrentImage(index) {
+    currentImageIndex = index;
+    updateImageDisplay();
+  }
+
+  function updateImageDisplay() {
+    const mainImage = document.getElementById('main-product-image');
+    const counter = document.getElementById('image-counter');
+    const dots = document.querySelectorAll('.image-dot');
+    
+    if (mainImage && productImages[currentImageIndex]) {
+      mainImage.src = productImages[currentImageIndex].url;
+      mainImage.alt = productImages[currentImageIndex].alt;
+    }
+    
+    if (counter) {
+      counter.textContent = `${currentImageIndex + 1} of ${productImages.length}`;
+    }
+    
+    // Update dots
+    dots.forEach((dot, index) => {
+      if (index === currentImageIndex) {
+        dot.className = 'image-dot w-8 h-2 rounded-full transition-all duration-200 bg-blue-600';
+      } else {
+        dot.className = 'image-dot w-2 h-2 rounded-full transition-all duration-200 bg-slate-300 hover:bg-slate-400';
+      }
+    });
+  }
+
+  // Quantity selection
+  function setQuantity(quantity) {
+    selectedQuantity = quantity;
+    document.getElementById('quantity-input').value = quantity;
+    
+    // Update button styles
+    document.querySelectorAll('.quantity-btn').forEach(btn => {
+      const btnQuantity = parseInt(btn.dataset.quantity);
+      if (btnQuantity === quantity) {
+        btn.className = 'quantity-btn w-12 h-12 rounded-xl font-medium transition-all duration-200 bg-blue-500 text-white shadow-lg scale-105';
+      } else {
+        btn.className = 'quantity-btn w-12 h-12 rounded-xl font-medium transition-all duration-200 bg-white border-2 border-slate-200 text-slate-700 hover:border-slate-300 hover:shadow-md';
+      }
+    });
+  }
+
+  // Buy now function
+  function buyNow() {
+    const form = document.getElementById('product-form');
+    const formData = new FormData(form);
+    
+    // Add product to cart then redirect to checkout
+    fetch('/cart/add.js', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      window.location.href = '/checkout';
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('There was an error adding the product to cart.');
+    });
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowLeft') {
+      navigateImage('prev');
+    } else if (e.key === 'ArrowRight') {
+      navigateImage('next');
+    }
+  });
+
+  // Variant selection handling
+  document.querySelectorAll('input[name^="option-"]').forEach(input => {
+    input.addEventListener('change', function() {
+      // Update variant selection logic here
+      updateSelectedVariant();
+    });
+  });
+
+  function updateSelectedVariant() {
+    // Get selected options
+    const selectedOptions = {};
+    document.querySelectorAll('input[name^="option-"]:checked').forEach(input => {
+      const optionPosition = input.name.replace('option-', '');
+      selectedOptions[optionPosition] = input.value;
+    });
+
+    // Find matching variant
+    {% if product.variants.size > 1 %}
+    const variants = [
+      {% for variant in product.variants %}
+      {
+        id: {{ variant.id }},
+        price: {{ variant.price }},
+        available: {{ variant.available | json }},
+        options: [
+          {% for option in variant.options %}
+          "{{ option | escape }}"{% unless forloop.last %},{% endunless %}
+          {% endfor %}
+        ]
+      }{% unless forloop.last %},{% endunless %}
+      {% endfor %}
+    ];
+
+    // Update variant ID in form
+    const variantInput = document.querySelector('input[name="id"]');
+    // Add variant matching logic here based on your needs
+    {% endif %}
+  }
+
+  // Initialize
+  document.addEventListener('DOMContentLoaded', function() {
+    updateImageDisplay();
+  });
 </script>
