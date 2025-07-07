@@ -1,0 +1,55 @@
+<style>
+.crypto-info-section {
+  background: #eaf6f6;
+  border-radius: 18px;
+  padding: 40px 20px;
+  margin-bottom: 36px;
+  text-align: center;
+}
+.crypto-info-section__heading {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1e3c72;
+  margin-bottom: 18px;
+}
+.crypto-info-section__steps {
+  text-align: left;
+  max-width: 500px;
+  margin: 0 auto 24px auto;
+  font-size: 1.1rem;
+  color: #2a5298;
+}
+.crypto-info-section__box {
+  background: #fff;
+  border: 2px solid #2a5298;
+  border-radius: 10px;
+  padding: 18px 24px;
+  display: inline-block;
+  font-size: 1.1rem;
+  color: #1e3c72;
+  margin-top: 12px;
+}
+</style>
+<div class="crypto-info-section">
+  <div class="crypto-info-section__heading">How to Pay with Crypto</div>
+  <div class="crypto-info-section__steps">
+    <ol>
+      <li>Fill out the payment form below.</li>
+      <li>Receive a wallet address and payment instructions.</li>
+      <li>Send the exact amount in your chosen cryptocurrency.</li>
+      <li>Your order will be processed once payment is confirmed.</li>
+    </ol>
+  </div>
+  <div class="crypto-info-section__box">
+    <strong>Need help?</strong> Contact our support team for assistance with crypto payments.
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Crypto Payment Info",
+  "presets": [
+    {"name": "Crypto Payment Info"}
+  ]
+}
+{% endschema %} 

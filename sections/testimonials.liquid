@@ -1,0 +1,65 @@
+<style>
+.testimonials-section {
+  background: #f7f9fb;
+  padding: 60px 20px;
+  border-radius: 20px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+.testimonials-section__heading {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 32px;
+  color: #1e3c72;
+}
+.testimonials-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 32px;
+}
+.testimonial {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(30,60,114,0.07);
+  padding: 32px 24px;
+  max-width: 340px;
+  flex: 1 1 280px;
+}
+.testimonial__quote {
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 18px;
+  font-style: italic;
+}
+.testimonial__name {
+  font-weight: 600;
+  color: #2a5298;
+}
+</style>
+<div class="testimonials-section">
+  <div class="testimonials-section__heading">What Our Customers Say</div>
+  <div class="testimonials-list">
+    <div class="testimonial">
+      <div class="testimonial__quote">"Super fast checkout and I love the crypto option!"</div>
+      <div class="testimonial__name">— Alex P.</div>
+    </div>
+    <div class="testimonial">
+      <div class="testimonial__quote">"Great products and amazing support. Highly recommend!"</div>
+      <div class="testimonial__name">— Jamie L.</div>
+    </div>
+    <div class="testimonial">
+      <div class="testimonial__quote">"The new site design is beautiful and easy to use."</div>
+      <div class="testimonial__name">— Morgan S.</div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "presets": [
+    {"name": "Testimonials"}
+  ]
+}
+{% endschema %} 

@@ -1,51 +1,7 @@
 {
   "sections": {
-    "hero": {
-      "type": "image-banner",
-      "settings": {
-        "heading": "Pay with Crypto",
-        "subheading": "Fast, secure, and borderless payments.",
-        "button_label": "Learn More",
-        "button_link": "/pages/crypto-info",
-        "image": "shopify://shop_images/crypto-banner.jpg",
-        "color_scheme": "scheme-1",
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "full_width": true,
-        "padding_top": 32,
-        "padding_bottom": 32
-      }
-    },
-    "instructions": {
-      "type": "rich-text",
-      "blocks": {
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "How to Pay with Crypto"
-          }
-        },
-        "text": {
-          "type": "text",
-          "settings": {
-            "text": "1. Fill out the payment form below.\n2. You will receive a wallet address and payment instructions.\n3. Send the exact amount in your chosen cryptocurrency.\n4. Your order will be processed once payment is confirmed."
-          }
-        }
-      },
-      "block_order": ["heading", "text"],
-      "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "color_scheme": "scheme-2",
-        "full_width": true,
-        "padding_top": 24,
-        "padding_bottom": 24
-      }
-    },
-    "form": {
-      "type": "contact-form-crypto",
-      "settings": {}
-    },
+    "crypto_info": { "type": "crypto-payment-info", "settings": {} },
+    "form": { "type": "contact-form-crypto", "settings": {} },
     "cta": {
       "type": "rich-text",
       "blocks": {
@@ -69,5 +25,5 @@
       }
     }
   },
-  "order": ["hero", "instructions", "form", "cta"]
+  "order": ["crypto_info", "form", "cta"]
 }
