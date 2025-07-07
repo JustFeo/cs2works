@@ -1,7 +1,7 @@
 <!-- Fully custom product page for Sir Bloody Miami Darryl Figure, matching the React reference -->
 <style>
   body {
-    background: linear-gradient(135deg, #f8fafc 0%, #e0e7ef 100%);
+    background: #fff !important;
   }
   .product-main-wrap {
     max-width: 1200px;
@@ -12,6 +12,7 @@
     gap: 48px;
     align-items: flex-start;
     font-family: 'Inter', Arial, sans-serif;
+    background: #fff;
   }
   .product-gallery {
     flex: 1 1 420px;
@@ -269,6 +270,29 @@
     font-weight: 700;
     font-size: 1.1rem;
   }
+  .info-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+    background: #f8fafc;
+    border-radius: 16px;
+    padding: 24px 0;
+    margin-top: 48px;
+    font-size: 1.08rem;
+    color: #334155;
+    font-weight: 500;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  }
+  .info-row-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .info-row-icon {
+    font-size: 1.5rem;
+    color: #2563eb;
+  }
   @media (max-width: 900px) {
     .product-main-wrap {
       flex-direction: column;
@@ -282,6 +306,11 @@
     .trust-badges {
       flex-direction: column;
       gap: 12px;
+    }
+    .info-row {
+      flex-direction: column;
+      gap: 12px;
+      padding: 18px 0;
     }
   }
 </style>
@@ -333,6 +362,12 @@
     </div>
     <div class="limited-edition-info">&#11088; ONLY 1000 EVER MADE &#11088;<br>Each figure is individually numbered and comes with a certificate of authenticity.</div>
   </div>
+</div>
+<div class="info-row">
+  <div class="info-row-item"><span class="info-row-icon">&#128230;</span> Premium Packaging</div>
+  <div class="info-row-item"><span class="info-row-icon">&#128274;</span> Secure Payment</div>
+  <div class="info-row-item"><span class="info-row-icon">&#128666;</span> Fast Shipping</div>
+  <div class="info-row-item"><span class="info-row-icon">&#11088;</span> Only 1000 Ever Made</div>
 </div>
 <script>
 // Data from React reference
@@ -425,8 +460,8 @@ function selectQuantity(qty) {
   document.querySelector(`.quantity-btn:nth-child(${qty})`).classList.add('selected');
 }
 function handlePreOrder() {
-  // Redirect to Shopify pre-order with selected quantity and glove
-  window.location.href = '/cart/add?id=YOUR_PRODUCT_VARIANT_ID&quantity='+selectedQuantity;
+  // Redirect to Shopify checkout for the product (update with actual variant ID)
+  window.location.href = '/cart/add?id=YOUR_PRODUCT_VARIANT_ID&quantity='+selectedQuantity+'&return_to=/checkout';
 }
 function handleCryptoOrder() {
   // Redirect to crypto checkout page
