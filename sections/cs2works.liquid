@@ -402,13 +402,14 @@ body {
   padding: 1.2rem 1.6rem;
   font-size: 1.7rem;
   letter-spacing: 0.02rem;
-  border-radius: 12px;               /* updated radius */
-  background: #F8FAFC;               /* updated background */
+  border-radius: 6px;
+  background: #d6d6d6;
   color: #000000;
-  border: 1px solid #0060FF;         /* updated border */
+  border: 1px solid #d4d4d4;
   cursor: pointer;
   transition: all 0.2s ease;
   box-shadow: none;
+    border: 1px solid #AAAAAA;
 }
 .product-form__input--pill input[type='radio'] + label::before {
   content: '';
@@ -425,25 +426,14 @@ body {
   border-color: #b6b6b6;
 }
 .product-form__input--pill input[type='radio']:checked + label {
-  background: #F8FAFC;               /* updated background */
-  border: 1px solid #0060FF;         /* updated border */
-  color: #000;
-  box-shadow: none;                  /* no additional glow */
+  background: #FFF7ED;           /* light orange fill */
+  color: #000000;
+  transform: none;
+  border: 2px solid #FF7A00;     /* bright orange outline */
+  box-shadow: none;              /* no additional glow */
 }
-  .product-form__input--pill input[type='radio']:checked + label::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  right: 1.6rem;
-  transform: translateY(-50%);
-  width: 1.6rem;
-  height: 1.6rem;
-  border: 2px solid #0060FF;
-  border-radius: 50%;
-  background: #fff;
-}
-/* ─── quantit
-  y selector ─── */
+
+/* ─── quantity selector ─── */
 .quantity-selector {
   font-family: Helvetica, Arial, sans-serif;
   display: flex;
