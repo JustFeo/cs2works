@@ -3,86 +3,103 @@
   Place this file in your theme's templates folder as product.liquid
 {% endcomment %}
 
-<div class="dark-product-page">
-  <header class="dark-product-header">
-    <div class="brand">CS2WORKS</div>
-    <a href="/pages/contact" class="contact-btn">Contact</a>
-  </header>
-  <div class="dark-product-main">
-    <div class="dark-product-gallery">
-      <div class="gallery-sticky">
-        <img id="main-product-image" src="{{ product.featured_image | img_url: '800x800' }}" alt="{{ product.featured_image.alt | default: product.title }}" class="gallery-img" />
-        {% if product.images.size > 1 %}
-        <div class="gallery-thumbs">
-          {% for image in product.images %}
-            <img src="{{ image | img_url: '200x200' }}" alt="{{ image.alt | default: product.title }}" class="gallery-thumb" onclick="setCurrentImage({{ forloop.index0 }})" data-index="{{ forloop.index0 }}" />
-          {% endfor %}
-        </div>
-        {% endif %}
+<div class="glove-layout-wrapper">
+  <div class="glove-column">
+    <div class="product-header">
+      <div class="product-info-box">
+        <h1 class="product-title">Sir Bloody Miami Darryl Figure</h1>
+        <div class="product-price">$278.00 USD</div>
+        <div class="free-delivery-message">Free Shipping On All Orders</div>
       </div>
     </div>
-    <div class="dark-product-info">
-      <div class="product-badge">Limited Edition</div>
-      <h1 class="product-title">{{ product.title }}</h1>
-      <div class="product-desc">{{ product.description }}</div>
-      <div class="product-price-row">
-        <span id="variant-price" class="product-price">{{ product.selected_or_first_available_variant.price | money }}</span>
-        {% if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price %}
-        <span id="variant-compare-price" class="product-compare">{{ product.selected_or_first_available_variant.compare_at_price | money }}</span>
-        {% endif %}
+
+    <div class="glove-options product-form__input--pill">
+      <input type="radio" id="glove-pandora" name="glove" value="pandora" checked>
+      <label for="glove-pandora">Pandora's Box</label>
+      <input type="radio" id="glove-vice" name="glove" value="vice">
+      <label for="glove-vice">Vice</label>
+      <input type="radio" id="glove-hedge" name="glove" value="hedge">
+      <label for="glove-hedge">Hedge Maze</label>
+    </div>
+
+    <div class="quantity-selector">
+      <div class="quantity-label">Quantity</div>
+      <div class="quantity-controls">
+        <button type="button" class="quantity-btn" id="qty-decrease" disabled>−</button>
+        <span        class="quantity-value" id="qty-value">1</span>
+        <button type="button" class="quantity-btn" id="qty-increase">+</button>
       </div>
-      <form action="/cart/add" method="post" enctype="multipart/form-data" id="product-form">
-        {% unless product.has_only_default_variant %}
-        <div class="product-variants">
-          {% for option in product.options_with_values %}
-          <div class="variant-group">
-            <div class="variant-label">{{ option.name }}</div>
-            <div class="variant-options">
-              {% for value in option.values %}
-              <label class="variant-radio">
-                <input type="radio" name="options[{{ option.name | handleize }}]" value="{{ value | escape }}" class="variant-selector" data-option-position="{{ option.position }}" data-option-value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %} />
-                <span>{{ value }}</span>
-              </label>
-              {% endfor %}
-            </div>
-          </div>
-          {% endfor %}
-        </div>
-        {% endunless %}
-        <div class="product-qty-row">
-          <div class="variant-label">Quantity</div>
-          <div class="qty-btns">
-            {% for i in (1..5) %}
-            <button type="button" onclick="setQuantity({{ i }})" class="qty-btn" data-quantity="{{ i }}">{{ i }}</button>
-            {% endfor %}
-          </div>
-        </div>
-        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" id="variant-id">
-        <input type="hidden" name="quantity" value="1" id="quantity-input">
-        <div class="product-actions">
-          <button type="submit" id="add-to-cart-btn" class="add-to-cart-btn" {% unless product.available %}disabled{% endunless %}>
-            <span id="add-to-cart-text">{% if product.available %}Add to Cart{% else %}Sold Out{% endif %}</span>
-          </button>
-          <button type="button" onclick="buyNow()" id="buy-now-btn" class="buy-now-btn" {% unless product.available %}disabled{% endunless %}>Buy Now</button>
-        </div>
-      </form>
-      <div class="product-trust-row">
-        <div class="trust-badge">🔒 Secure Payment</div>
-        <div class="trust-badge">🚚 Fast Shipping</div>
-        <div class="trust-badge">🎟️ Authenticity Guaranteed</div>
+    </div>
+
+    <div class="preorder-buttons">
+      <button class="btn-preorder">Pre-Order</button>
+      <button class="btn-crypto">Pre-Order With Crypto &amp; Save $30</button>
+    </div>
+
+    <div class="limited-edition-badge">
+      <div class="limited-flash">
+        <span class="gold-star">★</span>
+        <span class="limited-text">LIMITED EDITION</span>
+      </div>
+      <div class="subtext">
+        Only 1000 will ever exist, each marked with a unique number.
+      </div>
+    </div>
+  </div>
+
+  <div class="glove-viewer">
+    <div id="viewer-container" class="viewer-container">
+      <img id="viewer-img" src="https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_PandorasBox_1.jpg?v=1750332619" alt="Figurine Image" class="viewer-img" loading="eager" />
+      <div class="viewer-controls">
+        <button id="prevBtn" class="overlay-nav arrow-left"  aria-label="Previous image">‹</button>
+        <button id="nextBtn" class="overlay-nav arrow-right" aria-label="Next image">›</button>
+        <div id="dotContainer" class="dot-container"></div>
+      </div>
+    </div>
+
+    <div class="viewer-info-container">
+      <div class="viewer-info-display">
+        <div class="preview-title">View Figure With:</div>
+        <span id="prevName" class="blurred-name clickable-name"></span>
+        <span id="currentName" class="active-name clickable-name"></span>
+        <span id="nextName" class="blurred-name clickable-name"></span>
+      </div>
+
+      <div class="figure-info">
+        <div class="figure-text">Figure Includes All Accessories</div>
+        <img id="accessory-img" class="glove-image" src="https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MMiamiDarrylFigurine_Accessories_1.jpg?v=1750332832" />
+      </div>
+    </div>
+
+    <div id="lightbox" class="lightbox">
+      <span class="close-lightbox" onclick="closeLightbox()">×</span>
+      <div class="lightbox-content">
+        <img id="lightbox-img" src="" alt="Large View" />
+        <div class="lightbox-instruction">← Use Arrow Keys →</div>
       </div>
     </div>
   </div>
 </div>
 
 <style>
-.dark-product-page {
-  background: #18122b;
-  color: #f3f0ff;
-  min-height: 100vh;
-  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+.glove-layout-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  max-width: 1100px;
+  margin: 3rem auto 0 auto;
+  padding: 0 3vw;
 }
-.dark-product-header {
+@media (min-width: 900px) {
+  .glove-layout-wrapper {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 4rem;
+  }
+  .glove-column { flex: 1.1; }
+  .glove-viewer { flex: 1.2; }
+}
+.product-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -93,170 +110,67 @@
   top: 0;
   z-index: 10;
 }
-.dark-product-header .brand {
-  font-size: 2rem;
+.product-header .product-info-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.product-header .product-info-box .product-title {
+  font-size: 2.3rem;
+  font-weight: 700;
+  color: #fff;
+}
+.product-header .product-info-box .product-price {
+  font-size: 2.1rem;
   font-weight: 700;
   color: #a259ec;
-  letter-spacing: 0.08em;
 }
-.dark-product-header .contact-btn {
-  background: #a259ec;
-  color: #fff;
+.product-header .product-info-box .free-delivery-message {
+  font-size: 1.15rem;
+  color: #b8b3d1;
+}
+.glove-options {
+  display: flex;
+  gap: 0.7rem;
+  margin-bottom: 1.2rem;
+}
+.glove-options input[type="radio"] {
+  display: none;
+}
+.glove-options label {
+  background: #18122b;
+  color: #f3f0ff;
   padding: 0.9rem 2.2rem;
   border-radius: 8px;
   font-weight: 600;
   text-transform: uppercase;
   font-size: 1.1rem;
-  border: none;
-  transition: background 0.18s;
-}
-.dark-product-header .contact-btn:hover {
-  background: #7c3aed;
-}
-.dark-product-main {
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
-  max-width: 1100px;
-  margin: 3rem auto 0 auto;
-  padding: 0 3vw;
-}
-@media (min-width: 900px) {
-  .dark-product-main {
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 4rem;
-  }
-  .dark-product-gallery { flex: 1.1; }
-  .dark-product-info { flex: 1.2; }
-}
-.dark-product-gallery .gallery-sticky {
-  position: sticky;
-  top: 6.5rem;
-}
-.gallery-img {
-  width: 100%;
-  border-radius: 18px;
-  background: #221a38;
-  box-shadow: 0 4px 32px #0002;
-  border: 2px solid #2d2346;
-  margin-bottom: 1.2rem;
-}
-.gallery-thumbs {
-  display: flex;
-  gap: 0.7rem;
-  margin-top: 0.5rem;
-}
-.gallery-thumb {
-  width: 48px;
-  height: 48px;
-  object-fit: cover;
-  border-radius: 8px;
-  border: 2px solid #2d2346;
-  background: #221a38;
-  cursor: pointer;
-  opacity: 0.7;
-  transition: border 0.18s, opacity 0.18s;
-}
-.gallery-thumb.selected, .gallery-thumb:hover {
-  border: 2px solid #a259ec;
-  opacity: 1;
-}
-.dark-product-info {
-  background: #221a38;
-  border-radius: 18px;
-  box-shadow: 0 2px 16px #0003;
-  padding: 2.5rem 2rem 2rem 2rem;
   border: 1.5px solid #2d2346;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
+  cursor: pointer;
+  transition: border 0.18s;
 }
-.product-badge {
-  background: #a259ec22;
-  color: #a259ec;
-  font-weight: 700;
-  font-size: 1.1rem;
-  padding: 0.5rem 1.2rem;
-  border-radius: 999px;
-  display: inline-block;
-  margin-bottom: 0.7rem;
+.glove-options label:hover {
+  border: 1.5px solid #a259ec;
 }
-.product-title {
-  font-size: 2.3rem;
-  font-weight: 700;
-  margin-bottom: 0.7rem;
+.glove-options input[type="radio"]:checked + label {
+  background: #a259ec;
   color: #fff;
+  border: 1.5px solid #a259ec;
 }
-.product-desc {
-  color: #b8b3d1;
-  font-size: 1.15rem;
+.quantity-selector {
   margin-bottom: 1.2rem;
 }
-.product-price-row {
-  display: flex;
-  align-items: baseline;
-  gap: 1.2rem;
-  margin-bottom: 1.2rem;
-}
-.product-price {
-  font-size: 2.1rem;
-  font-weight: 700;
-  color: #a259ec;
-}
-.product-compare {
-  font-size: 1.2rem;
-  color: #b8b3d1;
-  text-decoration: line-through;
-}
-.product-variants, .product-qty-row {
-  margin-bottom: 1.2rem;
-}
-.variant-group {
-  margin-bottom: 0.7rem;
-}
-.variant-label {
+.quantity-label {
   font-size: 1.1rem;
   font-weight: 600;
   color: #f3f0ff;
   margin-bottom: 0.4rem;
 }
-.variant-options {
+.quantity-controls {
   display: flex;
   gap: 0.7rem;
 }
-.variant-radio {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: #18122b;
-  border: 1.5px solid #2d2346;
-  border-radius: 8px;
-  padding: 0.7rem 1.3rem;
-  cursor: pointer;
-  color: #f3f0ff;
-  font-weight: 500;
-  font-size: 1.1rem;
-  transition: border 0.18s, background 0.18s;
-}
-.variant-radio input[type="radio"] {
-  display: none;
-}
-.variant-radio input[type="radio"]:checked + span, .variant-radio input[type="radio"]:checked ~ span {
-  color: #a259ec;
-  font-weight: 700;
-}
-.variant-radio input[type="radio"]:checked ~ span {
-  border-bottom: 2px solid #a259ec;
-}
-.variant-radio input[type="radio"]:checked ~ span, .variant-radio:hover span {
-  color: #a259ec;
-}
-.qty-btns {
-  display: flex;
-  gap: 0.7rem;
-}
-.qty-btn {
+.quantity-btn {
   width: 44px;
   height: 44px;
   border-radius: 10px;
@@ -268,17 +182,17 @@
   cursor: pointer;
   transition: border 0.18s, background 0.18s, color 0.18s;
 }
-.qty-btn.selected, .qty-btn:hover {
+.quantity-btn.selected, .quantity-btn:hover {
   background: #a259ec;
   color: #fff;
   border: 1.5px solid #a259ec;
 }
-.product-actions {
+.preorder-buttons {
   display: flex;
   gap: 1.2rem;
-  margin-top: 1.2rem;
+  margin-bottom: 1.2rem;
 }
-.add-to-cart-btn, .buy-now-btn {
+.btn-preorder, .btn-crypto {
   flex: 1;
   padding: 1.1rem 0;
   border-radius: 10px;
@@ -291,37 +205,162 @@
   cursor: pointer;
   transition: background 0.18s, box-shadow 0.18s;
 }
-.add-to-cart-btn:hover, .buy-now-btn:hover {
+.btn-preorder:hover, .btn-crypto:hover {
   background: #7c3aed;
   box-shadow: 0 4px 16px #7c3aed33;
 }
-.add-to-cart-btn[disabled], .buy-now-btn[disabled] {
-  background: #2d2346;
-  color: #b8b3d1;
-  cursor: not-allowed;
-  opacity: 0.7;
-}
-.product-trust-row {
-  display: flex;
-  gap: 1.2rem;
-  margin-top: 2rem;
-  justify-content: flex-start;
-}
-.trust-badge {
-  background: #18122b;
+.limited-edition-badge {
+  background: #a259ec22;
   color: #a259ec;
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 0.5rem 1.2rem;
+  border-radius: 999px;
+  display: inline-block;
+  margin-bottom: 0.7rem;
+}
+.glove-viewer {
+  background: #221a38;
+  border-radius: 18px;
+  box-shadow: 0 2px 16px #0003;
+  padding: 2.5rem 2rem 2rem 2rem;
   border: 1.5px solid #2d2346;
-  border-radius: 8px;
-  padding: 0.6rem 1.2rem;
-  font-size: 1rem;
-  font-weight: 600;
   display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.viewer-container {
+  position: relative;
+}
+.viewer-img {
+  width: 100%;
+  border-radius: 18px;
+  background: #221a38;
+  box-shadow: 0 4px 32px #0002;
+  border: 2px solid #2d2346;
+  margin-bottom: 1.2rem;
+}
+.viewer-controls {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 0.5rem;
+  padding: 0 1rem;
+}
+.overlay-nav {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #fff;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.18s;
+}
+.overlay-nav:hover {
+  opacity: 1;
+}
+.dot-container {
+  display: flex;
+  gap: 0.7rem;
+  margin-top: 0.5rem;
+}
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #2d2346;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.18s;
+}
+.dot.selected, .dot:hover {
+  opacity: 1;
+}
+.viewer-info-container {
+  background: #221a38;
+  border-radius: 18px;
+  box-shadow: 0 2px 16px #0003;
+  padding: 2.5rem 2rem 2rem 2rem;
+  border: 1.5px solid #2d2346;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.viewer-info-display {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.preview-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #f3f0ff;
+}
+.blurred-name, .active-name, .clickable-name {
+  font-size: 1.1rem;
+  color: #b8b3d1;
+}
+.figure-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.figure-text {
+  font-size: 1.1rem;
+  color: #b8b3d1;
+}
+.glove-image {
+  width: 100%;
+  border-radius: 8px;
+  background: #221a38;
+  box-shadow: 0 4px 32px #0002;
+  border: 2px solid #2d2346;
+  margin-top: 0.7rem;
+}
+.lightbox {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+}
+.lightbox-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border-radius: 18px;
+  padding: 2rem;
+  max-width: 80%;
+  max-height: 80%;
+}
+.close-lightbox {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 2rem;
+  color: #fff;
+  cursor: pointer;
+}
+.lightbox-instruction {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.1rem;
+  color: #fff;
 }
 @media (max-width: 900px) {
-  .dark-product-main { flex-direction: column; }
-  .dark-product-gallery, .dark-product-info { width: 100%; }
+  .glove-layout-wrapper { flex-direction: column; }
+  .glove-column, .glove-viewer { width: 100%; }
 }
 </style>
 
@@ -334,14 +373,14 @@ const productImages = [
 let currentImageIndex = 0;
 function setCurrentImage(index) {
   currentImageIndex = index;
-  const mainImage = document.getElementById('main-product-image');
+  const mainImage = document.getElementById('viewer-img');
   if (mainImage && productImages[currentImageIndex]) {
     mainImage.src = productImages[currentImageIndex].url;
     mainImage.alt = productImages[currentImageIndex].alt;
   }
-  document.querySelectorAll('.gallery-thumb').forEach((thumb, idx) => {
-    if (idx === index) thumb.classList.add('selected');
-    else thumb.classList.remove('selected');
+  document.querySelectorAll('.dot').forEach((dot, idx) => {
+    if (idx === index) dot.classList.add('selected');
+    else dot.classList.remove('selected');
   });
 }
 const productVariants = [
@@ -360,24 +399,23 @@ let selectedQuantity = 1;
 let currentVariant = productVariants[0];
 function setQuantity(quantity) {
   selectedQuantity = quantity;
-  document.getElementById('quantity-input').value = quantity;
-  document.querySelectorAll('.qty-btn').forEach(btn => {
-    const btnQuantity = parseInt(btn.dataset.quantity);
+  document.getElementById('qty-value').textContent = quantity;
+  document.querySelectorAll('.quantity-btn').forEach(btn => {
+    const btnQuantity = parseInt(btn.textContent);
     if (btnQuantity === quantity) btn.classList.add('selected');
     else btn.classList.remove('selected');
   });
 }
 function updateSelectedVariant() {
   const selectedOptions = [];
-  document.querySelectorAll('.variant-selector:checked').forEach(input => {
-    selectedOptions[input.dataset.optionPosition - 1] = input.dataset.optionValue;
+  document.querySelectorAll('.glove-options input[type="radio"]:checked').forEach(input => {
+    selectedOptions[input.id.split('-')[1]] = input.value;
   });
   const matchingVariant = productVariants.find(variant => {
     return variant.options.every((option, index) => option === selectedOptions[index]);
   });
   if (matchingVariant) {
     currentVariant = matchingVariant;
-    document.getElementById('variant-id').value = matchingVariant.id;
     const priceElement = document.getElementById('variant-price');
     const comparePriceElement = document.getElementById('variant-compare-price');
     if (priceElement) {
@@ -389,13 +427,13 @@ function updateSelectedVariant() {
     } else if (comparePriceElement) {
       comparePriceElement.style.display = 'none';
     }
-    const addToCartBtn = document.getElementById('add-to-cart-btn');
-    const addToCartText = document.getElementById('add-to-cart-text');
-    const buyNowBtn = document.getElementById('buy-now-btn');
+    const addToCartBtn = document.querySelector('.btn-preorder');
+    const addToCartText = document.querySelector('.btn-preorder');
+    const buyNowBtn = document.querySelector('.btn-crypto');
     if (matchingVariant.available) {
       addToCartBtn.disabled = false;
       buyNowBtn.disabled = false;
-      addToCartText.textContent = 'Add to Cart';
+      addToCartText.textContent = 'Pre-Order';
       addToCartBtn.classList.remove('disabled');
       buyNowBtn.classList.remove('disabled');
     } else {
@@ -409,7 +447,7 @@ function updateSelectedVariant() {
 }
 function buyNow() {
   if (!currentVariant.available) return;
-  const form = document.getElementById('product-form');
+  const form = document.querySelector('.glove-layout-wrapper');
   fetch('/cart/add.js', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -423,7 +461,7 @@ document.addEventListener('DOMContentLoaded', function() {
   setCurrentImage(0);
   setQuantity(1);
   updateSelectedVariant();
-  document.querySelectorAll('.variant-selector').forEach(input => {
+  document.querySelectorAll('.glove-options input[type="radio"]').forEach(input => {
     input.addEventListener('change', updateSelectedVariant);
   });
 });
