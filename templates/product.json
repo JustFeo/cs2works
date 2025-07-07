@@ -9,10 +9,6 @@
  */
 {
   "sections": {
-    "info_row": {
-      "type": "info-row",
-      "settings": {}
-    },
     "main": {
       "type": "main-product",
       "settings": {}
@@ -72,7 +68,6 @@
     }
   },
   "order": [
-    "info_row",
     "main",
     "custom_liquid_rcHMjg",
     "related-products",
