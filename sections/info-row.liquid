@@ -1,0 +1,39 @@
+<style>
+.info-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+  margin-bottom: 36px;
+}
+.info-row__item {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(30,60,114,0.07);
+  padding: 18px 32px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 1.1rem;
+  color: #1e3c72;
+  font-weight: 600;
+}
+.info-row__icon {
+  font-size: 1.5rem;
+  color: #2a5298;
+}
+</style>
+<div class="info-row">
+  <div class="info-row__item"><span class="info-row__icon">🚚</span> Free Delivery On All Orders</div>
+  <div class="info-row__item"><span class="info-row__icon">✅</span> No hidden fees, customs or import taxes</div>
+  <div class="info-row__item"><span class="info-row__icon">🛠️</span> Handmade by artisans with Disney/Marvel experience</div>
+</div>
+
+{% schema %}
+{
+  "name": "Info Row",
+  "presets": [
+    {"name": "Info Row"}
+  ]
+}
+{% endschema %} 

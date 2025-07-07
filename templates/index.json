@@ -1,6 +1,7 @@
 {
   "sections": {
-    "hero": { "type": "hero-branded", "settings": {} },
+    "main_hero": { "type": "main-hero", "settings": {} },
+    "info_row": { "type": "info-row", "settings": {} },
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
@@ -31,5 +32,5 @@
     },
     "testimonials": { "type": "testimonials", "settings": {} }
   },
-  "order": ["hero", "featured_collection", "testimonials"]
+  "order": ["main_hero", "info_row", "featured_collection", "testimonials"]
 }

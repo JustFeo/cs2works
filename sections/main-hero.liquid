@@ -1,0 +1,81 @@
+<style>
+.main-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #f7f7fa;
+  padding: 60px 20px 40px 20px;
+  border-radius: 32px;
+  margin-bottom: 48px;
+  box-shadow: 0 4px 32px rgba(30,60,114,0.07);
+}
+.main-hero__image {
+  max-width: 340px;
+  width: 100%;
+  border-radius: 24px;
+  box-shadow: 0 2px 16px rgba(30,60,114,0.10);
+  margin-bottom: 32px;
+}
+.main-hero__headline {
+  font-size: 2.6rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+  color: #1e3c72;
+  text-align: center;
+}
+.main-hero__subheadline {
+  font-size: 1.3rem;
+  color: #2a5298;
+  margin-bottom: 32px;
+  text-align: center;
+}
+.main-hero__cta-row {
+  display: flex;
+  gap: 18px;
+  justify-content: center;
+}
+.main-hero__cta {
+  background: #1e3c72;
+  color: #fff;
+  font-weight: 700;
+  padding: 16px 36px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 8px rgba(30,60,114,0.10);
+  transition: background 0.2s, color 0.2s;
+}
+.main-hero__cta--secondary {
+  background: #fff;
+  color: #1e3c72;
+  border: 2px solid #1e3c72;
+}
+.main-hero__cta:hover {
+  background: #2a5298;
+  color: #fff;
+}
+</style>
+<div class="main-hero">
+  <img class="main-hero__image" src="{{ section.settings.hero_image | img_url: '600x' }}" alt="{{ section.settings.headline }}" loading="lazy" />
+  <div class="main-hero__headline">{{ section.settings.headline }}</div>
+  <div class="main-hero__subheadline">{{ section.settings.subheadline }}</div>
+  <div class="main-hero__cta-row">
+    <a class="main-hero__cta" href="/products/sir-bloody-miami-darryl-figure">Pre-Order</a>
+    <a class="main-hero__cta main-hero__cta--secondary" href="/pages/crypto-payment">Pre-Order With Crypto & Save $30</a>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Main Hero",
+  "settings": [
+    {"type": "image_picker", "id": "hero_image", "label": "Hero Image"},
+    {"type": "text", "id": "headline", "label": "Headline", "default": "Sir Bloody Miami Darryl Figure"},
+    {"type": "text", "id": "subheadline", "label": "Subheadline", "default": "Handmade, limited edition. Pre-order now!"}
+  ],
+  "presets": [
+    {"name": "Main Hero"}
+  ]
+}
+{% endschema %} 
