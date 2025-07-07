@@ -1,5 +1,7 @@
 {
   "sections": {
+    "main_hero": { "type": "main-hero", "settings": {} },
+    "info_row": { "type": "info-row", "settings": {} },
     "crypto_info": { "type": "crypto-payment-info", "settings": {} },
     "form": { "type": "contact-form-crypto", "settings": {} },
     "cta": {
@@ -25,5 +27,5 @@
       }
     }
   },
-  "order": ["crypto_info", "form", "cta"]
+  "order": ["main_hero", "info_row", "crypto_info", "form", "cta"]
 }
