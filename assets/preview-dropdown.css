@@ -1,0 +1,38 @@
+/* === Preview-with dropdown === */
+#extraSelect {
+  /* closed state  – already looks like a pill */
+  border-radius: 2rem;          /* same oval */
+  padding: 0.5rem 1.25rem;
+}
+
+/* open listbox (Chrome, Edge, Safari) */
+#extraSelect:-webkit-autofill,
+#extraSelect option {           /* every <option> row */
+  background: #fff;             /* white like your buttons */
+  color: #111;                  /* same text colour */
+  padding: 0.55rem 1.25rem;
+  border-bottom: 1px solid #e5e5e5;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+/* last option: remove bottom border */
+#extraSelect option:last-child { border-bottom: none; }
+
+/* highlight on hover / focus inside the list */
+#extraSelect option:hover,
+#extraSelect option:checked {
+  background: #f5f5f5;
+}
+
+/* Firefox needs its own tweak */
+@-moz-document url-prefix() {
+  #extraSelect {
+    appearance: none;
+    background-color: #fff;
+    border: 1px solid #b3b3b3;
+  }
+  #extraSelect option {
+    padding: 0.55rem 1.25rem;
+  }
+}

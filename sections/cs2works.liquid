@@ -1,0 +1,916 @@
+<div class="glove-layout-wrapper">
+  <div class="glove-column">
+    <div class="product-header">
+      <div class="product-info-box">
+        <h1 class="product-title">Sir Bloody Miami Darryl Figure</h1>
+        <div class="product-price">$278.00 USD</div>
+        <div class="free-delivery-message">Free Shipping On All Orders</div>
+      </div>
+    </div>
+
+    <div class="glove-options product-form__input--pill">
+      <input type="radio" id="glove-pandora" name="glove" value="pandora" checked>
+      <label for="glove-pandora">Pandora's Box</label>
+      <input type="radio" id="glove-vice" name="glove" value="vice">
+      <label for="glove-vice">Vice</label>
+      <input type="radio" id="glove-hedge" name="glove" value="hedge">
+      <label for="glove-hedge">Hedge Maze</label>
+    </div>
+
+    <div class="quantity-selector">
+      <div class="quantity-label">Quantity</div>
+      <div class="quantity-options">
+        <span class="quantity-option selected">1</span>
+        <span class="quantity-option">2</span>
+        <span class="quantity-option">3</span>
+        <span class="quantity-option">4</span>
+        <span class="quantity-option">5</span>
+        <span class="quantity-option">6</span>
+        <span class="quantity-option">7</span>
+        <span class="quantity-option">8</span>
+        <span class="quantity-option">9</span>
+      </div>
+    </div>
+
+    <div class="preorder-buttons">
+      <button class="btn-preorder">Pre-Order</button>
+      <button class="btn-crypto">Pre-Order With Crypto &amp; Save $30</button>
+    </div>
+
+    <div class="limited-edition-badge">
+      <div class="limited-flash">
+        <span class="gold-star">★</span>
+        <span class="limited-text">LIMITED EDITION</span>
+      </div>
+      <div class="subtext">
+        Only 1000 will ever exist, each marked with a unique number.
+      </div>
+    </div>
+  </div>
+
+  <div class="glove-viewer">
+    <div id="viewer-container" class="viewer-container">
+      <img id="viewer-img" src="https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_PandorasBox_1.jpg?v=1750332619" alt="Figurine Image" class="viewer-img" loading="eager" />
+     <div class="viewer-controls">
+  <!-- icon-only angle buttons -->
+  <button id="angleLeftBtn" class="viewer-nav icon-only">↺</button>
+  <button id="prevBtn"       class="viewer-nav">← Previous</button>
+  <span   id="imageCounter">1 / 8</span>
+  <button id="nextBtn"       class="viewer-nav">Next →</button>
+  <button id="angleRightBtn" class="viewer-nav icon-only">↻</button>
+</div>
+
+    </div>
+
+    <div class="viewer-info-container">
+      <div class="viewer-info-display">
+        <div class="preview-title">View Figure With:</div>
+        <span id="prevName" class="blurred-name clickable-name"></span>
+        <span id="currentName" class="active-name clickable-name"></span>
+        <span id="nextName" class="blurred-name clickable-name"></span>
+      </div>
+
+      <div class="figure-info">
+        <div class="figure-text">Figure Includes All Accessories</div>
+        <img id="accessory-img" class="glove-image" src="https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MMiamiDarrylFigurine_Accessories_1.jpg?v=1750332832" />
+      </div>
+    </div>
+
+    <div id="lightbox" class="lightbox">
+      <span class="close-lightbox" onclick="closeLightbox()">×</span>
+      <div class="lightbox-content">
+        <img id="lightbox-img" src="" alt="Large View" />
+        <div class="lightbox-instruction">← Use Arrow Keys →</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.product-info-box {
+  background: #cfcfcf;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 134%;          /* let it fill the same width as glove-options */
+  max-width: none;      /* remove fixed maximum width */
+  min-width: unset;     /* remove forced minimum width */
+  margin-bottom: 2rem;
+  box-sizing: border-box;
+  transform: translateX(-8.5rem) translateY(-5rem);
+}
+
+
+
+.free-delivery-message {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #2CA305;
+  font-family: 'Inter', sans-serif;
+}
+
+
+  /* CSS */
+.limited-edition-badge {
+  display: inline-block;
+  margin: 15px auto;
+  padding: 12px 20px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #f6e27a, #d4af37, #cfae56);
+  text-align: center;
+  width: auto;
+  min-width: 300px;
+  box-sizing: border-box;
+  border: 1px solid #bcbcbc;
+  overflow: hidden;
+    transform: translateX(-7.1rem) translateY(4rem) scale(1.2);
+}
+
+.limited-flash {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.gold-star {
+  font-size: 18px;
+  font-weight: bold;
+  margin-right: 8px;
+  color: #b8860b;
+  animation: star-rotate 6s linear infinite;
+  text-shadow: 0 0 4px #b8860b;
+}
+
+.limited-text {
+  font-weight: bold;
+  font-size: 14px;
+  white-space: nowrap;
+  color: #b8860b;
+  animation: flashbang 1.5s ease-in-out infinite;
+  text-shadow: 0 0 4px #b8860b;
+}
+
+.subtext {
+  font-style: italic;
+  font-size: 14px;
+  color: #000;
+  white-space: nowrap;
+}
+
+/* Keyframes for animations */
+@keyframes star-rotate {
+  0% { transform: rotate(0deg); }
+  20%, 80% { transform: rotate(360deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes flashbang {
+  0%   { filter: brightness(100%); color: #b8860b; text-shadow: 0 0 4px #b8860b; }
+  25%  { filter: brightness(130%); color: #ffcc00; text-shadow: 0 0 8px #ffd700, 0 0 16px #ffdd55; }
+  50%  { filter: brightness(170%); color: #ffcc00; text-shadow: 0 0 12px #fff176, 0 0 20px #fff59d; }
+  75%  { filter: brightness(130%); color: #ffcc00; text-shadow: 0 0 8px #ffd700, 0 0 16px #fff3b0; }
+  100% { filter: brightness(100%); color: #b8860b; text-shadow: 0 0 4px #b8860b; }
+}
+
+/* Hover effect rainbow flash */
+.limited-edition-badge:hover .gold-star,
+.limited-edition-badge:hover .limited-text,
+.limited-edition-badge:hover .subtext {
+  animation: rgb-flash 2s ease-in-out 1;
+  filter: none !important;
+  text-shadow: none !important;
+}
+
+@keyframes rgb-flash {
+  0%   { color: red;    filter: drop-shadow(0 0 5px red); }
+  14%  { color: orange; filter: drop-shadow(0 0 6px orange); }
+  28%  { color: yellow; filter: drop-shadow(0 0 7px yellow); }
+  42%  { color: green;  filter: drop-shadow(0 0 6px green); }
+  56%  { color: blue;   filter: drop-shadow(0 0 7px blue); }
+  70%  { color: indigo; filter: drop-shadow(0 0 6px indigo); }
+  84%  { color: violet; filter: drop-shadow(0 0 7px violet); }
+  100% { color: #b8860b; filter: drop-shadow(0 0 5px #b8860b); }
+}
+
+.lightbox-content {
+  position: relative; /* Needed for absolute positioning child */
+  max-width: 90%;
+  max-height: 90%;
+}
+
+.lightbox-instruction {
+  position: absolute;
+  bottom: 2rem; /* adjust for height on image */
+  left: 50%;
+  transform: translateX(-50%);
+  color: #000000;
+  font-size: 1.8rem;
+  font-weight: 600;
+  pointer-events: none; /* so clicks go through */
+  text-shadow: 0 0 6px rgba(0,0,0,0.6); /* makes it readable on any image */
+}
+
+.product-details-header {
+  align-self: flex-start; /* overrides the parent centering */
+  width: 100%;
+  max-width: 480px;
+  margin-bottom: 1.5rem;
+  transform: translateX(-10rem);
+}
+
+.product-title {
+  font-size: 3.2rem;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  color: #000;
+  margin-bottom: 0.8rem;
+  letter-spacing: -0.5px;
+  white-space: nowrap;
+}
+
+
+.product-price {
+  font-size: 2.4rem;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  color: #54504f;
+  font-style: italic;
+  margin-bottom: 0.8rem;
+}
+
+ /* ─── hide the entire right-side info panel ─── */
+.viewer-info-container,
+.figure-info {
+  display: none !important;
+}
+  
+  /* Adjust the viewer-info-display to take full width */
+  .viewer-info-display {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    font-size: 2.2rem;
+    font-weight: 800;
+    font-family: 'Inter', sans-serif;
+    color: #111;
+    text-align: center;
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: unset;
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    margin-top: -10rem;
+  }
+
+ /* Image Gallery Styles */
+.glove-gallery {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.figure-text {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #54504f;
+  font-family: 'Inter', sans-serif;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #000000;
+}
+
+.glove-image {
+  width: 100%;
+  height: 480px; /* Increased size */
+  object-fit: cover;
+  border-radius: 12px;
+  border: 2px solid #eee;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.glove-image:hover {
+  transform: scale(1.03);
+  border-color: #ddd;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 900px) {
+  .glove-gallery {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .glove-image {
+    height: 300px; /* Adjust height for smaller screens */
+  }
+}
+
+/* Lightbox Styles */
+.lightbox {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox.active {
+  display: flex;
+}
+
+.lightbox-content {
+  max-width: 90%;
+  max-height: 90%;
+}
+
+.lightbox-content img {
+  max-width: 100%;
+  max-height: 90vh;
+  border-radius: 8px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+   transition: transform 0.4s ease, transform-origin 0.4s ease;
+}
+
+.close-lightbox {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.close-lightbox:hover {
+  color: #bbb;
+}
+
+
+/* Site background */
+body {
+  background-color: #141414;
+  color: #d6d6d6;
+  margin: 0;
+}
+
+/* Background band layout */
+.page-background-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  z-index: -1;
+}
+.page-background-wrapper .bg-column {
+  flex: 1;
+  background-color: #1a1a1a;
+}
+.page-background-wrapper .bg-column.middle {
+  flex: 1.8;
+  background-color: #1f1f1f;
+}
+
+/* Layout */
+.glove-layout-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3rem;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+
+  /* ← add this: */
+  flex-direction: row-reverse;
+}
+
+.glove-column {
+  display: flex;
+  flex-direction: column;
+  gap: 2.2rem;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+/* Background with heading for the glove variants */
+.product-form__input--pill {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 0.8rem;
+  padding: 2rem;
+  border-radius: 12px;
+  background: #cfcfcf;
+  margin-bottom: 2rem; /* added extra space below the pills and preorder buttons */
+}
+
+.product-form__input--pill::before {
+  content: "Pick Your Gloves";
+  display: block;
+  width: 100%;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #000000;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #000000;
+}
+
+/* Variant Pills */
+.product-form__input--pill input[type='radio'] {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+}
+
+.product-form__input--pill input[type='radio'] + label {
+  position: relative;
+  display: inline-block;
+  padding: 1.6rem 3.2rem;
+  font-size: 1.8rem;
+  letter-spacing: 0.05rem;
+  border-radius: 999px;
+  background: linear-gradient(to bottom, rgba(249,249,249,0.95), rgba(234,234,234,0.9));
+  color: #111;
+  border: 1px solid rgba(17,17,17,0.25);
+  cursor: pointer;
+  transition: 0.2s ease;
+  box-shadow: inset 0 1px 2px rgba(17,17,17,0.08), 0 3px 8px rgba(0,0,0,0.08);
+}
+
+.product-form__input--pill input[type='radio'] + label::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.15), rgba(0,0,0,0.03));
+  pointer-events: none;
+  z-index: 0;
+}
+
+.product-form__input--pill input[type='radio']:hover + label {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+  border-color: rgba(17,17,17,0.6);
+}
+
+.product-form__input--pill input[type='radio']:checked + label {
+  background: #111;
+  color: #f9f9f9;
+  transform: scale(1.03);
+  border-color: rgba(17,17,17,0.8);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+/* Quantity Buttons */
+.quantity-selector {
+  font-family: Helvetica, Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* left align */
+  margin-top: -3rem;
+  margin-bottom: 2rem;
+  margin-left: -13.5rem; /* shift more to the left */
+  width: 100%;
+  max-width: 480px;
+  position: relative;
+}
+
+.quantity-selector::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: #000;
+  margin-top: 1rem;
+}
+
+.quantity-label {
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: 0.05rem;
+  margin-bottom: 1rem;
+  color: #000;
+}
+
+.quantity-options {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.quantity-option {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 1.8rem;
+  font-weight: 400;
+  color: #999;
+  cursor: pointer;
+  transition: color 0.2s, font-weight 0.2s;
+}
+
+.quantity-option.selected {
+  color: #000;
+  font-weight: 700;
+}
+
+  
+/* Preorder Buttons */
+.preorder-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  width: 100%;
+}
+
+.btn-preorder,
+.btn-crypto {
+  flex: 1;
+  padding: 1.6rem 3.2rem;
+  font-size: 1.8rem;
+  letter-spacing: 0.05rem;
+  font-weight: 400;
+  text-align: center;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #7a7a7a 0%, #000000 100%);
+  color: #ffffff;
+}
+
+.btn-preorder:hover,
+.btn-crypto:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+/* ─── re-center the main image viewer ─── */
+.glove-viewer {
+  display: flex !important;
+  justify-content: center;
+}
+
+/* ─── allow the viewer to expand full width ─── */
+.viewer-container {
+  width: 100%;
+  max-width: 800px; /* adjust as desired */
+}
+
+.viewer-img {
+  width: 88%;
+  border-radius: 14px;
+  border: 2.816px solid #000000;
+  /* remove all transitions */
+  transition: none !important;
+  will-change: auto;
+}
+.viewer-img:hover {
+  /* disable hover scaling */
+  transform: none !important;
+}
+
+/* disable any keyframe animation */
+.viewer-img.animate {
+  animation: none !important;
+}
+
+/* you can leave viewer-controls untouched */
+.viewer-controls {
+  margin-top: 1.6rem;
+  display: flex;
+  transform: translateX(-66px);
+  justify-content: center;
+  gap: 2.4rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+}
+
+.viewer-nav {
+  background: linear-gradient(to right, #d6d6d6, #cfcfcf);
+  border: 1px solid #111;
+  border-radius: 999px;
+  padding: 0.9rem 2rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+}
+
+/* new: narrow icon-only buttons */
+.viewer-nav.icon-only {
+  padding: 0.9rem;      /* remove horizontal padding */
+  width: 3.2rem;        /* fixed square */
+  font-size: 1.4rem;    /* larger icon */
+  text-align: center;   /* center the arrow */
+}
+
+.viewer-nav:hover:not(:disabled) {
+  background: #111;
+  color: #fff;
+  transform: scale(1.05);
+}
+.viewer-nav:disabled {
+  cursor: default;
+  opacity: 0.4;
+  transform: none;
+}
+
+/* Name Display (View Figure With) */
+.viewer-info-display {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  font-size: 2.2rem;
+  font-weight: 800;
+  font-family: 'Inter', sans-serif;
+  color: #111;
+  text-align: left;
+  white-space: nowrap;   /* keep on one line */
+  overflow: visible;     /* let it overflow, don't cut */
+  text-overflow: unset;  /* don't add ... */
+  width: 320px;          /* fixed width so container doesn't grow */
+  max-width: 320px;
+  margin-left: -2rem;     /* adjust as needed for position */
+}
+
+
+.preview-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #54504f;
+  margin-bottom: 1.2rem;
+  letter-spacing: -0.5px;
+  padding: 0;
+  display: block;
+}
+
+.blurred-name {
+  opacity: 0.25;
+  filter: blur(2px);
+  color: #888;
+  display: inline-block;
+}
+
+.active-name {
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: #000;
+  display: inline;
+  transition: all 0.2s ease;
+}
+
+
+.clickable-name {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.clickable-name:hover {
+  opacity: 0.8;
+  transform: translateX(4px);
+}
+  
+.active-name:hover {
+  transform: scale(1.05);
+}
+/* Responsive unchanged from before */
+@media (max-width: 900px) {
+  .glove-layout-wrapper { flex-direction: column; }
+  .glove-viewer { flex-direction: column; }
+  .preorder-buttons { width: 100%; max-width: 480px; }
+}
+.blurred-name:empty { display: none !important; }
+
+  .highlighted {
+  font-weight: bold;
+  color: #000000; /* You can change this to any color you prefer */
+}
+
+  #imageCounter {
+  color: #333333;  /* makes the “/ 8” darker and visible */
+}
+
+
+</style>
+
+<script>
+/* ---------- 1. LITTLE HEADER CLICK (unchanged) ---------- */
+document.addEventListener('DOMContentLoaded', () => {
+  const deliveryMessage = document.querySelector('.free-delivery-message');
+  deliveryMessage.addEventListener('click', () => {
+    deliveryMessage.classList.toggle('clicked');
+  });
+});
+
+/* ---------- 2. MAIN LOGIC ---------- */
+document.addEventListener('DOMContentLoaded', () => {
+
+  /* ---------- 2-A. LIGHTBOX + ZOOM ---------- */
+  const gloveImage  = document.getElementById('accessory-img');
+  const lightbox    = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const viewerImg   = document.getElementById('viewer-img');
+
+  let isZoomed = false;
+
+  gloveImage.addEventListener('click', () => {
+    lightbox.classList.add('active');
+    lightboxImg.src = gloveImage.src;
+    resetZoom();
+  });
+  function closeLightbox() { lightbox.classList.remove('active'); resetZoom(); }
+  function resetZoom() {
+    lightboxImg.style.transform       = 'scale(1)';
+    lightboxImg.style.transformOrigin = 'center center';
+    isZoomed = false;
+  }
+  document.querySelector('.close-lightbox').addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click',  e => { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && lightbox.classList.contains('active')) closeLightbox(); });
+  lightboxImg.addEventListener('click', e => {
+    if (!isZoomed) {
+      const { left, top, width, height } = lightboxImg.getBoundingClientRect();
+      const x = ((e.clientX - left) / width ) * 100;
+      const y = ((e.clientY - top ) / height) * 100;
+      lightboxImg.style.transformOrigin = `${x}% ${y}%`;
+      lightboxImg.style.transform = 'scale(2)';
+      isZoomed = true;
+    } else resetZoom();
+  });
+
+  /* ---------- 2-B. IMAGE DATA ---------- */
+  const urls = {
+    vice: [
+      "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_ViceGloves_1.jpg?v=1750332554",
+      "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/vice_fade.jpg?v=1749907969",
+      "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/vice_arabesque.jpg?v=1749907724",
+      "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/vice_hotrod.jpg?v=1749907940",
+      "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/vice_bluephosphor.jpg?v=1749907774",
+      "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/vice_ruby.jpg?v=1749907792",
+      "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/vice_emerald.jpg?v=1749908821",
+      "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/vice_sapphire.jpg?v=1750008665"
+    ],
+    pandora: [
+      "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_PandorasBox_1.jpg?v=1750332619",
+      "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/pandora_fade.jpg?v=1749907926",
+      "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/pandora_arabesque.jpg?v=1749918916",
+      "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/pandora_hotrod.jpg?v=1749907952",
+      "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/pandora_bluephosphor.jpg?v=1749907839",
+      "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/pandora_ruby.jpg?v=1749908644",
+      "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/pandora_emerald.jpg?v=1749907913",
+      "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/pandora_sapphire.jpg?v=1750008691"
+    ],
+    hedge: [
+      "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_HedgeMaze_1.jpg?v=1750332352",
+      "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/hedge_fade.jpg?v=1749907822",
+      "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/hedge_arabesque.jpg?v=1749907808",
+      "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/hedge_hotrod.jpg?v=1749908427",
+      "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/hedge_bluephosphor.jpg?v=1749907985",
+      "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/hedge_ruby.jpg?v=1749908002",
+      "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/hedge_emerald.jpg?v=1749908692",
+      "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/hedge_sapphire.jpg?v=1750008689"
+    ]
+  };
+
+  const angleUrls = {
+    vice: [
+      "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_ViceGloves_1.jpg?v=1750332570",
+      "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_ViceGloves_2.jpg?v=1750332570",
+      "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_ViceGloves_3.jpg?v=1750332570",
+      "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_ViceGloves_4.jpg?v=1750332570"
+    ],
+    pandora: [
+      "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_PandorasBox_1.jpg?v=1750332630",
+      "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_PandorasBox_2.jpg?v=1750332630",
+      "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_PandorasBox_3.jpg?v=1750332630",
+      "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_PandorasBox_4.jpg?v=1750332630"
+    ],
+    hedge: [
+      "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_HedgeMaze_1.jpg?v=1750332418",
+      "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_HedgeMaze_2.jpg?v=1750332418",
+      "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_HedgeMaze_3.jpg?v=1750332418",
+      "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_HedgeMaze_4.jpg?v=1750332418"
+    ]
+  };
+
+  /* ---------- 2-C. STATE ---------- */
+  let currentGlove = 'pandora';
+  let currentSet   = urls[currentGlove];
+  let index        = 0;
+  let angleIndex   = 0;
+
+  /* ---------- 2-D. DOM REFS ---------- */
+  const imageCounter  = document.getElementById('imageCounter');
+  const currentName   = document.getElementById('currentName');
+  const prevName      = document.getElementById('prevName');
+  const nextName      = document.getElementById('nextName');
+  const prevBtn       = document.getElementById('prevBtn');
+  const nextBtn       = document.getElementById('nextBtn');
+  const angleLeftBtn  = document.getElementById('angleLeftBtn');
+  const angleRightBtn = document.getElementById('angleRightBtn');
+
+  const gloves = {
+    vice:    ["Vice Gloves", "AWP | Fade","AK-47 | Gold Arabesque","M4A1-S | Hot Rod","M4A1-S | Blue Phosphor","★ Karambit | Ruby","★ Karambit | Emerald","★ M9 Bayonet | Sapphire"],
+    pandora: ["Pandora's Box Gloves","AWP | Fade","AK-47 | Gold Arabesque","M4A1-S | Hot Rod","M4A1-S | Blue Phosphor","★ Karambit | Ruby","★ Karambit | Emerald","★ M9 Bayonet | Sapphire"],
+    hedge:   ["Hedge Maze Gloves","AWP | Fade","AK-47 | Gold Arabesque","M4A1-S | Hot Rod","M4A1-S | Blue Phosphor","★ Karambit | Ruby","★ Karambit | Emerald","★ M9 Bayonet | Sapphire"]
+  };
+
+  /* ---------- 2-E. RENDER ---------- */
+  function updateImage() {
+    viewerImg.classList.add('animate');
+    setTimeout(() => {
+      viewerImg.src   = currentSet[index];
+      lightboxImg.src = currentSet[index];
+      viewerImg.onload = () => viewerImg.classList.remove('animate');
+
+      imageCounter.innerHTML =
+        `<span class="highlighted">${index + 1}</span> / ${currentSet.length}`;
+
+      currentName.textContent = gloves[currentGlove][index];
+      prevName.textContent    = gloves[currentGlove][(index - 1 + currentSet.length) % currentSet.length];
+      nextName.textContent    = gloves[currentGlove][(index + 1) % currentSet.length];
+    }, 80);
+  }
+
+  /* ---------- 2-F. GLOBAL KEY NAV ---------- */
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft')  { prevBtn.click();  e.preventDefault(); }
+    if (e.key === 'ArrowRight') { nextBtn.click();  e.preventDefault(); }
+  });
+
+  /* ---------- 2-G. CAROUSEL BUTTONS ---------- */
+  prevBtn.addEventListener('click', () => {
+    angleIndex = 0;
+    index = (index - 1 + currentSet.length) % currentSet.length;
+    updateImage();
+  });
+  nextBtn.addEventListener('click', () => {
+    angleIndex = 0;
+    index = (index + 1) % currentSet.length;
+    updateImage();
+  });
+
+  /* ---------- 2-H. ANGLE BUTTONS ---------- */
+  angleLeftBtn.addEventListener('click', () => {
+    angleIndex = (angleIndex - 1 + angleUrls[currentGlove].length) % angleUrls[currentGlove].length;
+    viewerImg.src   = angleUrls[currentGlove][angleIndex];
+    lightboxImg.src = angleUrls[currentGlove][angleIndex];
+    imageCounter.textContent = `Angle ${angleIndex + 1}`;
+  });
+
+  angleRightBtn.addEventListener('click', () => {
+    angleIndex = (angleIndex + 1) % angleUrls[currentGlove].length;
+    viewerImg.src   = angleUrls[currentGlove][angleIndex];
+    lightboxImg.src = angleUrls[currentGlove][angleIndex];
+    imageCounter.textContent = `Angle ${angleIndex + 1}`;
+  });
+
+  /* ---------- 2-I. NAME CLICK NAV ---------- */
+  prevName.addEventListener('click', prevBtn.click.bind(prevBtn));
+  nextName.addEventListener('click', nextBtn.click.bind(nextBtn));
+  currentName.addEventListener('click', updateImage);
+
+  /* ---------- 2-J. GLOVE VARIANT SWITCH ---------- */
+  document.querySelectorAll('input[name="glove"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      if (!radio.checked) return;
+      currentGlove = radio.value;
+      currentSet   = urls[currentGlove];
+      index = 0;
+      angleIndex = 0;
+      updateImage();
+    });
+  });
+
+  /* ---------- 2-K. QUANTITY SELECTOR ---------- */
+  document.querySelectorAll('.quantity-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      document.querySelectorAll('.quantity-option').forEach(el => el.classList.remove('selected'));
+      opt.classList.add('selected');
+    });
+  });
+
+  /* ---------- 2-L. INITIAL RENDER ---------- */
+  updateImage();
+});
+</script>
+
