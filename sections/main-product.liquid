@@ -1,174 +1,440 @@
-<!-- Modern Hardcoded Product Page for Sir Bloody Miami Darryl Figure -->
+<!-- Fully custom product page for Sir Bloody Miami Darryl Figure, matching the React reference -->
 <style>
-  .custom-product-container {
-    max-width: 900px;
-    margin: 40px auto;
-    background: #fff;
-    border-radius: 18px;
-    box-shadow: 0 4px 32px rgba(0,0,0,0.10);
-    padding: 32px 24px;
+  body {
+    background: linear-gradient(135deg, #f8fafc 0%, #e0e7ef 100%);
+  }
+  .product-main-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 16px 80px 16px;
     display: flex;
     flex-wrap: wrap;
-    gap: 40px;
+    gap: 48px;
+    align-items: flex-start;
     font-family: 'Inter', Arial, sans-serif;
   }
-  .custom-product-image {
-    flex: 1 1 320px;
-    min-width: 320px;
-    max-width: 400px;
+  .product-gallery {
+    flex: 1 1 420px;
+    min-width: 340px;
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+  .gallery-image-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1/1;
+    background: #fff;
+    border-radius: 24px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.10);
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #f7f7f7;
-    border-radius: 12px;
-    overflow: hidden;
-    height: 420px;
   }
-  .custom-product-image img {
+  .gallery-image-wrap img {
     width: 100%;
-    height: auto;
-    object-fit: contain;
-    border-radius: 12px;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s cubic-bezier(.4,2,.6,1);
   }
-  .custom-product-details {
-    flex: 2 1 400px;
-    min-width: 320px;
+  .gallery-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    background: rgba(255,255,255,0.92);
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.5rem;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+    z-index: 2;
+  }
+  .gallery-nav-btn:hover { opacity: 1; }
+  .gallery-nav-btn.left { left: 12px; }
+  .gallery-nav-btn.right { right: 12px; }
+  .gallery-dots {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 8px;
+  }
+  .gallery-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #cbd5e1;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, width 0.2s;
+  }
+  .gallery-dot.active {
+    background: #2563eb;
+    width: 28px;
+    border-radius: 8px;
+  }
+  .gallery-caption {
+    text-align: center;
+    color: #475569;
+    font-weight: 500;
+    font-size: 1.1rem;
+    margin-top: 6px;
+  }
+  .gallery-count {
+    text-align: center;
+    color: #64748b;
+    font-size: 0.95rem;
+    margin-top: 2px;
+  }
+  .product-info {
+    flex: 2 1 480px;
+    min-width: 340px;
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 28px;
   }
-  .custom-product-title {
-    font-size: 2.2rem;
+  .badge-limited {
+    display: inline-flex;
+    align-items: center;
+    background: #fef3c7;
+    color: #b45309;
+    font-weight: 700;
+    font-size: 1rem;
+    border-radius: 999px;
+    padding: 6px 16px;
+    margin-bottom: 8px;
+    gap: 6px;
+  }
+  .product-title {
+    font-size: 2.6rem;
     font-weight: 800;
+    color: #1e293b;
     margin-bottom: 0.2em;
-    color: #1a1a1a;
   }
-  .custom-product-price {
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: #e85d04;
+  .product-desc {
+    color: #475569;
+    font-size: 1.18rem;
     margin-bottom: 0.5em;
   }
-  .custom-product-badge {
-    display: inline-block;
-    background: #fbbf24;
-    color: #fff;
-    font-weight: 700;
-    font-size: 1rem;
-    border-radius: 6px;
-    padding: 4px 12px;
+  .product-price-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    padding: 18px 24px;
     margin-bottom: 0.5em;
   }
-  .custom-product-desc {
+  .product-price {
+    font-size: 2.1rem;
+    font-weight: 700;
+    color: #1e293b;
+  }
+  .product-shipping {
+    color: #059669;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
     font-size: 1.1rem;
-    color: #444;
+  }
+  .glove-select-wrap {
     margin-bottom: 1em;
   }
-  .custom-product-loadout {
-    background: #f3f4f6;
-    border-radius: 8px;
-    padding: 16px 18px;
-    margin-bottom: 1em;
-  }
-  .custom-product-loadout h3 {
-    font-size: 1.1rem;
+  .glove-select-title {
+    font-size: 1.2rem;
     font-weight: 700;
+    color: #1e293b;
     margin-bottom: 0.5em;
-    color: #1a1a1a;
   }
-  .custom-product-loadout ul {
-    margin: 0 0 0 1.2em;
-    padding: 0;
-    color: #333;
-    font-size: 1rem;
-  }
-  .custom-product-shipping {
-    background: #e0f7fa;
-    border-radius: 8px;
-    padding: 14px 18px;
-    margin-bottom: 1em;
-    color: #006064;
-    font-size: 1rem;
-  }
-  .custom-product-payment {
-    background: #f1f8e9;
-    border-radius: 8px;
-    padding: 14px 18px;
-    color: #33691e;
-    font-size: 1rem;
-    margin-bottom: 1em;
-  }
-  .custom-product-actions {
+  .glove-options {
     display: flex;
     gap: 16px;
+    flex-wrap: wrap;
+  }
+  .glove-option {
+    flex: 1 1 120px;
+    min-width: 120px;
+    background: #fff;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 14px 18px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #1e293b;
+    text-align: center;
+    transition: border 0.2s, box-shadow 0.2s, background 0.2s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+    position: relative;
+  }
+  .glove-option.selected {
+    border: 2px solid #2563eb;
+    background: #eff6ff;
+    box-shadow: 0 2px 8px rgba(37,99,235,0.08);
+  }
+  .quantity-select-wrap {
+    margin-bottom: 1em;
+  }
+  .quantity-select-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 0.5em;
+  }
+  .quantity-options {
+    display: flex;
+    gap: 10px;
+  }
+  .quantity-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    border: 2px solid #e5e7eb;
+    background: #fff;
+    color: #1e293b;
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: border 0.2s, background 0.2s, color 0.2s;
+  }
+  .quantity-btn.selected {
+    background: #2563eb;
+    color: #fff;
+    border: 2px solid #2563eb;
+  }
+  .product-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
     margin-top: 1.2em;
   }
-  .custom-btn {
-    background: #1a73e8;
+  .product-btn {
+    width: 100%;
+    padding: 18px 0;
+    border: none;
+    border-radius: 14px;
+    font-size: 1.18rem;
+    font-weight: 700;
+    cursor: pointer;
+    background: linear-gradient(90deg, #2563eb 0%, #1e40af 100%);
     color: #fff;
+    box-shadow: 0 2px 12px rgba(37,99,235,0.10);
+    transition: background 0.2s, transform 0.1s;
+  }
+  .product-btn.crypto {
+    background: linear-gradient(90deg, #a21caf 0%, #7c3aed 100%);
+  }
+  .product-btn:hover {
+    background: linear-gradient(90deg, #1e40af 0%, #2563eb 100%);
+    transform: translateY(-2px) scale(1.01);
+  }
+  .product-btn.crypto:hover {
+    background: linear-gradient(90deg, #7c3aed 0%, #a21caf 100%);
+  }
+  .trust-badges {
+    display: flex;
+    gap: 24px;
+    margin-top: 32px;
+    justify-content: space-between;
+  }
+  .trust-badge {
+    flex: 1 1 0;
+    background: #f1f5f9;
+    border-radius: 12px;
+    padding: 18px 0;
+    text-align: center;
+    color: #334155;
+    font-weight: 600;
+    font-size: 1rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+  }
+  .limited-edition-info {
+    background: linear-gradient(90deg, #fef3c7 0%, #fde68a 100%);
+    border: 1.5px solid #fbbf24;
+    border-radius: 14px;
+    padding: 18px 0;
+    margin-top: 32px;
+    text-align: center;
+    color: #b45309;
     font-weight: 700;
     font-size: 1.1rem;
-    border: none;
-    border-radius: 8px;
-    padding: 12px 28px;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  .custom-btn.crypto {
-    background: #00b894;
-  }
-  .custom-btn:hover {
-    background: #1558b0;
-  }
-  .custom-btn.crypto:hover {
-    background: #008e6b;
   }
   @media (max-width: 900px) {
-    .custom-product-container {
+    .product-main-wrap {
       flex-direction: column;
-      align-items: center;
-      padding: 18px 6px;
+      gap: 32px;
+      padding: 18px 4px 40px 4px;
     }
-    .custom-product-details {
+    .product-gallery, .product-info {
       min-width: 0;
+      max-width: 100%;
+    }
+    .trust-badges {
+      flex-direction: column;
+      gap: 12px;
     }
   }
 </style>
-<div class="custom-product-container">
-  <div class="custom-product-image">
-    <img src="https://cdn.shopify.com/s/files/1/0680/4150/7113/files/miami-darryl-figure.png?v=1717171717" alt="Sir Bloody Miami Darryl Figure" />
+<div class="product-main-wrap">
+  <div class="product-gallery">
+    <div class="gallery-image-wrap">
+      <button class="gallery-nav-btn left" onclick="navigateImage('prev')" aria-label="Previous image">&#8592;</button>
+      <img id="mainProductImage" src="https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_PandorasBox_1.jpg?v=1750332619" alt="Sir Bloody Miami Darryl Figure" />
+      <button class="gallery-nav-btn right" onclick="navigateImage('next')" aria-label="Next image">&#8594;</button>
+    </div>
+    <div class="gallery-dots" id="galleryDots"></div>
+    <div class="gallery-caption" id="galleryCaption">Pandora's Box Gloves</div>
+    <div class="gallery-count" id="galleryCount">1 of 8</div>
   </div>
-  <div class="custom-product-details">
-    <span class="custom-product-badge">LIMITED EDITION</span>
-    <div class="custom-product-title">Sir Bloody Miami Darryl Figure</div>
-    <div class="custom-product-price">$278.00 <span style="font-size:1rem;font-weight:400;color:#00b894;">Pre-Order With Crypto & Save $30</span></div>
-    <div class="custom-product-desc">
-      Handmade, limited edition. Includes 4 guns and 3 knives.<br>
-      <b>Approx. size:</b> ~23 cm (H) × ~11 cm (W).<br>
-      <b>Handmade by artisans with Disney/Marvel experience.</b>
+  <div class="product-info">
+    <div class="badge-limited">&#11088; LIMITED EDITION</div>
+    <div class="product-title">Sir Bloody Miami Darryl Figure</div>
+    <div class="product-desc">Premium collectible figure featuring interchangeable CS2 gloves and accessories. Each piece is uniquely numbered and comes with a certificate of authenticity.</div>
+    <div class="product-price-row">
+      <div class="product-price">$278.00 <span style="font-size:1rem;font-weight:400;color:#a21caf;">Pre-Order With Crypto & Save $30</span></div>
+      <div class="product-shipping">&#128666; Free Shipping</div>
     </div>
-    <div class="custom-product-loadout">
-      <h3>Figurine Loadout:</h3>
-      <ul>
-        <li><b>Detachable Gun Skins (4):</b> AK-47 Arabesque, M4A1-S Red Phosphor, M4A1-S Blue Phosphor, AWP Fade</li>
-        <li><b>Detachable Gem Knives (3):</b> Karambit Emerald, Karambit Ruby, M9 Bayonet Sapphire</li>
-        <li><b>Gloves (1 Pair of Your Choice):</b> Pandora's Box, Vice, Hedge Maze</li>
-      </ul>
+    <div class="glove-select-wrap">
+      <div class="glove-select-title">Choose Your Gloves</div>
+      <div class="glove-options">
+        <div class="glove-option selected" data-glove="pandora" onclick="selectGlove('pandora')">Pandora's Box Gloves</div>
+        <div class="glove-option" data-glove="vice" onclick="selectGlove('vice')">Vice Gloves</div>
+        <div class="glove-option" data-glove="hedge" onclick="selectGlove('hedge')">Hedge Maze Gloves</div>
+      </div>
     </div>
-    <div class="custom-product-shipping">
-      <b>🚚 Free Delivery On All Orders</b><br>
-      No hidden fees, customs and import taxes are fully covered.<br>
-      <b>Estimated Delivery:</b> 7–15 business days after production (starts July).
+    <div class="quantity-select-wrap">
+      <div class="quantity-select-title">Quantity</div>
+      <div class="quantity-options">
+        <button class="quantity-btn selected" onclick="selectQuantity(1)">1</button>
+        <button class="quantity-btn" onclick="selectQuantity(2)">2</button>
+        <button class="quantity-btn" onclick="selectQuantity(3)">3</button>
+        <button class="quantity-btn" onclick="selectQuantity(4)">4</button>
+        <button class="quantity-btn" onclick="selectQuantity(5)">5</button>
+      </div>
     </div>
-    <div class="custom-product-payment">
-      <b>Payments Accepted:</b><br>
-      Credit Card, Apple Pay, Google Pay<br>
-      <span style="color:#00b894;font-weight:700;">Crypto (USDC, USDT) — Save $30!</span><br>
-      <span style="font-size:0.95em;">Bank Transfer (EU & UK) available via X @CS2WORKS</span>
+    <div class="product-actions">
+      <button class="product-btn" onclick="handlePreOrder()">Pre-Order Now</button>
+      <button class="product-btn crypto" onclick="handleCryptoOrder()">Pay with Crypto & Save $30</button>
     </div>
-    <div class="custom-product-actions">
-      <button class="custom-btn">Pre-Order</button>
-      <button class="custom-btn crypto">Pre-Order With Crypto</button>
+    <div class="trust-badges">
+      <div class="trust-badge">&#128274; Secure Payment</div>
+      <div class="trust-badge">&#128230; Premium Packaging</div>
+      <div class="trust-badge">&#128666; Fast Shipping</div>
     </div>
+    <div class="limited-edition-info">&#11088; ONLY 1000 EVER MADE &#11088;<br>Each figure is individually numbered and comes with a certificate of authenticity.</div>
   </div>
 </div>
+<script>
+// Data from React reference
+const gloves = {
+  vice: [
+    "Vice Gloves", "AWP | Fade", "AK-47 | Gold Arabesque", "M4A1-S | Hot Rod",
+    "M4A1-S | Blue Phosphor", "★ Karambit | Ruby", "★ Karambit | Emerald",
+    "★ M9 Bayonet | Sapphire"
+  ],
+  pandora: [
+    "Pandora's Box Gloves", "AWP | Fade", "AK-47 | Gold Arabesque", "M4A1-S | Hot Rod",
+    "M4A1-S | Blue Phosphor", "★ Karambit | Ruby", "★ Karambit | Emerald", 
+    "★ M9 Bayonet | Sapphire"
+  ],
+  hedge: [
+    "Hedge Maze Gloves", "AWP | Fade", "AK-47 | Gold Arabesque", "M4A1-S | Hot Rod",
+    "M4A1-S | Blue Phosphor", "★ Karambit | Ruby", "★ Karambit | Emerald",
+    "★ M9 Bayonet | Sapphire"
+  ]
+};
+const urls = {
+  vice: [
+    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_ViceGloves_1.jpg?v=1750332554",
+    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/vice_fade.jpg?v=1749907969",
+    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/vice_arabesque.jpg?v=1749907724",
+    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/vice_hotrod.jpg?v=1749907940",
+    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/vice_bluephosphor.jpg?v=1749907774",
+    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/vice_ruby.jpg?v=1749907792",
+    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/vice_emerald.jpg?v=1749908821",
+    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/vice_sapphire.jpg?v=1750008665"
+  ],
+  pandora: [
+    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_PandorasBox_1.jpg?v=1750332619",
+    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/pandora_fade.jpg?v=1749907926",
+    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/pandora_arabesque.jpg?v=1749918916",
+    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/pandora_hotrod.jpg?v=1749907952",
+    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/pandora_bluephosphor.jpg?v=1749907839",
+    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/pandora_ruby.jpg?v=1749908644",
+    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/pandora_emerald.jpg?v=1749907913",
+    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/pandora_sapphire.jpg?v=1750008691"
+  ],
+  hedge: [
+    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_HedgeMaze_1.jpg?v=1750332352",
+    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/hedge_fade.jpg?v=1749907822",
+    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/hedge_arabesque.jpg?v=1749907808",
+    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/hedge_hotrod.jpg?v=1749908427",
+    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/hedge_bluephosphor.jpg?v=1749907985",
+    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/hedge_ruby.jpg?v=1749908002",
+    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/hedge_emerald.jpg?v=1749908692",
+    "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/hedge_sapphire.jpg?v=1750008689"
+  ]
+};
+let selectedGlove = 'pandora';
+let currentImageIndex = 0;
+let selectedQuantity = 1;
+function updateGallery() {
+  const images = urls[selectedGlove];
+  const names = gloves[selectedGlove];
+  document.getElementById('mainProductImage').src = images[currentImageIndex];
+  document.getElementById('mainProductImage').alt = names[currentImageIndex];
+  document.getElementById('galleryCaption').textContent = names[currentImageIndex];
+  document.getElementById('galleryCount').textContent = (currentImageIndex+1) + ' of ' + images.length;
+  // Dots
+  const dots = images.map((_, idx) => `<button class='gallery-dot${idx===currentImageIndex?' active':''}' onclick='setImageIndex(${idx})'></button>`).join('');
+  document.getElementById('galleryDots').innerHTML = dots;
+}
+function navigateImage(dir) {
+  const images = urls[selectedGlove];
+  if(dir==='prev') {
+    currentImageIndex = (currentImageIndex-1+images.length)%images.length;
+  } else {
+    currentImageIndex = (currentImageIndex+1)%images.length;
+  }
+  updateGallery();
+}
+function setImageIndex(idx) {
+  currentImageIndex = idx;
+  updateGallery();
+}
+function selectGlove(glove) {
+  selectedGlove = glove;
+  currentImageIndex = 0;
+  document.querySelectorAll('.glove-option').forEach(el=>el.classList.remove('selected'));
+  document.querySelector(`.glove-option[data-glove='${glove}']`).classList.add('selected');
+  updateGallery();
+}
+function selectQuantity(qty) {
+  selectedQuantity = qty;
+  document.querySelectorAll('.quantity-btn').forEach(el=>el.classList.remove('selected'));
+  document.querySelector(`.quantity-btn:nth-child(${qty})`).classList.add('selected');
+}
+function handlePreOrder() {
+  // Redirect to Shopify pre-order with selected quantity and glove
+  window.location.href = '/cart/add?id=YOUR_PRODUCT_VARIANT_ID&quantity='+selectedQuantity;
+}
+function handleCryptoOrder() {
+  // Redirect to crypto checkout page
+  window.location.href = '/pages/crypto-payment';
+}
+document.addEventListener('DOMContentLoaded', updateGallery);
+document.addEventListener('keydown', function(e) {
+  if(e.key==='ArrowLeft') navigateImage('prev');
+  if(e.key==='ArrowRight') navigateImage('next');
+});
+</script>
