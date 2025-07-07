@@ -1,6 +1,6 @@
 {% comment %}
   Product Page Template for Shopify
-  Custom section to match the reference at darryl-figure-revamp.lovable.app
+  Place this file in your theme's templates folder as product.liquid
 {% endcomment %}
 
 <div class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
@@ -48,6 +48,8 @@
               <div class="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </div>
           </div>
+          
+          <!-- Navigation Overlay -->
           {% if product.images.size > 1 %}
           <button
             onclick="navigateImage('prev')"
@@ -67,6 +69,8 @@
           </button>
           {% endif %}
         </div>
+
+        <!-- Image Counter & Current Item -->
         {% if product.images.size > 1 %}
         <div class="text-center space-y-2">
           <div class="flex justify-center items-center space-x-2">
