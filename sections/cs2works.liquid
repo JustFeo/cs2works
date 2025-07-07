@@ -668,7 +668,7 @@ body {
 /* ─── image counter ─── */
 #imageCounter {
   display: inline-block;    /* make width honor the value below */
-  width: 7ch;               /* roughly “Angle 8” width; adjust if needed */
+  width: 7ch;               /* roughly "Angle 8" width; adjust if needed */
   text-align: center;       /* center the text within that fixed box */
   color: #333333;
   margin: 0 1.6rem;
@@ -677,12 +677,12 @@ body {
 
 
 
-  /* move left angle nearer “Previous” */
+  /* move left angle nearer "Previous" */
 #angleLeftBtn {
   transform: translateX(8rem) !important;
 }
 
-/* move right angle nearer “Next” */
+/* move right angle nearer "Next" */
 #angleRightBtn {
   transform: translateX(-8rem) !important;
 }
@@ -758,11 +758,11 @@ body {
    1. Hover cue for the main viewer image
    =========================================================== */
 .viewer-img{
-  /* override the old “transition: none !important;” rule */
+  /* override the old "transition: none !important;" rule */
   transition: transform .35s ease !important;
 }
 .viewer-img:hover{
-  /* subtle enlarge so visitors know it’s clickable */
+  /* subtle enlarge so visitors know it's clickable */
   transform: scale(1.03) !important;
 }
 
@@ -808,7 +808,7 @@ body {
   width:36px; border-radius:4px; background:#0060ff; transform:translateY(-1px);
 }
 
-/* suppress the old “1 / 8” counter */
+/* suppress the old "1 / 8" counter */
 #imageCounter{ display:none !important; }
 </style>
 
@@ -989,8 +989,52 @@ function buildDots(){
 
   /* ---------- 2-I. Initial render ---------- */
 updateImage();     // paint first image + names
-buildDots();       // NEW ­– render the dot bar
+buildDots();       // NEW – render the dot bar
 });                // (end of DOMContentLoaded)
+
+// --- Shopify Variant IDs for each glove ---
+const VARIANT_IDS = {
+  pandora: 'REPLACE_WITH_PANDORA_VARIANT_ID', // e.g. '1234567890'
+  vice:    'REPLACE_WITH_VICE_VARIANT_ID',
+  hedge:   'REPLACE_WITH_HEDGE_VARIANT_ID'
+};
+
+// --- Preorder and Crypto Button Logic ---
+document.addEventListener('DOMContentLoaded', function() {
+  // Preorder button logic
+  const preorderBtn = document.querySelector('.btn-preorder');
+  const cryptoBtn   = document.querySelector('.btn-crypto');
+
+  preorderBtn && preorderBtn.addEventListener('click', async function(e) {
+    e.preventDefault();
+    // Get selected variant
+    const selectedGlove = document.querySelector('input[name="glove"]:checked').value;
+    const variantId = VARIANT_IDS[selectedGlove];
+    // Get quantity
+    const qty = parseInt(document.getElementById('qty-value').textContent, 10) || 1;
+    if (!variantId) {
+      alert('Error: No variant selected.');
+      return;
+    }
+    // Add to cart via Shopify AJAX API
+    try {
+      await fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ id: variantId, quantity: qty })
+      });
+      window.location.href = '/checkout';
+    } catch (err) {
+      alert('Could not add to cart. Please try again.');
+    }
+  });
+
+  // Crypto button logic
+  cryptoBtn && cryptoBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    window.location.href = '/pages/crypto-payment-confirmation';
+  });
+});
 </script>
 
 
