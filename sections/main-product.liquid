@@ -20,13 +20,11 @@
               <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
             </svg>
           </button>
-          <button class="p-2 hover:bg-slate-100 rounded-lg transition-colors">
+          <a href="/cart" class="p-2 hover:bg-slate-100 rounded-lg transition-colors">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-slate-600">
-              <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
-              <path d="M16 6l-4-4-4 4"/>
-              <path d="M12 2v15"/>
+              <path d="m19 7 4 8a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2l4-8ZM8.5 2.5 13 7l4.5-4.5"/>
             </svg>
-          </button>
+          </a>
         </div>
       </div>
     </div>
@@ -114,11 +112,11 @@
         <div class="bg-white rounded-xl p-6 shadow-lg border border-slate-200/50">
           <div class="flex items-center justify-between mb-4">
             <div>
-              <p class="text-3xl font-bold text-slate-900">
+              <p id="variant-price" class="text-3xl font-bold text-slate-900">
                 {{ product.selected_or_first_available_variant.price | money }}
               </p>
               {% if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price %}
-                <p class="text-slate-500 line-through">
+                <p id="variant-compare-price" class="text-slate-500 line-through">
                   {{ product.selected_or_first_available_variant.compare_at_price | money }}
                 </p>
               {% endif %}
@@ -148,9 +146,11 @@
                 <label class="variant-option relative block p-4 border-2 rounded-xl cursor-pointer transition-all duration-200 border-slate-200 hover:border-slate-300 bg-white">
                   <input
                     type="radio"
-                    name="option-{{ option.position }}"
+                    name="options[{{ option.name | handleize }}]"
                     value="{{ value | escape }}"
-                    class="sr-only"
+                    class="sr-only variant-selector"
+                    data-option-position="{{ option.position }}"
+                    data-option-value="{{ value | escape }}"
                     {% if option.selected_value == value %}checked{% endif %}
                   />
                   <div class="flex items-center justify-between">
@@ -185,26 +185,31 @@
           </div>
 
           <!-- Hidden inputs -->
-          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" id="variant-id">
           <input type="hidden" name="quantity" value="1" id="quantity-input">
 
           <!-- Action Buttons -->
           <div class="space-y-3">
             <button 
               type="submit"
+              id="add-to-cart-btn"
               class="w-full py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold text-lg rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
               {% unless product.available %}disabled{% endunless %}
             >
-              {% if product.available %}
-                Add to Cart
-              {% else %}
-                Sold Out
-              {% endif %}
+              <span id="add-to-cart-text">
+                {% if product.available %}
+                  Add to Cart
+                {% else %}
+                  Sold Out
+                {% endif %}
+              </span>
             </button>
             <button 
               type="button"
               onclick="buyNow()"
+              id="buy-now-btn"
               class="w-full py-4 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-bold text-lg rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+              {% unless product.available %}disabled{% endunless %}
             >
               Buy Now
             </button>
@@ -271,11 +276,6 @@
     background-color: #eff6ff;
   }
   
-  .variant-option input:checked {
-    border-color: #3b82f6;
-    background-color: #eff6ff;
-  }
-  
   .variant-option:has(input:checked) {
     border-color: #3b82f6 !important;
     background-color: #eff6ff !important;
@@ -283,7 +283,7 @@
 </style>
 
 <script>
-  // Product images array
+  // Product data
   const productImages = [
     {% for image in product.images %}
     {
@@ -293,8 +293,26 @@
     {% endfor %}
   ];
   
+  const productVariants = [
+    {% for variant in product.variants %}
+    {
+      id: {{ variant.id }},
+      price: {{ variant.price }},
+      compare_at_price: {{ variant.compare_at_price | default: 0 }},
+      available: {{ variant.available | json }},
+      title: "{{ variant.title | escape }}",
+      options: [
+        {% for option in variant.options %}
+        "{{ option | escape }}"{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+      ]
+    }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ];
+
   let currentImageIndex = 0;
   let selectedQuantity = 1;
+  let currentVariant = productVariants[0];
 
   // Image navigation
   function navigateImage(direction) {
@@ -353,15 +371,85 @@
     });
   }
 
+  // Variant selection
+  function updateSelectedVariant() {
+    const selectedOptions = [];
+    
+    // Get all selected option values
+    document.querySelectorAll('.variant-selector:checked').forEach(input => {
+      selectedOptions[input.dataset.optionPosition - 1] = input.dataset.optionValue;
+    });
+
+    // Find matching variant
+    const matchingVariant = productVariants.find(variant => {
+      return variant.options.every((option, index) => option === selectedOptions[index]);
+    });
+
+    if (matchingVariant) {
+      currentVariant = matchingVariant;
+      
+      // Update form
+      document.getElementById('variant-id').value = matchingVariant.id;
+      
+      // Update price display
+      const priceElement = document.getElementById('variant-price');
+      const comparePriceElement = document.getElementById('variant-compare-price');
+      
+      if (priceElement) {
+        priceElement.textContent = new Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency: '{{ cart.currency.iso_code }}'
+        }).format(matchingVariant.price / 100);
+      }
+      
+      if (comparePriceElement && matchingVariant.compare_at_price > matchingVariant.price) {
+        comparePriceElement.textContent = new Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency: '{{ cart.currency.iso_code }}'
+        }).format(matchingVariant.compare_at_price / 100);
+        comparePriceElement.style.display = 'block';
+      } else if (comparePriceElement) {
+        comparePriceElement.style.display = 'none';
+      }
+      
+      // Update button availability
+      const addToCartBtn = document.getElementById('add-to-cart-btn');
+      const addToCartText = document.getElementById('add-to-cart-text');
+      const buyNowBtn = document.getElementById('buy-now-btn');
+      
+      if (matchingVariant.available) {
+        addToCartBtn.disabled = false;
+        buyNowBtn.disabled = false;
+        addToCartText.textContent = 'Add to Cart';
+        addToCartBtn.className = addToCartBtn.className.replace('opacity-50 cursor-not-allowed', '');
+        buyNowBtn.className = buyNowBtn.className.replace('opacity-50 cursor-not-allowed', '');
+      } else {
+        addToCartBtn.disabled = true;
+        buyNowBtn.disabled = true;
+        addToCartText.textContent = 'Sold Out';
+        addToCartBtn.className += ' opacity-50 cursor-not-allowed';
+        buyNowBtn.className += ' opacity-50 cursor-not-allowed';
+      }
+    }
+  }
+
   // Buy now function
   function buyNow() {
+    if (!currentVariant.available) return;
+    
     const form = document.getElementById('product-form');
     const formData = new FormData(form);
     
     // Add product to cart then redirect to checkout
     fetch('/cart/add.js', {
       method: 'POST',
-      body: formData
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: currentVariant.id,
+        quantity: selectedQuantity
+      })
     })
     .then(response => response.json())
     .then(data => {
@@ -373,56 +461,24 @@
     });
   }
 
-  // Keyboard navigation
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'ArrowLeft') {
-      navigateImage('prev');
-    } else if (e.key === 'ArrowRight') {
-      navigateImage('next');
-    }
-  });
-
-  // Variant selection handling
-  document.querySelectorAll('input[name^="option-"]').forEach(input => {
-    input.addEventListener('change', function() {
-      // Update variant selection logic here
-      updateSelectedVariant();
-    });
-  });
-
-  function updateSelectedVariant() {
-    // Get selected options
-    const selectedOptions = {};
-    document.querySelectorAll('input[name^="option-"]:checked').forEach(input => {
-      const optionPosition = input.name.replace('option-', '');
-      selectedOptions[optionPosition] = input.value;
-    });
-
-    // Find matching variant
-    {% if product.variants.size > 1 %}
-    const variants = [
-      {% for variant in product.variants %}
-      {
-        id: {{ variant.id }},
-        price: {{ variant.price }},
-        available: {{ variant.available | json }},
-        options: [
-          {% for option in variant.options %}
-          "{{ option | escape }}"{% unless forloop.last %},{% endunless %}
-          {% endfor %}
-        ]
-      }{% unless forloop.last %},{% endunless %}
-      {% endfor %}
-    ];
-
-    // Update variant ID in form
-    const variantInput = document.querySelector('input[name="id"]');
-    // Add variant matching logic here based on your needs
-    {% endif %}
-  }
-
-  // Initialize
+  // Event listeners
   document.addEventListener('DOMContentLoaded', function() {
+    // Initialize display
     updateImageDisplay();
+    updateSelectedVariant();
+    
+    // Add variant change listeners
+    document.querySelectorAll('.variant-selector').forEach(input => {
+      input.addEventListener('change', updateSelectedVariant);
+    });
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowLeft') {
+        navigateImage('prev');
+      } else if (e.key === 'ArrowRight') {
+        navigateImage('next');
+      }
+    });
   });
 </script>
