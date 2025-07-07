@@ -686,54 +686,7 @@ body {
 #angleRightBtn {
   transform: translateX(-8rem) !important;
 }
-  /* ─── variant-specific button & pill styles ─── */
-.glove-column.pandora .btn-preorder {
-  background: #000;
-}
-.glove-column.pandora .btn-crypto {
-  background: #9A4DFF;
-}
-.glove-column.pandora .product-form__input--pill input[type='radio']:checked + label {
-  background: #9A4DFF;
-  border-color: #9A4DFF;
-  color: #fff;
-}
-
-.glove-column.vice .btn-preorder {
-  background: #14d5db;  /* Miami-Vice cyan */
-}
-.glove-column.vice .btn-crypto {
-  background: #FF3DA6;  /* pinkish vice accent */
-}
-.glove-column.vice .product-form__input--pill input[type='radio']:checked + label {
-  background: #FF3DA6;
-  border-color: #FF3DA6;
-  color: #fff;
-}
-
-.glove-column.hedge .btn-preorder {
-  background: #000;
-}
-.glove-column.hedge .btn-crypto {
-  background: #04d608;
-}
-.glove-column.hedge .product-form__input--pill input[type='radio']:checked + label {
-  background: #28A745;
-  border-color: #28A745;
-  color: #fff;
-}
-
-  /* ─── darker variant-pill outlines ─── */
-.glove-column.pandora .product-form__input--pill input[type='radio']:checked + label {
-  outline: 2px solid #6A0DAD;
-}
-.glove-column.vice    .product-form__input--pill input[type='radio']:checked + label {
-  outline: 2px solid #D60084;
-}
-.glove-column.hedge .product-form__input--pill input[type='radio']:checked + label {
-  background:    #04d608;
-  border-color: #0F8C0F;
-  color:         #fff;
+ 
 }
 
 /* ========== light-box overlay ========== */
@@ -959,24 +912,6 @@ function buildDots(){
   prevName.addEventListener('click', () => prevBtn.click());
   nextName.addEventListener('click', () => nextBtn.click());
   currentName.addEventListener('click', updateImage);
-
-  /* ---------- 2-G. Variant switch ---------- */
-  const gloveColumn   = document.querySelector('.glove-column');
-  gloveColumn.classList.add(currentGlove);
-
-  document.querySelectorAll('input[name="glove"]').forEach(radio => {
-    radio.addEventListener('change', () => {
-      if (!radio.checked) return;
-      currentGlove = radio.value;
-      currentSet   = urls[currentGlove];
-      nameSet      = gloves[currentGlove];
-      index        = 0;
-      updateImage();
-
-      gloveColumn.classList.remove('pandora','vice','hedge');
-      gloveColumn.classList.add(currentGlove);
-    });
-  });
 
   /* ---------- 2-H. Quantity selector ---------- */
   const qtyOptions = document.querySelectorAll('.quantity-option');
