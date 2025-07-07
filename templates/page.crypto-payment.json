@@ -1,31 +1,8 @@
 {
   "sections": {
-    "main_hero": { "type": "main-hero", "settings": {} },
     "info_row": { "type": "info-row", "settings": {} },
     "crypto_info": { "type": "crypto-payment-info", "settings": {} },
-    "form": { "type": "contact-form-crypto", "settings": {} },
-    "cta": {
-      "type": "rich-text",
-      "blocks": {
-        "button": {
-          "type": "button",
-          "settings": {
-            "button_label": "Need Help? Contact Support",
-            "button_link": "/pages/contact",
-            "button_style_secondary": true
-          }
-        }
-      },
-      "block_order": ["button"],
-      "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "color_scheme": "scheme-1",
-        "full_width": true,
-        "padding_top": 16,
-        "padding_bottom": 32
-      }
-    }
+    "form": { "type": "contact-form-crypto", "settings": {} }
   },
-  "order": ["main_hero", "info_row", "crypto_info", "form", "cta"]
+  "order": ["info_row", "crypto_info", "form"]
 }

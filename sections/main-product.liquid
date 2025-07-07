@@ -3,482 +3,428 @@
   Place this file in your theme's templates folder as product.liquid
 {% endcomment %}
 
-<div class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-  <!-- Modern Header -->
-  <header class="bg-white/80 backdrop-blur-md border-b border-slate-200/50 sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-6 py-4">
-      <div class="flex justify-between items-center">
-        <div class="flex items-center space-x-3">
-          <div class="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg"></div>
-          <h1 class="text-2xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">
-            {{ shop.name }}
-          </h1>
-        </div>
-        <div class="flex items-center space-x-4">
-          <button class="p-2 hover:bg-slate-100 rounded-lg transition-colors">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-slate-600">
-              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-            </svg>
-          </button>
-          <a href="/cart" class="p-2 hover:bg-slate-100 rounded-lg transition-colors">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-slate-600">
-              <path d="m19 7 4 8a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2l4-8ZM8.5 2.5 13 7l4.5-4.5"/>
-            </svg>
-          </a>
-        </div>
-      </div>
-    </div>
+<div class="dark-product-page">
+  <header class="dark-product-header">
+    <div class="brand">CS2WORKS</div>
+    <a href="/pages/contact" class="contact-btn">Contact</a>
   </header>
-
-  <div class="max-w-7xl mx-auto px-6 py-12">
-    <div class="grid lg:grid-cols-2 gap-16 items-start">
-      <!-- Enhanced Image Section -->
-      <div class="space-y-6">
-        <div class="relative group">
-          <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200/50">
-            <div class="aspect-square relative">
-              <img
-                id="main-product-image"
-                src="{{ product.featured_image | img_url: '800x800' }}"
-                alt="{{ product.featured_image.alt | default: product.title }}"
-                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              <div class="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </div>
-          </div>
-          
-          <!-- Navigation Overlay -->
-          {% if product.images.size > 1 %}
-          <button
-            onclick="navigateImage('prev')"
-            class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 hover:bg-white backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center transition-all duration-200 opacity-0 group-hover:opacity-100"
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-slate-700">
-              <polyline points="15,18 9,12 15,6"/>
-            </svg>
-          </button>
-          <button
-            onclick="navigateImage('next')"
-            class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 hover:bg-white backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center transition-all duration-200 opacity-0 group-hover:opacity-100"
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-slate-700">
-              <polyline points="9,18 15,12 9,6"/>
-            </svg>
-          </button>
-          {% endif %}
-        </div>
-
-        <!-- Image Counter & Current Item -->
+  <div class="dark-product-main">
+    <div class="dark-product-gallery">
+      <div class="gallery-sticky">
+        <img id="main-product-image" src="{{ product.featured_image | img_url: '800x800' }}" alt="{{ product.featured_image.alt | default: product.title }}" class="gallery-img" />
         {% if product.images.size > 1 %}
-        <div class="text-center space-y-2">
-          <div class="flex justify-center items-center space-x-2">
-            {% for image in product.images %}
-              <button
-                onclick="setCurrentImage({{ forloop.index0 }})"
-                class="image-dot w-2 h-2 rounded-full transition-all duration-200 {% if forloop.first %}bg-blue-600 w-8{% else %}bg-slate-300 hover:bg-slate-400{% endif %}"
-                data-index="{{ forloop.index0 }}"
-              ></button>
-            {% endfor %}
-          </div>
-          <p class="text-slate-600 font-medium" id="current-image-title">
-            {{ product.title }}
-          </p>
-          <p class="text-sm text-slate-500" id="image-counter">
-            1 of {{ product.images.size }}
-          </p>
+        <div class="gallery-thumbs">
+          {% for image in product.images %}
+            <img src="{{ image | img_url: '200x200' }}" alt="{{ image.alt | default: product.title }}" class="gallery-thumb" onclick="setCurrentImage({{ forloop.index0 }})" data-index="{{ forloop.index0 }}" />
+          {% endfor %}
         </div>
         {% endif %}
       </div>
-
-      <!-- Enhanced Product Info -->
-      <div class="space-y-8">
-        <!-- Product Header -->
-        <div class="space-y-4">
-          <div class="inline-flex items-center px-3 py-1 bg-amber-100 text-amber-800 text-sm font-medium rounded-full">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" class="mr-1">
-              <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
-            </svg>
-            Limited Edition
-          </div>
-          <h1 class="text-4xl font-bold text-slate-900 leading-tight">
-            {{ product.title }}
-          </h1>
-          <div class="text-slate-600 text-lg leading-relaxed">
-            {{ product.description }}
-          </div>
-        </div>
-
-        <!-- Pricing -->
-        <div class="bg-white rounded-xl p-6 shadow-lg border border-slate-200/50">
-          <div class="flex items-center justify-between mb-4">
-            <div>
-              <p id="variant-price" class="text-3xl font-bold text-slate-900">
-                {{ product.selected_or_first_available_variant.price | money }}
-              </p>
-              {% if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price %}
-                <p id="variant-compare-price" class="text-slate-500 line-through">
-                  {{ product.selected_or_first_available_variant.compare_at_price | money }}
-                </p>
-              {% endif %}
-            </div>
-            <div class="flex items-center text-emerald-600 font-medium">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="mr-2">
-                <rect x="1" y="3" width="15" height="13"/>
-                <polygon points="16,8 20,8 23,11 23,16 16,16 16,8"/>
-                <circle cx="5.5" cy="18.5" r="2.5"/>
-                <circle cx="18.5" cy="18.5" r="2.5"/>
-              </svg>
-              Free Shipping
-            </div>
-          </div>
-        </div>
-
-        <!-- Product Form -->
-        <form action="/cart/add" method="post" enctype="multipart/form-data" id="product-form">
-          <!-- Variant Selection -->
-          {% unless product.has_only_default_variant %}
-          <div class="space-y-4">
-            {% for option in product.options_with_values %}
-            <div class="space-y-4">
-              <h3 class="text-xl font-semibold text-slate-900">{{ option.name }}</h3>
-              <div class="grid gap-3">
-                {% for value in option.values %}
-                <label class="variant-option relative block p-4 border-2 rounded-xl cursor-pointer transition-all duration-200 border-slate-200 hover:border-slate-300 bg-white">
-                  <input
-                    type="radio"
-                    name="options[{{ option.name | handleize }}]"
-                    value="{{ value | escape }}"
-                    class="sr-only variant-selector"
-                    data-option-position="{{ option.position }}"
-                    data-option-value="{{ value | escape }}"
-                    {% if option.selected_value == value %}checked{% endif %}
-                  />
-                  <div class="flex items-center justify-between">
-                    <span class="font-medium text-slate-900">{{ value }}</span>
-                    <div class="variant-check w-5 h-5 border-2 border-slate-300 rounded-full flex items-center justify-center opacity-0">
-                      <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
-                    </div>
-                  </div>
-                </label>
-                {% endfor %}
-              </div>
-            </div>
-            {% endfor %}
-          </div>
-          {% endunless %}
-
-          <!-- Quantity Selection -->
-          <div class="space-y-4">
-            <h3 class="text-xl font-semibold text-slate-900">Quantity</h3>
-            <div class="flex flex-wrap gap-2">
-              {% for i in (1..5) %}
-              <button
-                type="button"
-                onclick="setQuantity({{ i }})"
-                class="quantity-btn w-12 h-12 rounded-xl font-medium transition-all duration-200 {% if i == 1 %}bg-blue-500 text-white shadow-lg scale-105{% else %}bg-white border-2 border-slate-200 text-slate-700 hover:border-slate-300 hover:shadow-md{% endif %}"
-                data-quantity="{{ i }}"
-              >
-                {{ i }}
-              </button>
+    </div>
+    <div class="dark-product-info">
+      <div class="product-badge">Limited Edition</div>
+      <h1 class="product-title">{{ product.title }}</h1>
+      <div class="product-desc">{{ product.description }}</div>
+      <div class="product-price-row">
+        <span id="variant-price" class="product-price">{{ product.selected_or_first_available_variant.price | money }}</span>
+        {% if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price %}
+        <span id="variant-compare-price" class="product-compare">{{ product.selected_or_first_available_variant.compare_at_price | money }}</span>
+        {% endif %}
+      </div>
+      <form action="/cart/add" method="post" enctype="multipart/form-data" id="product-form">
+        {% unless product.has_only_default_variant %}
+        <div class="product-variants">
+          {% for option in product.options_with_values %}
+          <div class="variant-group">
+            <div class="variant-label">{{ option.name }}</div>
+            <div class="variant-options">
+              {% for value in option.values %}
+              <label class="variant-radio">
+                <input type="radio" name="options[{{ option.name | handleize }}]" value="{{ value | escape }}" class="variant-selector" data-option-position="{{ option.position }}" data-option-value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %} />
+                <span>{{ value }}</span>
+              </label>
               {% endfor %}
             </div>
           </div>
-
-          <!-- Hidden inputs -->
-          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" id="variant-id">
-          <input type="hidden" name="quantity" value="1" id="quantity-input">
-
-          <!-- Action Buttons -->
-          <div class="space-y-3">
-            <button 
-              type="submit"
-              id="add-to-cart-btn"
-              class="w-full py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold text-lg rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
-              {% unless product.available %}disabled{% endunless %}
-            >
-              <span id="add-to-cart-text">
-                {% if product.available %}
-                  Add to Cart
-                {% else %}
-                  Sold Out
-                {% endif %}
-              </span>
-            </button>
-            <button 
-              type="button"
-              onclick="buyNow()"
-              id="buy-now-btn"
-              class="w-full py-4 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-bold text-lg rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
-              {% unless product.available %}disabled{% endunless %}
-            >
-              Buy Now
-            </button>
-          </div>
-        </form>
-
-        <!-- Trust Badges -->
-        <div class="grid grid-cols-3 gap-4 pt-6 border-t border-slate-200">
-          <div class="text-center space-y-2">
-            <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mx-auto">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-emerald-600">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-              </svg>
-            </div>
-            <p class="text-sm font-medium text-slate-700">Secure Payment</p>
-          </div>
-          <div class="text-center space-y-2">
-            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mx-auto">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-blue-600">
-                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-                <polyline points="3.27,6.96 12,12.01 20.73,6.96"/>
-                <line x1="12" y1="22.08" x2="12" y2="12"/>
-              </svg>
-            </div>
-            <p class="text-sm font-medium text-slate-700">Premium Packaging</p>
-          </div>
-          <div class="text-center space-y-2">
-            <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center mx-auto">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-orange-600">
-                <rect x="1" y="3" width="15" height="13"/>
-                <polygon points="16,8 20,8 23,11 23,16 16,16 16,8"/>
-                <circle cx="5.5" cy="18.5" r="2.5"/>
-                <circle cx="18.5" cy="18.5" r="2.5"/>
-              </svg>
-            </div>
-            <p class="text-sm font-medium text-slate-700">Fast Shipping</p>
+          {% endfor %}
+        </div>
+        {% endunless %}
+        <div class="product-qty-row">
+          <div class="variant-label">Quantity</div>
+          <div class="qty-btns">
+            {% for i in (1..5) %}
+            <button type="button" onclick="setQuantity({{ i }})" class="qty-btn" data-quantity="{{ i }}">{{ i }}</button>
+            {% endfor %}
           </div>
         </div>
-
-        <!-- Limited Edition Info -->
-        <div class="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-xl p-6">
-          <div class="flex items-center justify-center space-x-2 mb-3">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="text-amber-500">
-              <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
-            </svg>
-            <span class="font-bold text-amber-800">LIMITED EDITION</span>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="text-amber-500">
-              <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
-            </svg>
-          </div>
-          <p class="text-center text-sm text-amber-700">
-            Each item is uniquely numbered and comes with a certificate of authenticity.
-          </p>
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" id="variant-id">
+        <input type="hidden" name="quantity" value="1" id="quantity-input">
+        <div class="product-actions">
+          <button type="submit" id="add-to-cart-btn" class="add-to-cart-btn" {% unless product.available %}disabled{% endunless %}>
+            <span id="add-to-cart-text">{% if product.available %}Add to Cart{% else %}Sold Out{% endif %}</span>
+          </button>
+          <button type="button" onclick="buyNow()" id="buy-now-btn" class="buy-now-btn" {% unless product.available %}disabled{% endunless %}>Buy Now</button>
         </div>
+      </form>
+      <div class="product-trust-row">
+        <div class="trust-badge">🔒 Secure Payment</div>
+        <div class="trust-badge">🚚 Fast Shipping</div>
+        <div class="trust-badge">🎟️ Authenticity Guaranteed</div>
       </div>
     </div>
   </div>
 </div>
 
 <style>
-  .variant-option input:checked + div .variant-check {
-    opacity: 1;
-    border-color: #3b82f6;
-    background-color: #eff6ff;
+.dark-product-page {
+  background: #18122b;
+  color: #f3f0ff;
+  min-height: 100vh;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+}
+.dark-product-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #221a38;
+  padding: 2rem 3vw 1.5rem 3vw;
+  border-bottom: 1px solid #2d2346;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.dark-product-header .brand {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #a259ec;
+  letter-spacing: 0.08em;
+}
+.dark-product-header .contact-btn {
+  background: #a259ec;
+  color: #fff;
+  padding: 0.9rem 2.2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 1.1rem;
+  border: none;
+  transition: background 0.18s;
+}
+.dark-product-header .contact-btn:hover {
+  background: #7c3aed;
+}
+.dark-product-main {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  max-width: 1100px;
+  margin: 3rem auto 0 auto;
+  padding: 0 3vw;
+}
+@media (min-width: 900px) {
+  .dark-product-main {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 4rem;
   }
-  
-  .variant-option:has(input:checked) {
-    border-color: #3b82f6 !important;
-    background-color: #eff6ff !important;
-  }
+  .dark-product-gallery { flex: 1.1; }
+  .dark-product-info { flex: 1.2; }
+}
+.dark-product-gallery .gallery-sticky {
+  position: sticky;
+  top: 6.5rem;
+}
+.gallery-img {
+  width: 100%;
+  border-radius: 18px;
+  background: #221a38;
+  box-shadow: 0 4px 32px #0002;
+  border: 2px solid #2d2346;
+  margin-bottom: 1.2rem;
+}
+.gallery-thumbs {
+  display: flex;
+  gap: 0.7rem;
+  margin-top: 0.5rem;
+}
+.gallery-thumb {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid #2d2346;
+  background: #221a38;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: border 0.18s, opacity 0.18s;
+}
+.gallery-thumb.selected, .gallery-thumb:hover {
+  border: 2px solid #a259ec;
+  opacity: 1;
+}
+.dark-product-info {
+  background: #221a38;
+  border-radius: 18px;
+  box-shadow: 0 2px 16px #0003;
+  padding: 2.5rem 2rem 2rem 2rem;
+  border: 1.5px solid #2d2346;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.product-badge {
+  background: #a259ec22;
+  color: #a259ec;
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 0.5rem 1.2rem;
+  border-radius: 999px;
+  display: inline-block;
+  margin-bottom: 0.7rem;
+}
+.product-title {
+  font-size: 2.3rem;
+  font-weight: 700;
+  margin-bottom: 0.7rem;
+  color: #fff;
+}
+.product-desc {
+  color: #b8b3d1;
+  font-size: 1.15rem;
+  margin-bottom: 1.2rem;
+}
+.product-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 1.2rem;
+  margin-bottom: 1.2rem;
+}
+.product-price {
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: #a259ec;
+}
+.product-compare {
+  font-size: 1.2rem;
+  color: #b8b3d1;
+  text-decoration: line-through;
+}
+.product-variants, .product-qty-row {
+  margin-bottom: 1.2rem;
+}
+.variant-group {
+  margin-bottom: 0.7rem;
+}
+.variant-label {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #f3f0ff;
+  margin-bottom: 0.4rem;
+}
+.variant-options {
+  display: flex;
+  gap: 0.7rem;
+}
+.variant-radio {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #18122b;
+  border: 1.5px solid #2d2346;
+  border-radius: 8px;
+  padding: 0.7rem 1.3rem;
+  cursor: pointer;
+  color: #f3f0ff;
+  font-weight: 500;
+  font-size: 1.1rem;
+  transition: border 0.18s, background 0.18s;
+}
+.variant-radio input[type="radio"] {
+  display: none;
+}
+.variant-radio input[type="radio"]:checked + span, .variant-radio input[type="radio"]:checked ~ span {
+  color: #a259ec;
+  font-weight: 700;
+}
+.variant-radio input[type="radio"]:checked ~ span {
+  border-bottom: 2px solid #a259ec;
+}
+.variant-radio input[type="radio"]:checked ~ span, .variant-radio:hover span {
+  color: #a259ec;
+}
+.qty-btns {
+  display: flex;
+  gap: 0.7rem;
+}
+.qty-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: #18122b;
+  color: #f3f0ff;
+  border: 1.5px solid #2d2346;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border 0.18s, background 0.18s, color 0.18s;
+}
+.qty-btn.selected, .qty-btn:hover {
+  background: #a259ec;
+  color: #fff;
+  border: 1.5px solid #a259ec;
+}
+.product-actions {
+  display: flex;
+  gap: 1.2rem;
+  margin-top: 1.2rem;
+}
+.add-to-cart-btn, .buy-now-btn {
+  flex: 1;
+  padding: 1.1rem 0;
+  border-radius: 10px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  border: none;
+  background: #a259ec;
+  color: #fff;
+  box-shadow: 0 2px 8px #a259ec33;
+  cursor: pointer;
+  transition: background 0.18s, box-shadow 0.18s;
+}
+.add-to-cart-btn:hover, .buy-now-btn:hover {
+  background: #7c3aed;
+  box-shadow: 0 4px 16px #7c3aed33;
+}
+.add-to-cart-btn[disabled], .buy-now-btn[disabled] {
+  background: #2d2346;
+  color: #b8b3d1;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+.product-trust-row {
+  display: flex;
+  gap: 1.2rem;
+  margin-top: 2rem;
+  justify-content: flex-start;
+}
+.trust-badge {
+  background: #18122b;
+  color: #a259ec;
+  border: 1.5px solid #2d2346;
+  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+@media (max-width: 900px) {
+  .dark-product-main { flex-direction: column; }
+  .dark-product-gallery, .dark-product-info { width: 100%; }
+}
 </style>
 
 <script>
-  // Product data
-  const productImages = [
-    {% for image in product.images %}
-    {
-      url: "{{ image | img_url: '800x800' }}",
-      alt: "{{ image.alt | default: product.title | escape }}"
-    }{% unless forloop.last %},{% endunless %}
-    {% endfor %}
-  ];
-  
-  const productVariants = [
-    {% for variant in product.variants %}
-    {
-      id: {{ variant.id }},
-      price: {{ variant.price }},
-      compare_at_price: {{ variant.compare_at_price | default: 0 }},
-      available: {{ variant.available | json }},
-      title: "{{ variant.title | escape }}",
-      options: [
-        {% for option in variant.options %}
-        "{{ option | escape }}"{% unless forloop.last %},{% endunless %}
-        {% endfor %}
-      ]
-    }{% unless forloop.last %},{% endunless %}
-    {% endfor %}
-  ];
-
-  let currentImageIndex = 0;
-  let selectedQuantity = 1;
-  let currentVariant = productVariants[0];
-
-  // Image navigation
-  function navigateImage(direction) {
-    if (productImages.length <= 1) return;
-    
-    if (direction === 'prev') {
-      currentImageIndex = (currentImageIndex - 1 + productImages.length) % productImages.length;
-    } else {
-      currentImageIndex = (currentImageIndex + 1) % productImages.length;
-    }
-    updateImageDisplay();
+const productImages = [
+  {% for image in product.images %}
+  { url: "{{ image | img_url: '800x800' }}", alt: "{{ image.alt | default: product.title | escape }}" }{% unless forloop.last %},{% endunless %}
+  {% endfor %}
+];
+let currentImageIndex = 0;
+function setCurrentImage(index) {
+  currentImageIndex = index;
+  const mainImage = document.getElementById('main-product-image');
+  if (mainImage && productImages[currentImageIndex]) {
+    mainImage.src = productImages[currentImageIndex].url;
+    mainImage.alt = productImages[currentImageIndex].alt;
   }
-
-  function setCurrentImage(index) {
-    currentImageIndex = index;
-    updateImageDisplay();
-  }
-
-  function updateImageDisplay() {
-    const mainImage = document.getElementById('main-product-image');
-    const counter = document.getElementById('image-counter');
-    const dots = document.querySelectorAll('.image-dot');
-    
-    if (mainImage && productImages[currentImageIndex]) {
-      mainImage.src = productImages[currentImageIndex].url;
-      mainImage.alt = productImages[currentImageIndex].alt;
-    }
-    
-    if (counter) {
-      counter.textContent = `${currentImageIndex + 1} of ${productImages.length}`;
-    }
-    
-    // Update dots
-    dots.forEach((dot, index) => {
-      if (index === currentImageIndex) {
-        dot.className = 'image-dot w-8 h-2 rounded-full transition-all duration-200 bg-blue-600';
-      } else {
-        dot.className = 'image-dot w-2 h-2 rounded-full transition-all duration-200 bg-slate-300 hover:bg-slate-400';
-      }
-    });
-  }
-
-  // Quantity selection
-  function setQuantity(quantity) {
-    selectedQuantity = quantity;
-    document.getElementById('quantity-input').value = quantity;
-    
-    // Update button styles
-    document.querySelectorAll('.quantity-btn').forEach(btn => {
-      const btnQuantity = parseInt(btn.dataset.quantity);
-      if (btnQuantity === quantity) {
-        btn.className = 'quantity-btn w-12 h-12 rounded-xl font-medium transition-all duration-200 bg-blue-500 text-white shadow-lg scale-105';
-      } else {
-        btn.className = 'quantity-btn w-12 h-12 rounded-xl font-medium transition-all duration-200 bg-white border-2 border-slate-200 text-slate-700 hover:border-slate-300 hover:shadow-md';
-      }
-    });
-  }
-
-  // Variant selection
-  function updateSelectedVariant() {
-    const selectedOptions = [];
-    
-    // Get all selected option values
-    document.querySelectorAll('.variant-selector:checked').forEach(input => {
-      selectedOptions[input.dataset.optionPosition - 1] = input.dataset.optionValue;
-    });
-
-    // Find matching variant
-    const matchingVariant = productVariants.find(variant => {
-      return variant.options.every((option, index) => option === selectedOptions[index]);
-    });
-
-    if (matchingVariant) {
-      currentVariant = matchingVariant;
-      
-      // Update form
-      document.getElementById('variant-id').value = matchingVariant.id;
-      
-      // Update price display
-      const priceElement = document.getElementById('variant-price');
-      const comparePriceElement = document.getElementById('variant-compare-price');
-      
-      if (priceElement) {
-        priceElement.textContent = new Intl.NumberFormat('en-US', {
-          style: 'currency',
-          currency: '{{ cart.currency.iso_code }}'
-        }).format(matchingVariant.price / 100);
-      }
-      
-      if (comparePriceElement && matchingVariant.compare_at_price > matchingVariant.price) {
-        comparePriceElement.textContent = new Intl.NumberFormat('en-US', {
-          style: 'currency',
-          currency: '{{ cart.currency.iso_code }}'
-        }).format(matchingVariant.compare_at_price / 100);
-        comparePriceElement.style.display = 'block';
-      } else if (comparePriceElement) {
-        comparePriceElement.style.display = 'none';
-      }
-      
-      // Update button availability
-      const addToCartBtn = document.getElementById('add-to-cart-btn');
-      const addToCartText = document.getElementById('add-to-cart-text');
-      const buyNowBtn = document.getElementById('buy-now-btn');
-      
-      if (matchingVariant.available) {
-        addToCartBtn.disabled = false;
-        buyNowBtn.disabled = false;
-        addToCartText.textContent = 'Add to Cart';
-        addToCartBtn.className = addToCartBtn.className.replace('opacity-50 cursor-not-allowed', '');
-        buyNowBtn.className = buyNowBtn.className.replace('opacity-50 cursor-not-allowed', '');
-      } else {
-        addToCartBtn.disabled = true;
-        buyNowBtn.disabled = true;
-        addToCartText.textContent = 'Sold Out';
-        addToCartBtn.className += ' opacity-50 cursor-not-allowed';
-        buyNowBtn.className += ' opacity-50 cursor-not-allowed';
-      }
-    }
-  }
-
-  // Buy now function
-  function buyNow() {
-    if (!currentVariant.available) return;
-    
-    const form = document.getElementById('product-form');
-    const formData = new FormData(form);
-    
-    // Add product to cart then redirect to checkout
-    fetch('/cart/add.js', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        id: currentVariant.id,
-        quantity: selectedQuantity
-      })
-    })
-    .then(response => response.json())
-    .then(data => {
-      window.location.href = '/checkout';
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      alert('There was an error adding the product to cart.');
-    });
-  }
-
-  // Event listeners
-  document.addEventListener('DOMContentLoaded', function() {
-    // Initialize display
-    updateImageDisplay();
-    updateSelectedVariant();
-    
-    // Add variant change listeners
-    document.querySelectorAll('.variant-selector').forEach(input => {
-      input.addEventListener('change', updateSelectedVariant);
-    });
-    
-    // Keyboard navigation
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'ArrowLeft') {
-        navigateImage('prev');
-      } else if (e.key === 'ArrowRight') {
-        navigateImage('next');
-      }
-    });
+  document.querySelectorAll('.gallery-thumb').forEach((thumb, idx) => {
+    if (idx === index) thumb.classList.add('selected');
+    else thumb.classList.remove('selected');
   });
+}
+const productVariants = [
+  {% for variant in product.variants %}
+  {
+    id: {{ variant.id }},
+    price: {{ variant.price }},
+    compare_at_price: {{ variant.compare_at_price | default: 0 }},
+    available: {{ variant.available | json }},
+    title: "{{ variant.title | escape }}",
+    options: [ {% for option in variant.options %}"{{ option | escape }}"{% unless forloop.last %},{% endunless %}{% endfor %} ]
+  }{% unless forloop.last %},{% endunless %}
+  {% endfor %}
+];
+let selectedQuantity = 1;
+let currentVariant = productVariants[0];
+function setQuantity(quantity) {
+  selectedQuantity = quantity;
+  document.getElementById('quantity-input').value = quantity;
+  document.querySelectorAll('.qty-btn').forEach(btn => {
+    const btnQuantity = parseInt(btn.dataset.quantity);
+    if (btnQuantity === quantity) btn.classList.add('selected');
+    else btn.classList.remove('selected');
+  });
+}
+function updateSelectedVariant() {
+  const selectedOptions = [];
+  document.querySelectorAll('.variant-selector:checked').forEach(input => {
+    selectedOptions[input.dataset.optionPosition - 1] = input.dataset.optionValue;
+  });
+  const matchingVariant = productVariants.find(variant => {
+    return variant.options.every((option, index) => option === selectedOptions[index]);
+  });
+  if (matchingVariant) {
+    currentVariant = matchingVariant;
+    document.getElementById('variant-id').value = matchingVariant.id;
+    const priceElement = document.getElementById('variant-price');
+    const comparePriceElement = document.getElementById('variant-compare-price');
+    if (priceElement) {
+      priceElement.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: '{{ cart.currency.iso_code }}' }).format(matchingVariant.price / 100);
+    }
+    if (comparePriceElement && matchingVariant.compare_at_price > matchingVariant.price) {
+      comparePriceElement.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: '{{ cart.currency.iso_code }}' }).format(matchingVariant.compare_at_price / 100);
+      comparePriceElement.style.display = 'inline';
+    } else if (comparePriceElement) {
+      comparePriceElement.style.display = 'none';
+    }
+    const addToCartBtn = document.getElementById('add-to-cart-btn');
+    const addToCartText = document.getElementById('add-to-cart-text');
+    const buyNowBtn = document.getElementById('buy-now-btn');
+    if (matchingVariant.available) {
+      addToCartBtn.disabled = false;
+      buyNowBtn.disabled = false;
+      addToCartText.textContent = 'Add to Cart';
+      addToCartBtn.classList.remove('disabled');
+      buyNowBtn.classList.remove('disabled');
+    } else {
+      addToCartBtn.disabled = true;
+      buyNowBtn.disabled = true;
+      addToCartText.textContent = 'Sold Out';
+      addToCartBtn.classList.add('disabled');
+      buyNowBtn.classList.add('disabled');
+    }
+  }
+}
+function buyNow() {
+  if (!currentVariant.available) return;
+  const form = document.getElementById('product-form');
+  fetch('/cart/add.js', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id: currentVariant.id, quantity: selectedQuantity })
+  })
+  .then(response => response.json())
+  .then(data => { window.location.href = '/checkout'; })
+  .catch(error => { alert('There was an error adding the product to cart.'); });
+}
+document.addEventListener('DOMContentLoaded', function() {
+  setCurrentImage(0);
+  setQuantity(1);
+  updateSelectedVariant();
+  document.querySelectorAll('.variant-selector').forEach(input => {
+    input.addEventListener('change', updateSelectedVariant);
+  });
+});
 </script>

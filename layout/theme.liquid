@@ -12,7 +12,7 @@ if (/Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(n
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="theme-color" content="">
+    <meta name="theme-color" content="#1a1625">
     <link rel="canonical" href="{{ canonical_url }}">
 
     {%- if settings.favicon != blank -%}
@@ -317,388 +317,94 @@ if (/Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(n
       }
     </script>
 
+    <style>
+      :root {
+        --color-bg: #18122b;
+        --color-bg-alt: #221a38;
+        --color-fg: #f3f0ff;
+        --color-fg-muted: #b8b3d1;
+        --color-accent: #a259ec;
+        --color-accent-hover: #7c3aed;
+        --color-card: #221a38;
+        --color-border: #2d2346;
+        --color-btn: #a259ec;
+        --color-btn-hover: #7c3aed;
+        --color-btn-text: #fff;
+      }
+      html, body {
+        background: var(--color-bg);
+        color: var(--color-fg);
+        font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+        font-size: 16px;
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+      }
+      a { color: var(--color-accent); text-decoration: none; transition: color 0.2s; }
+      a:hover { color: var(--color-accent-hover); }
+      .custom-top-nav {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        background: var(--color-bg-alt);
+        border-radius: 16px;
+        box-shadow: 0 2px 12px rgba(30,20,60,0.12);
+        margin: 2.5rem auto 1.5rem auto;
+        padding: 1.5rem 0;
+        max-width: 900px;
+      }
+      .custom-top-nav a {
+        display: inline-block;
+        padding: 1.2rem 2.5rem;
+        background: var(--color-accent);
+        color: var(--color-btn-text);
+        font-size: 1.3rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        border-radius: 8px;
+        letter-spacing: 0.04em;
+        transition: background 0.18s;
+      }
+      .custom-top-nav a:hover {
+        background: var(--color-accent-hover);
+      }
+      @media (max-width:600px){
+        .custom-top-nav { flex-direction:column; gap:1rem; align-items:center; }
+        .custom-top-nav a { width:90%; text-align:center; font-size:1.1rem; }
+      }
+      main#MainContent, .content-for-layout {
+        margin-top: 0 !important;
+        padding-top: 2rem !important;
+        min-height: 60vh;
+        background: none;
+      }
+      .minimal-footer {
+        background: var(--color-bg-alt);
+        color: var(--color-fg-muted);
+        text-align: center;
+        padding: 2rem 0 1.5rem 0;
+        font-size: 1rem;
+        border-top: 1px solid var(--color-border);
+        margin-top: 4rem;
+      }
+      .minimal-footer a { color: var(--color-accent); }
+      .minimal-footer a:hover { color: var(--color-accent-hover); }
+    </style>
 
-    {% style %}
-  /* 1 . Hide Dawn's built-in header & any leftover spacing */
-  header { display:none !important; }
-  .content-for-layout { margin-top:0 !important; }
-
-  /* 2 . Our custom two-button nav */
-  .custom-top-nav     { display:flex; justify-content:center; gap:2rem; margin:2.5rem 0 1.5rem; background:#fff; border-radius:14px; box-shadow:0 2px 12px rgba(0,0,0,0.04); padding: 1.5rem 0; }
-  .custom-top-nav a   { display:inline-block; padding:1.2rem 2.5rem;
-                        background:#111; color:#fff; font-size:1.4rem; font-weight:700;
-                        text-transform:uppercase; text-decoration:none; border-radius:8px; letter-spacing:0.04em; transition:background 0.18s; }
-  .custom-top-nav a:hover { background:#333; }
-  @media (max-width:600px){
-    .custom-top-nav    { flex-direction:column; gap:1rem; align-items:center; }
-    .custom-top-nav a  { width:90%; text-align:center; font-size:1.1rem; }
-     white-space:nowrap;
-  }
-      /* layout tweaks – pull page content up */
-.content-for-layout {
-  margin-top: 0 !important;          /* we already had this */
-  padding-top: 2rem !important;      /* new: small breathing room */
-  min-height: auto !important;       /* remove big vertical centering */
-}
-
-/* cart icon sizing & badge */
-.cart-icon  { height: 28px; }
-.cart-link  { position:relative; }
-.cart-count {
-  position:absolute; top:-6px; right:-10px;
-  background:#e03; color:#FFFFFF; font-size:1.2rem;
-  padding:0 .45rem; border-radius:999px;
-}
-  /* ── 1. Shrink the big empty space under the nav on every page ───────── */
-main#MainContent,
-.content-for-layout,
-.shopify-section:first-of-type {
-  margin-top: 0 !important;
-  padding-top: 1.5rem !important;   /* adjust up/down as you like */
-}
-
-/* ── 2. White Cart button  ─────────────────────────────────────────── */
-.cart-link {
-  background:#fff !important;
-  color:#111 !important;
-  border:2px solid #111;
-}
-.cart-link:hover {
-  background:#f4f4f4 !important;
-}
-
-/* ensure the icon stays centred */
-.cart-icon { height:28px; vertical-align:middle; }
-
-/* ── Kill Dawn's huge min-height on empty states ─────────────── */
-.cart__warnings,
-.template-search .section-template--none,          /* empty search */
-.template-collection .collection--empty-state,     /* empty collection */
-.page-width--empty-state {                          /* generic */
-  min-height: 0 !important;
-  padding-top: 2rem !important;   /* small breathing room */
-}
-
-/* optional: tighten the generic page width when nothing is inside */
-.page-width--empty-state { max-width:40rem; margin:4rem auto 6rem; }
-
-.btn-pay-crypto {
-  display:inline-block; margin-top:1rem;
-  background:#111; color:#fff; padding:1.2rem 2.4rem;
-  text-decoration:none; border-radius:8px; text-align:center;
-}
-.btn-pay-crypto:hover { background:#d6d6d6 !important; }
-
-/* form grid layout */
-.crypto-grid{
-  display:grid; gap:1.2rem;
-  grid-template-columns:1fr;
-}
-.crypto-grid .field--full{grid-column:1/-1}
-
-@media(min-width:700px){
-  .crypto-grid{grid-template-columns:1fr 1fr}
-}
-
-      .btn-pay-crypto{
-  background:#d6d6d6 !important;
-  color:#fff !important;
-  padding:1.2rem 1.6rem; border-radius:8px; text-decoration:none;
-}
-.btn-pay-crypto:hover{background:#d6d6d6 !important;}
-
-.btn-pay-crypto{
-  margin-top:0.6rem;   /* keeps a little space under the quantity picker */
-  width:100%;          /* ensures full-width like the native button */
-}
-.buy-btn-stack .button{display:block;width:100%;margin:0;}      /* kill default margins   */
-.buy-btn-stack .button + .button{margin-top:.6rem;}             /* ONE controlled gap     */
-
-
-
-.product-form__buttons{display:none!important;}
-
-/* --- keep both buttons the same width & spacing --- */
-.crypto-btn-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 1.4rem;
-}
-
-/* polished preorder & crypto buttons styled like variant pills */
-.btn-preorder,
-.btn-crypto {
-  display: block;
-  width: 100%;
-  padding: 1.1rem 2.2rem;
-  font-size: 1.6rem;
-  letter-spacing: 0.05rem;
-  font-weight: 500;
-  text-align: center;
-  border-radius: var(--variant-pills-radius, 999px);
-  background: linear-gradient(
-    to bottom,
-    rgba(var(--color-foreground, 0, 0, 0), 0.95),
-    rgba(var(--color-foreground, 0, 0, 0), 0.9)
-  );
-  color: rgb(var(--color-background, 255, 255, 255));
-  border: 1px solid rgba(var(--color-foreground), 0.25);
-  box-shadow:
-    inset 0 1px 2px rgba(var(--color-background, 255, 255, 255), 0.08),
-    0 3px 8px rgba(var(--color-shadow, 0, 0, 0), 0.08);
-  transition:
-    transform 0.15s ease,
-    box-shadow 0.2s ease,
-    border-color 0.2s ease,
-    background 0.3s ease;
-  cursor: pointer;
-}
-
-.btn-preorder:hover,
-.btn-crypto:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    0 6px 16px rgba(var(--color-shadow, 0, 0, 0), 0.1),
-    inset 0 1px 2px rgba(var(--color-background, 255, 255, 255), 0.05);
-  border-color: rgba(var(--color-foreground, 0, 0, 0), 0.6);
-}
-
-
-  /* only hide Dawn's built-in checkout button, leave your wrapper alone */
-  .cart__footer button[name="checkout"] {
-    display: none !important;
-  }
-
- /* lay our two links out horizontally and right-align them */
-    .cart__footer .crypto-btn-wrapper {
-      display: flex;
-      gap: 1rem;
-      justify-content: flex-end;
-      margin-top: 1rem;
-    }
-    /* remove any extra top-margin on your .button utility */
-    .cart__footer .crypto-btn-wrapper .button {
-      margin-top: 0 !important;
-    }
-      .btn-preorder::before,
-.btn-preorder::after,
-.btn-crypto::before,
-.btn-crypto::after {
-  content: none !important;
-  display: none !important;
-  background: none !important;
-  border: none !important;
-  box-shadow: none !important;
-  pointer-events: none !important;
-}
-
-
- /* --------------- */
-/*  .custom-top-nav  */
-/* --------------- */
-.custom-top-nav {
-  display: flex;
-  justify-content: center;
-  align-items: center;   /* vertically center everything */
-  gap: 2rem;
-  margin: 2.5rem 0 1.5rem;
-  background: #fff;
-  border-radius: 14px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-  padding: 1.5rem 0;
-}
-
-/* Remove any default padding/background on the logo link */
-.custom-top-nav .logo-link {
-  display: inline-block;
-  padding: 0;
-  background: none;
-  border-radius: 0;
-}
-
-/* Force the logo PNG up to roughly the same height as the "CONTACT" button */
-.custom-top-nav .logo-img {
-  display: block;
-  max-height: 60px;   /* ← bump this up/down until it matches your "CONTACT" height */
-  width: auto;        /* preserve aspect ratio */
-}
-
-/* Style for the CONTACT button (unchanged) */
-.custom-top-nav .custom-button {
-  display: inline-block;
-  padding: 1.2rem 3rem;
-  background: #d6d6d6;
-  color: #111;
-  font-size: 2rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  text-decoration: none;
-  border-radius: 8px;
-  border: 2px solid #111;
-  transition: background 0.2s ease;
-}
-
-.custom-top-nav .custom-button:hover {
-  background: #c6c6c6;
-}
-
-/* --- CART BUTTON ONLY: Match site background (#d6d6d6) --- */
-.custom-top-nav .cart-link {
-  background: #d6d6d6 !important;
-  color: #111 !important;
-  border: 2px solid #111;
-  padding: 1.2rem 3rem;
-  font-size: 2rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  text-decoration: none;
-  border-radius: 8px;
-  display: inline-block;
-}
-.custom-top-nav .cart-link:hover {
-  background: #c6c6c6 !important; /* slightly darker on hover */
-}
-
-}
-.custom-top-nav .cart-link:hover {
-  background: #f4f4f4;
-}
-.custom-top-nav .cart-icon {
-  height: 28px;
-  vertical-align: middle;
-}
-.custom-top-nav .cart-count {
-  position: absolute;
-  top: -6px;
-  right: -10px;
-  background: #e03;
-  color: #fff;
-  font-size: 1.2rem;
-  padding: 0 0.45rem;
-  border-radius: 999px;
-}
-
-/* Responsive tweaks: stack vertically below 600px */
-@media (max-width: 600px) {
-  .custom-top-nav {
-    flex-direction: column;
-    gap: 1rem;
-    align-items: center;
-  }
-  .custom-top-nav .custom-button {
-    width: 90%;
-    text-align: center;
-    font-size: 1.4rem;
-    white-space: nowrap;
-  }
-}
-/* === VIEW WITH X section === */
-.extra-views.hidden { display:none; }
-
-.extra-views {            /* wrapper */
-  margin-top: 1.2rem;
-  display: grid;
-  gap: .6rem;
-}
-
-.view-btn{
-  width:100%;
-  padding:1.0rem;
-  background:#f8f8f8;
-  border:1px solid #ddd;
-  border-radius:6px;
-  font-weight:600;
-  cursor:pointer;
-  transition:background .2s;
-}
-.view-btn:hover{background:#eee;}
-
-
-/* Dropdown styled like pills (final with font + animation) */
-
-.extra-select,
-#extraSelect {
-  width: 100%;
-  max-width: 280px;
-  padding: 1.1rem 2.2rem;
-  border-radius: var(--variant-pills-radius, 999px);
-  font-size: 1.4rem;
-  font-family: inherit;
-  font-weight: 500;
-  letter-spacing: 0.05rem;
-  background: linear-gradient(
-    to bottom,
-    rgba(var(--color-background), 0.95),
-    rgba(var(--color-background), 0.9)
-  );
-  color: rgb(var(--color-foreground));
-  border: 1px solid rgba(var(--color-foreground), 0.25);
-  box-shadow:
-    inset 0 1px 2px rgba(var(--color-foreground), 0.08),
-    0 3px 8px rgba(var(--color-shadow), 0.08);
-  transition:
-    box-shadow 0.2s ease,
-    border-color 0.2s ease,
-    background 0.3s ease,
-    transform 0.2s ease;
-  appearance: none;
-  -webkit-appearance: none;
-  background-position: right 1.2rem center;
-  background-repeat: no-repeat;
-  background-size: 1rem;
-  cursor: pointer;
-}
-
-/* Simulated open effect on focus */
-.extra-select:focus,
-#extraSelect:focus {
-  outline: 2px solid rgba(var(--color-foreground), 0.55);
-  outline-offset: 3px;
-  transform: scale(1.02);
-  box-shadow:
-    0 4px 12px rgba(var(--color-shadow), 0.2),
-    inset 0 1px 2px rgba(var(--color-background), 0.2);
-}
-
-/* Hover effect (mimics pills hover) */
-.extra-select:hover,
-#extraSelect:hover {
-  border-color: rgba(var(--color-foreground), 0.6);
-  box-shadow:
-    0 6px 16px rgba(var(--color-shadow), 0.1),
-    inset 0 1px 2px rgba(var(--color-foreground), 0.05);
-}
-
-/* Wrapper margin */
-#extra-wrap {
-  max-width: 280px;
-  margin: 0.8rem 0 1.4rem;
-}
-
-@media (min-width: 750px) {
-  .extra-select,
-  #extraSelect {
-    max-width: 320px;
-  }
-}
-
-
-{% endstyle %}
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
 
 <div class="custom-top-nav">
-  <a href="/" style="background:#2563eb;">CS2WORKS</a>
+  <a href="/">CS2WORKS</a>
   <a href="/pages/contact">Contact</a>
 </div>
 
-
-
-
-    
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
     </a>
@@ -709,12 +415,13 @@ main#MainContent,
 
     {% sections 'header-group' %}
 
-
     <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
       {{ content_for_layout }}
     </main>
 
-    {% sections 'footer-group' %}
+    <footer class="minimal-footer">
+      &copy; {{ 'now' | date: '%Y' }} CS2WORKS. Powered by Shopify.
+    </footer>
 
     <ul hidden>
       <li id="a11y-refresh-page-message">{{ 'accessibility.refresh_page' | t }}</li>
@@ -773,10 +480,6 @@ main#MainContent,
     {%- if settings.cart_type == 'drawer' -%}
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
-
-   
-
-
 
   </body>
 </html>
