@@ -422,7 +422,7 @@ main#MainContent,
     rgba(var(--color-foreground, 0, 0, 0), 0.9)
   );
   color: rgb(var(--color-background, 255, 255, 255));
-  border: 1px solid rgba(var(--color-foreground, 0, 0, 0), 0.25);
+  border: 1px solid rgba(var(--color-foreground), 0.25);
   box-shadow:
     inset 0 1px 2px rgba(var(--color-background, 255, 255, 255), 0.08),
     0 3px 8px rgba(var(--color-shadow, 0, 0, 0), 0.08);
@@ -667,25 +667,20 @@ main#MainContent,
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
 
 <div class="custom-top-nav">
-<a href="/collections/all" class="logo-link">
+  <a href="/pages/cs2works" class="logo-link">
     <img
-      src=https://cdn.shopify.com/s/files/1/0745/6482/9415/files/cs2works.png?v=1748710836
+      src="https://cdn.shopify.com/s/files/1/0745/6482/9415/files/cs2works.png?v=1748710836"
       alt="CS2WORKS"
       class="logo-img"
     >
   </a>
-
-
-
   <a href="/pages/contact">Contact</a>
-
   <a href="/cart" class="cart-link">
     <img src="{{ 'cart.png' | file_url }}" alt="Cart" class="cart-icon">
     {% if cart.item_count > 0 %}
       <span class="cart-count">{{ cart.item_count }}</span>
     {% endif %}
   </a>
-
 </div>
 
 
