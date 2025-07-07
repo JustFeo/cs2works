@@ -750,8 +750,163 @@
     </script>
   </div>
 
-
-
+  <style>
+.product-custom-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #f7f7fa;
+  padding: 60px 20px 40px 20px;
+  border-radius: 32px;
+  margin-bottom: 48px;
+  box-shadow: 0 4px 32px rgba(30,60,114,0.07);
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.product-custom-main__image {
+  max-width: 340px;
+  width: 100%;
+  border-radius: 24px;
+  box-shadow: 0 2px 16px rgba(30,60,114,0.10);
+  margin-bottom: 32px;
+}
+.product-custom-main__headline {
+  font-size: 2.6rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+  color: #1e3c72;
+  text-align: center;
+}
+.product-custom-main__subheadline {
+  font-size: 1.3rem;
+  color: #2a5298;
+  margin-bottom: 32px;
+  text-align: center;
+}
+.product-custom-main__price {
+  font-size: 2rem;
+  color: #1e3c72;
+  font-weight: 700;
+  margin-bottom: 18px;
+  text-align: center;
+}
+.product-custom-main__cta-row {
+  display: flex;
+  gap: 18px;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+.product-custom-main__cta {
+  background: #1e3c72;
+  color: #fff;
+  font-weight: 700;
+  padding: 16px 36px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 8px rgba(30,60,114,0.10);
+  transition: background 0.2s, color 0.2s;
+}
+.product-custom-main__cta--secondary {
+  background: #fff;
+  color: #1e3c72;
+  border: 2px solid #1e3c72;
+}
+.product-custom-main__cta:hover {
+  background: #2a5298;
+  color: #fff;
+}
+.info-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+  margin-bottom: 36px;
+}
+.info-row__item {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(30,60,114,0.07);
+  padding: 18px 32px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 1.1rem;
+  color: #1e3c72;
+  font-weight: 600;
+}
+.info-row__icon {
+  font-size: 1.5rem;
+  color: #2a5298;
+}
+.product-custom-main__details {
+  background: #fff;
+  border-radius: 18px;
+  padding: 32px 24px;
+  margin-top: 32px;
+  box-shadow: 0 2px 12px rgba(30,60,114,0.07);
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.product-custom-main__details h2 {
+  color: #1e3c72;
+  font-size: 1.4rem;
+  margin-top: 24px;
+  margin-bottom: 10px;
+}
+.product-custom-main__details ul {
+  margin-bottom: 18px;
+  padding-left: 20px;
+}
+.product-custom-main__details li {
+  margin-bottom: 6px;
+}
+</style>
+<div class="product-custom-main">
+  <img class="product-custom-main__image" src="{{ product.featured_image | img_url: '600x' }}" alt="{{ product.title }}" loading="lazy" />
+  <div class="product-custom-main__headline">{{ product.title }}</div>
+  <div class="product-custom-main__subheadline">Handmade, limited edition. Pre-order now!</div>
+  <div class="product-custom-main__price">{{ product.price | money }}</div>
+  <div class="product-custom-main__cta-row">
+    <a class="product-custom-main__cta" href="#">Pre-Order</a>
+    <a class="product-custom-main__cta product-custom-main__cta--secondary" href="/pages/crypto-payment">Pre-Order With Crypto & Save $30</a>
+  </div>
+  <div class="info-row">
+    <div class="info-row__item"><span class="info-row__icon">🚚</span> Free Delivery On All Orders</div>
+    <div class="info-row__item"><span class="info-row__icon">✅</span> No hidden fees, customs or import taxes</div>
+    <div class="info-row__item"><span class="info-row__icon">🛠️</span> Handmade by artisans with Disney/Marvel experience</div>
+  </div>
+  <div class="product-custom-main__details">
+    <h2>Figurine Loadout</h2>
+    <ul>
+      <li><strong>Detachable Gun Skins (4):</strong> AK-47 Arabesque, M4A1-S Red Phosphor, M4A1-S Blue Phosphor, AWP Fade</li>
+      <li><strong>Detachable Gem Knives (3):</strong> Karambit Emerald, Karambit Ruby, M9 Bayonet Sapphire</li>
+      <li><strong>Gloves (1 Pair of Your Choice):</strong> Pandora's Box, Vice, Hedge Maze</li>
+    </ul>
+    <h2>Shipping</h2>
+    <ul>
+      <li><strong>Free shipping to ALL countries.</strong></li>
+      <li>All orders are exempt from customs and import taxes.</li>
+      <li>Shipping to most countries takes 7-15 business days.</li>
+      <li>Tracking links will be shared once shipped.</li>
+      <li>We don't support any returns due to the product being limited edition. However, if you are not satisfied with the product, contact us, tell us why and we can help!</li>
+    </ul>
+    <h2>Product Details</h2>
+    <ul>
+      <li><strong>Estimated Delivery Timeline:</strong> Production for the first batch of figures will begin in July. Each piece will undergo manual quality inspection to ensure the highest standards. Once approved, orders will be shipped out, with an estimated delivery time of 7–15 days.</li>
+      <li><strong>Figure Material & Features:</strong> The figure and its accessories are crafted from premium resin, the same material used in high-end figures. Since resin is a firm material, the arms and other body parts aren't movable. However, all knives and guns are detachable. The figure is 23cm in height.</li>
+    </ul>
+    <h2>Payments</h2>
+    <ul>
+      <li><strong>Credit Card, Apple Pay & Google Pay:</strong> We accept all major credit cards as well as Apple Pay and Google Pay.</li>
+      <li><strong>Crypto Payment:</strong> We currently accept <strong>USDC</strong> and <strong>USDT</strong> across 5 major chains (Ethereum, TRON, BSC, Solana, and Polygon). Simply click the <strong>Preorder with Crypto</strong> button during checkout. Paying with crypto also saves you <strong>$30</strong> off the regular price.</li>
+      <li><strong>Bank Transfer (EU & UK):</strong> Prefer to pay via bank transfer? We're happy to help. Please contact us directly on X (formerly Twitter) at <a href="https://twitter.com/CS2WORKS">@CS2WORKS</a> to arrange your payment.</li>
+    </ul>
+    <div style="margin-top: 18px; font-style: italic; color: #888;">Approx. size: ~23 cm (H) × ~11 cm (W).</div>
+  </div>
+</div>
 
 </product-info>
 
