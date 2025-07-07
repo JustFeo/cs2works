@@ -395,21 +395,19 @@ body {
   width: 1px;
   overflow: hidden;
 }
-.product-form__input--pill input[type='radio'] + label {
+  
+.product-form__input--pill input[type="radio"] + label {
   position: relative;
-  display: block;                     /* full-width */
+  display: block;              /* full width */
   width: 100%;
-  padding: 1.2rem 1.6rem;
-  font-size: 1.7rem;
-  letter-spacing: 0.02rem;
-  border-radius: 6px;
-  background: #d6d6d6;
-  color: #000000;
-  border: 1px solid #d4d4d4;
+  padding: 1rem 1.5rem;        /* Dawn’s padding */
+  font-size: 1.6rem;
+  border-radius: 12px;         /* pill shape */
+  background-color: #ffffff;   /* pure white */
+  border: 1px solid #d4d4d4;   /* light grey outline */
+  color: #111111;              /* dark text */
   cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: none;
-    border: 1px solid #AAAAAA;
+  transition: border-color .2s ease, background-color .2s ease;
 }
 .product-form__input--pill input[type='radio'] + label::before {
   content: '';
@@ -420,19 +418,21 @@ body {
   pointer-events: none;
   z-index: 0;
 }
-.product-form__input--pill input[type='radio']:hover + label {
-  transform: none;
-  box-shadow: 0 0 0 2px rgba(0,0,0,0.05);
-  border-color: #b6b6b6;
+/* ─── HOVER STATE ─── */
+.product-form__input--pill input[type="radio"]:hover + label {
+  border-color: #aaaaaa;
 }
-.product-form__input--pill input[type='radio']:checked + label {
-  background: #FFF7ED;           /* light orange fill */
-  color: #000000;
-  transform: none;
-  border: 2px solid #FF7A00;     /* bright orange outline */
-  box-shadow: none;              /* no additional glow */
+/* ─── CHECKED STATE ─── */
+.product-form__input--pill input[type="radio"]:checked + label {
+  background-color: #ffffff;   /* keep white */
+  border-color: #0060ff;       /* bright blue outline */
+  color: #111111;              /* keep dark text */
 }
 
+/* ─── OPTIONAL: slight blue tint on select ─── */
+/* .product-form__input--pill input[type="radio"]:checked + label {
+     background-color: rgba(0, 96, 255, 0.05);
+   } */
 /* ─── quantity selector ─── */
 .quantity-selector {
   font-family: Helvetica, Arial, sans-serif;
@@ -686,8 +686,6 @@ body {
 #angleRightBtn {
   transform: translateX(-8rem) !important;
 }
- 
-}
 
 /* ========== light-box overlay ========== */
 .lightbox            { display:none; position:fixed; inset:0; z-index:1000;
@@ -913,6 +911,7 @@ function buildDots(){
   nextName.addEventListener('click', () => nextBtn.click());
   currentName.addEventListener('click', updateImage);
 
+ 
   /* ---------- 2-H. Quantity selector ---------- */
   const qtyOptions = document.querySelectorAll('.quantity-option');
   qtyOptions.forEach(opt => {
