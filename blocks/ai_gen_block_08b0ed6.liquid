@@ -1,0 +1,103 @@
+{% doc %}
+  @prompt
+    Create a free shipping announcement banner with green text that displays "Free Shipping" on all orders
+
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-free-shipping-banner-{{ ai_gen_id }} {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: {{ block.settings.padding }}px;
+    background-color: {{ block.settings.background_color }};
+    text-align: center;
+  }
+
+  .ai-free-shipping-banner__text-{{ ai_gen_id }} {
+    color: {{ block.settings.text_color }};
+    font-size: {{ block.settings.font_size }}px;
+    font-weight: {{ block.settings.bold_text | plus: 4 | times: 100 }};
+    margin: 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-free-shipping-banner__text-{{ ai_gen_id }} {
+      font-size: {{ block.settings.font_size | times: 0.8 }}px;
+    }
+  }
+{% endstyle %}
+
+<div class="ai-free-shipping-banner-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <p class="ai-free-shipping-banner__text-{{ ai_gen_id }}">
+    {{ block.settings.banner_text }}
+  </p>
+</div>
+
+{% schema %}
+{
+  "name": "Free Shipping Banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "banner_text",
+      "label": "Banner text",
+      "default": "Free Shipping on all orders"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#008000"
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "min": 12,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 16
+    },
+    {
+      "type": "checkbox",
+      "id": "bold_text",
+      "label": "Bold text",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding",
+      "min": 5,
+      "max": 30,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding",
+      "default": 10
+    }
+  ],
+  "presets": [
+    {
+      "name": "Free Shipping Banner"
+    }
+  ],
+  "tag": null
+}
+{% endschema %}
