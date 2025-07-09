@@ -930,6 +930,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Add redirect logic for preorder buttons
+  var preorderBtn = document.querySelector('.btn-preorder');
+  var cryptoBtn = document.querySelector('.btn-crypto');
+  if (preorderBtn) {
+    preorderBtn.addEventListener('click', function() {
+      window.location.href = '/cart';
+    });
+  }
+  if (cryptoBtn) {
+    cryptoBtn.addEventListener('click', function() {
+      window.location.href = '/pages/crypto-payment-confirmation';
+    });
+  }
+
   // ─── Init gallery ───
   updateImage();
   buildDots();
