@@ -935,7 +935,31 @@ document.addEventListener('DOMContentLoaded', () => {
   var cryptoBtn = document.querySelector('.btn-crypto');
   if (preorderBtn) {
     preorderBtn.addEventListener('click', function() {
-      window.location.href = '/cart';
+      // Get selected glove
+      var glove = document.querySelector('input[name="glove"]:checked').value;
+      // Get selected quantity
+      var qtyBtn = document.querySelector('.quantity-btn.active');
+      var qty = qtyBtn ? parseInt(qtyBtn.textContent) : 1;
+      // Map glove to variant ID
+      var variantMap = {
+        pandora: '51004650979559',
+        vice: '51004650946791',
+        hedge: '51004650914023'
+      };
+      var variantId = variantMap[glove] || variantMap['pandora'];
+      // Add to cart via AJAX
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: variantId, quantity: qty })
+      })
+      .then(function(res) { return res.json(); })
+      .then(function(data) {
+        window.location.href = '/cart';
+      })
+      .catch(function(err) {
+        alert('Error adding to cart. Please try again.');
+      });
     });
   }
   if (cryptoBtn) {
