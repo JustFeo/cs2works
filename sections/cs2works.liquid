@@ -1,0 +1,951 @@
+<div class="glove-layout-wrapper">
+  <div class="glove-column">
+    <div class="product-header">
+      <div class="product-info-box">
+        <h1 class="product-title">Sir Bloody Miami Darryl Figure</h1>
+        <div class="product-price">$278.00 USD</div>
+        <div class="free-delivery-message">Free Shipping On All Orders</div>
+      </div>
+    </div>
+
+    <div class="glove-options product-form__input--pill">
+      <input type="radio" id="glove-pandora" name="glove" value="pandora" checked>
+      <label for="glove-pandora">Pandora's Box</label>
+      <input type="radio" id="glove-vice" name="glove" value="vice">
+      <label for="glove-vice">Vice</label>
+      <input type="radio" id="glove-hedge" name="glove" value="hedge">
+      <label for="glove-hedge">Hedge Maze</label>
+    </div>
+
+   <div class="quantity-selector">
+  <div class="quantity-label">Quantity</div>
+  <div class="quantity-controls" id="qty-controls">
+    <!-- buttons 1–9 injected by JS -->
+  </div>
+</div>
+
+    <div class="preorder-buttons">
+      <button class="btn-preorder">Pre-Order</button>
+      <button class="btn-crypto">Pre-Order With Crypto &amp; Save $30</button>
+    </div>
+
+    <div class="limited-edition-badge">
+      <div class="limited-flash">
+        <span class="gold-star">★</span>
+        <span class="limited-text">LIMITED EDITION</span>
+      </div>
+      <div class="subtext">
+        Only 1000 will ever exist, each marked with a unique number.
+      </div>
+    </div>
+  </div>
+
+  <div class="glove-viewer">
+    <div id="viewer-container" class="viewer-container">
+      <img id="viewer-img" src="https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_PandorasBox_1.jpg?v=1750332619" alt="Figurine Image" class="viewer-img" loading="eager" />
+      
+      <!-- Angle view buttons -->
+      <div class="angle-buttons">
+  <button id="myAngleLeft"  class="angle-btn" aria-label="Previous angle">↻</button>
+  <button id="myAngleRight" class="angle-btn" aria-label="Next angle">↺</button>
+</div>
+      
+      <div class="viewer-controls">
+        <button id="prevBtn" class="overlay-nav arrow-left" aria-label="Previous image">‹</button>
+        <button id="nextBtn" class="overlay-nav arrow-right" aria-label="Next image">›</button>
+        <div id="dotContainer" class="dot-container"></div>
+      </div>
+
+      <div class="viewer-caption">
+        <div id="currentCaption" class="caption-text"></div>
+        <div id="imageCount" class="count-text"></div>
+      </div>
+    </div>
+
+    <div class="viewer-info-container">
+      <div class="viewer-info-display">
+        <div class="preview-title">View Figure With:</div>
+        <span id="prevName" class="blurred-name clickable-name"></span>
+        <span id="currentName" class="active-name clickable-name"></span>
+        <span id="nextName" class="blurred-name clickable-name"></span>
+      </div>
+
+      <div class="figure-info">
+        <div class="figure-text">Figure Includes All Accessories</div>
+        <img id="accessory-img" class="glove-image" src="https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MMiamiDarrylFigurine_Accessories_1.jpg?v=1750332832" />
+      </div>
+    </div>
+
+    <div id="lightbox" class="lightbox">
+      <span class="close-lightbox" onclick="closeLightbox()">×</span>
+      <div class="lightbox-content">
+        <img id="lightbox-img" src="" alt="Large View" />
+        <div class="lightbox-instruction">← Use Arrow Keys →</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+/* ─── product info box ─── */
+.product-info-box {
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  border-radius: 8px;
+
+  /* ↑ increase both vertical & horizontal padding  ↓ */
+  padding: 2rem 3rem;
+
+  /* ↑ make the card wider ↓ */
+  max-width: 600px;
+
+  /* keep your existing positioning rules */
+  width: calc(100% + 14rem);
+  margin-left: -12rem;
+  min-width: unset;
+  margin-bottom: 1.5rem;
+  box-sizing: border-box;
+  transform: none;
+}
+
+/* free delivery message */
+.free-delivery-message {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #2CA305;
+  font-family: 'Inter', sans-serif;
+}
+
+.limited-edition-badge {
+  display: inline-block;
+  margin: 2rem 0;
+  padding: 12px 20px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #f6e27a, #d4af37, #cfae56);
+  text-align: center;
+  width: 480px;
+  max-width: 480px;
+  min-width: 0;
+  box-sizing: border-box;
+  border: 1px solid #bcbcbc;
+  overflow: hidden;
+  transform: translateX(-6.5rem);
+}
+
+.limited-flash {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+.gold-star {
+  font-size: 18px;
+  font-weight: bold;
+  margin-right: 8px;
+  color: #b8860b;
+  animation: star-rotate 6s linear infinite;
+  text-shadow: 0 0 4px #b8860b;
+}
+.limited-text {
+  font-weight: bold;
+  font-size: 14px;
+  white-space: nowrap;
+  color: #b8860b;
+  animation: flashbang 1.5s ease-in-out infinite;
+  text-shadow: 0 0 4px #b8860b;
+}
+.subtext {
+  font-style: italic;
+  font-size: 14px;
+  color: #000;
+  white-space: nowrap;
+}
+@keyframes star-rotate {
+  0% { transform: rotate(0deg); }
+  20%, 80% { transform: rotate(360deg); }
+  100% { transform: rotate(360deg); }
+}
+@keyframes flashbang {
+  0%   { filter: brightness(100%); color: #b8860b; text-shadow: 0 0 4px #b8860b; }
+  25%  { filter: brightness(130%); color: #ffcc00; text-shadow: 0 0 8px #ffd700, 0 0 16px #ffdd55; }
+  50%  { filter: brightness(170%); color: #ffcc00; text-shadow: 0 0 12px #fff176, 0 0 20px #fff59d; }
+  75%  { filter: brightness(130%); color: #ffcc00; text-shadow: 0 0 8px #ffd700, 0 0 16px #fff3b0; }
+  100% { filter: brightness(100%); color: #b8860b; text-shadow: 0 0 4px #b8860b; }
+}
+
+/* lightbox content */
+.lightbox-content {
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+}
+.lightbox-instruction {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #000000;
+  font-size: 1.8rem;
+  font-weight: 600;
+  pointer-events: none;
+  text-shadow: 0 0 6px rgba(0,0,0,0.6);
+}
+
+/* product details header */
+.product-title {
+  font-size: 3.2rem;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  color: #000;
+  margin-bottom: 0.8rem;
+  letter-spacing: -0.5px;
+  white-space: nowrap;
+}
+.product-price {
+  font-size: 2.4rem;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  color: #54504f;
+  font-style: italic;
+  margin-bottom: 0.8rem;
+}
+
+/* hide right-side info panel */
+.viewer-info-container,
+.figure-info {
+  display: none !important;
+}
+.viewer-info-display {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  font-size: 2.2rem;
+  font-weight: 800;
+  font-family: 'Inter', sans-serif;
+  color: #111;
+  text-align: center;
+  white-space: nowrap;
+  overflow: visible;
+  text-overflow: unset;
+  width: 100%;
+  max-width: 100%;
+  margin-left: 0;
+  margin-top: -10rem;
+}
+
+/* image gallery */
+.figure-text {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #54504f;
+  font-family: 'Inter', sans-serif;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #000000;
+}
+
+/* lightbox */
+.lightbox {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.9);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+.lightbox.active { display: flex; }
+.lightbox-content img {
+  max-width: 100%;
+  max-height: 90vh;
+  border-radius: 8px;
+  box-shadow: 0 0 30px rgba(0,0,0,0.6);
+  transition: transform 0.4s ease, transform-origin 0.4s ease;
+}
+.close-lightbox {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.close-lightbox:hover { color: #bbb; }
+
+/* site background */
+body {
+  background-color: #141414;
+  color: #d6d6d6;
+  margin: 0;
+}
+
+/* background band layout */
+.page-background-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  z-index: -1;
+}
+.page-background-wrapper .bg-column {
+  flex: 1;
+  background-color: #1a1a1a;
+}
+.page-background-wrapper .bg-column.middle {
+  flex: 1.8;
+  background-color: #1f1f1f;
+}
+
+/* overall layout */
+.glove-layout-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3rem;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  flex-direction: row-reverse;
+}
+.glove-column {
+  display: flex;
+  flex-direction: column;
+  gap: 2.2rem;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+/* ─── clean Dawn-style variant pills ─── */
+.product-form__input--pill {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  transform: translateX(-5rem);
+}
+
+.product-form__input--pill::before {
+  content: "Choose Your Gloves";
+  display: block;
+  width: 100%;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #000;
+  margin-bottom: 0.5rem;
+}
+
+.product-form__input--pill input[type="radio"] {
+  position: absolute;
+  clip: rect(0, 0, 0, 0);
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.product-form__input--pill input[type="radio"] + label {
+  display: block;
+  width: 100%;
+  padding: 1rem 1.5rem;
+  font-size: 1.6rem;
+  border-radius: 12px;
+  background-color: #fff;
+  border: 1px solid #d4d4d4;
+  color: #111;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+  box-sizing: border-box;
+  margin-bottom: 0;
+  
+}
+
+.product-form__input--pill input[type="radio"]:hover + label {
+  border-color: #aaa;
+}
+
+.product-form__input--pill input[type="radio"]:checked + label {
+  background-color: #EEF7FF !important;
+  border: 1px solid #0060FF !important;
+  color: #111 !important;
+}
+
+/* ─── quantity selector ─── */
+.quantity-selector {
+  font-family: Helvetica, Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  margin-left: -13.5rem;
+  width: 100%;
+  max-width: 480px;
+  position: relative;
+}
+
+.quantity-label {
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: 0.05rem;
+  margin-bottom: 1rem;
+  color: #000;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.quantity-btn,
+.quantity-value {
+  width: 4.8rem;
+  height: 4.8rem;
+  border-radius: 6px;
+  font-size: 1.8rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  transition: background 0.2s ease;
+}
+
+.quantity-btn {
+  background: transparent !important;
+  box-shadow: none;
+  color: #333;
+  cursor: pointer;
+}
+.quantity-btn:hover:not(:disabled) {
+  background: #E0E0E0;
+}
+.quantity-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.quantity-value {
+  background: #3870ec;
+  color: #fff;
+  pointer-events: none;
+  border: 1px solid #AAAAAA;
+}
+
+/* ─── preorder buttons ─── */
+.preorder-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  width: 100%;
+  max-width: none;
+  margin-left: -10rem;
+
+  /* ↓ add this: ↑ adjust the value to taste ↓ */
+  padding-bottom: 3rem;
+
+  border-bottom: 2px solid #eee;
+}
+.btn-preorder,
+.btn-crypto {
+  width: 100% !important;
+  padding: 1.8rem 3.2rem;
+  font-size: 1.9rem;
+  letter-spacing: 0.03rem;
+  font-weight: 600;
+  text-align: center;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  flex: none;
+}
+
+.btn-preorder {
+  background: #3870ec;
+}
+.btn-preorder:hover {
+  background: #1c5ff3;
+}
+.btn-crypto {
+  background: #9A4DFF;
+}
+.btn-crypto:hover {
+  background: #873EEF;
+}
+
+/* ─── re-center and control layout ─── */
+.glove-viewer {
+  display: flex !important;
+  justify-content: center;
+}
+.viewer-container {
+  width: 100%;
+  max-width: 800px;
+  position: relative;
+}
+.viewer-img {
+  width: 88%;
+  border-radius: 14px;
+  border: none;
+  transition: transform .35s ease !important;
+  will-change: auto;
+}
+  
+.viewer-img:hover {
+  transform: scale(1.03) !important;
+  cursor: pointer;
+}
+.viewer-img.animate {
+  animation: none !important;
+}
+
+/* ─── viewer controls ─── */
+.viewer-controls {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 88%;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  gap: 0;
+  transform: translateX(-49px);
+}
+
+/* Angle buttons styling */
+.angle-buttons {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  transform: translateY(-50%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+  
+}
+
+.angle-btn {
+  pointer-events: auto;
+  background: transparent;   /* remove white fill */
+  padding: 0.5em;            /* maintain a tap/click area */
+  width: auto;               /* let content size naturally */
+  height: auto;
+  border: none;              /* no border */
+  border-radius: 0;          /* drop the circle rounding */
+  box-shadow: none;          /* remove the shadow */
+  color: #333;
+  font: 700 2.4rem/1 "Inter", sans-serif;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin: 0;
+  transition: background 0.2s ease;
+}
+
+
+.angle-btn:hover {
+  background: #f2f2f2;
+}
+
+/* overlay nav buttons */
+.overlay-nav {
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+  width: 48px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #fff;
+  color: #333;
+  font: 700 2.4rem/1 "Inter", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,.15);
+  border: none;
+  cursor: pointer;
+  opacity: 1 !important;
+  transition: none !important;
+}
+
+.arrow-left  { left:16px; }
+.arrow-right { right:16px; }
+
+.viewer-container:hover .overlay-nav {
+  opacity: 1 !important;
+}
+.overlay-nav:hover{ background:#f2f2f2; }
+
+/* ─── progress dots ─── */
+.dot-container{
+  position:relative;
+  margin:28px auto 6px;
+  display:flex;
+  gap:8px;
+  justify-content:center;
+  min-height: 8px;
+}
+.dot-container .dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#c8cdd2;
+  transition:all .25s ease;
+  cursor:pointer;
+}
+.dot-container .dot.active{
+  width:36px;
+  border-radius:4px;
+  background:#0060ff;
+  transform:translateY(-1px);
+}
+
+/* ─── image caption & count ─── */
+.viewer-caption {
+  text-align: center;
+  margin-top: 0.5rem;
+  transform: translateX(-4.8rem);
+}
+
+.caption-text {
+  font-size: 1.5rem;
+  color: #111;
+  margin-bottom: 0.25rem;
+}
+
+.count-text {
+  font-size: 1.2rem;
+  color: #888;
+}
+
+/* name display */
+.preview-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #54504f;
+  margin-bottom: 1.2rem;
+  letter-spacing: -0.5px;
+  display: block;
+}
+.blurred-name {
+  opacity: 0.25;
+  filter: blur(2px);
+  color: #888;
+}
+.active-name {
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: #000;
+  transition: all 0.2s ease;
+}
+.clickable-name {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.clickable-name:hover {
+  opacity: 0.8;
+  transform: translateX(4px);
+}
+.active-name:hover {
+  transform: scale(1.05);
+}
+.blurred-name:empty { display: none !important; }
+
+/* responsive adjustments */
+@media (max-width: 900px) {
+  .glove-layout-wrapper { flex-direction: column; }
+  .glove-viewer { flex-direction: column; }
+  .preorder-buttons { width: 100%; max-width: 480px; }
+}
+
+#myAngleLeft {
+  margin-left: 0.2rem;    
+}
+
+#myAngleRight { transform: translateX(-10rem); }
+
+  /* only show buttons when hovering the image itself (or the buttons) */
+.viewer-img:hover + .angle-buttons,
+.angle-buttons:hover {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+  .quantity-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.quantity-btn {
+  width: 4.8rem;
+  height: 4.8rem;
+  border-radius: 6px;
+  border: 1px solid #eee;
+  background: #fff !important;
+  color: #333;
+  font-size: 1.8rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.quantity-btn:hover {
+  background: #3870ec;
+}
+
+.quantity-btn.active {
+  background: #3870ec !important;   /* your blue */ 
+  color: #fff !important;
+  border-color: #3870ec;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // ─── 1) Quantity buttons (1–5) ───
+  const qtyControls = document.getElementById('qty-controls');
+  let selectedQty = 1;
+  for (let i = 1; i <= 5; i++) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'quantity-btn';
+    btn.textContent = i;
+    btn.dataset.value = i;
+    if (i === selectedQty) btn.classList.add('active');
+    btn.addEventListener('click', () => {
+      qtyControls.querySelectorAll('.quantity-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedQty = i;
+      console.log('Quantity now:', selectedQty);
+    });
+    qtyControls.appendChild(btn);
+  }
+
+  // ─── 2) Lightbox & zoom setup ───
+  const accessoryImg = document.getElementById('accessory-img');
+  const viewerImg     = document.getElementById('viewer-img');
+  const lightbox      = document.getElementById('lightbox');
+  const lightboxImg   = document.getElementById('lightbox-img');
+  const closeBtn      = document.querySelector('.close-lightbox');
+  let zoomed = false;
+  const resetZoom = () => { lightboxImg.style.transform = 'scale(1)'; zoomed = false; };
+  const openBox    = src => { lightboxImg.src = src; lightbox.classList.add('active'); resetZoom(); };
+  const closeBox   = () => { lightbox.classList.remove('active'); resetZoom(); };
+  viewerImg   && viewerImg.addEventListener('click', () => openBox(viewerImg.src));
+  accessoryImg&& accessoryImg.addEventListener('click', e => openBox(e.target.src));
+  closeBtn    && closeBtn.addEventListener('click', closeBox);
+  lightbox    .addEventListener('click', e => { if (e.target === lightbox) closeBox(); });
+  lightboxImg .addEventListener('click', e => {
+    if (!zoomed) {
+      const r = lightboxImg.getBoundingClientRect();
+      const x = ((e.clientX - r.left) / r.width) * 100;
+      const y = ((e.clientY - r.top ) / r.height)* 100;
+      lightboxImg.style.transformOrigin = `${x}% ${y}%`;
+      lightboxImg.style.transform = 'scale(2)';
+      zoomed = true;
+    } else resetZoom();
+  });
+
+  // ─── 3) Carousel & gallery variables ───
+  const prevBtn      = document.getElementById('prevBtn');
+  const nextBtn      = document.getElementById('nextBtn');
+  const dotContainer = document.getElementById('dotContainer');
+  const currentCaption = document.getElementById('currentCaption');
+  const imageCount     = document.getElementById('imageCount');
+  const prevName     = document.getElementById('prevName');
+  const currentName  = document.getElementById('currentName');
+  const nextName     = document.getElementById('nextName');
+  const angleLeftBtn = document.getElementById('myAngleLeft');
+  const angleRightBtn= document.getElementById('myAngleRight');
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft')  { prevBtn.click(); e.preventDefault(); }
+    if (e.key === 'ArrowRight') { nextBtn.click(); e.preventDefault(); }
+    if (e.key === 'Escape' && lightbox.classList.contains('active')) closeBox();
+  });
+
+  const urls = {
+    vice: {
+      angles: [
+        "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_ViceGloves_1.jpg?v=1750332570",
+        "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_ViceGloves_2.jpg?v=1750332570",
+        "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_ViceGloves_3.jpg?v=1750332570",
+        "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_ViceGloves_4.jpg?v=1750332570"
+      ],
+      skins: [
+        "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_ViceGloves_1.jpg?v=1750332554",
+        "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/vice_fade.jpg?v=1749907969",
+        "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/vice_arabesque.jpg?v=1749907724",
+        "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/vice_hotrod.jpg?v=1749907940",
+        "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/vice_bluephosphor.jpg?v=1749907774",
+        "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/vice_ruby.jpg?v=1749907792",
+        "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/vice_emerald.jpg?v=1749908821",
+        "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/vice_sapphire.jpg?v=1750008665"
+      ]
+    },
+    pandora: {
+      angles: [
+        "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_PandorasBox_1.jpg?v=1750332630",
+        "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_PandorasBox_2.jpg?v=1750332630",
+        "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_PandorasBox_3.jpg?v=1750332630",
+        "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_PandorasBox_4.jpg?v=1750332630"
+      ],
+      skins: [
+        "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_PandorasBox_1.jpg?v=1750332619",
+        "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/pandora_fade.jpg?v=1749907926",
+        "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/pandora_arabesque.jpg?v=1749918916",
+        "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/pandora_hotrod.jpg?v=1749907952",
+        "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/pandora_bluephosphor.jpg?v=1749907839",
+        "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/pandora_ruby.jpg?v=1749908644",
+        "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/pandora_emerald.jpg?v=1749907913",
+        "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/pandora_sapphire.jpg?v=1750008691"
+      ]
+    },
+    hedge: {
+      angles: [
+        "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_HedgeMaze_1.jpg?v=1750332418",
+        "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_HedgeMaze_2.jpg?v=1750332418",
+        "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_HedgeMaze_3.jpg?v=1750332418",
+        "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_HedgeMaze_4.jpg?v=1750332418"
+      ],
+      skins: [
+        "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/MiamiDarrylFigurine_HedgeMaze_1.jpg?v=1750332352",
+        "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/hedge_fade.jpg?v=1749907822",
+        "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/hedge_arabesque.jpg?v=1749907808",
+        "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/hedge_hotrod.jpg?v=1749908427",
+        "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/hedge_bluephosphor.jpg?v=1749907985",
+        "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/hedge_ruby.jpg?v=1749908002",
+        "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/hedge_emerald.jpg?v=1749908692",
+        "https://cdn.shopify.com/s/files/1/0745/6482/9415/files/hedge_sapphire.jpg?v=1750008689"
+      ]
+    }
+  };
+
+  const gloves = {
+    vice:    ["Vice Gloves","AWP | Fade","AK-47 | Gold Arabesque","M4A1-S | Hot Rod","M4A1-S | Blue Phosphor","★ Karambit | Ruby","★ Karambit | Emerald","★ M9 Bayonet | Sapphire"],
+    pandora: ["Pandora's Box Gloves","AWP | Fade","AK-47 | Gold Arabesque","M4A1-S | Hot Rod","M4A1-S | Blue Phosphor","★ Karambit | Ruby","★ Karambit | Emerald","★ M9 Bayonet | Sapphire"],
+    hedge:   ["Hedge Maze Gloves","AWP | Fade","AK-47 | Gold Arabesque","M4A1-S | Hot Rod","M4A1-S | Blue Phosphor","★ Karambit | Ruby","★ Karambit | Emerald","★ M9 Bayonet | Sapphire"]
+  };
+
+  let currentGlove   = 'pandora';
+  let currentSet     = urls[currentGlove];
+  let nameSet        = gloves[currentGlove];
+  let index          = 0;
+  let currentAngle   = 0;
+  let showingAngles  = false;
+
+  function buildDots() {
+    dotContainer.innerHTML = '';
+    (showingAngles ? [0,1,2,3] : currentSet.skins)
+      .forEach((_, i) => {
+        const d = document.createElement('span');
+        d.className = 'dot' + ((showingAngles? i===currentAngle : i===index) ? ' active' : '');
+        d.addEventListener('click', () => {
+          if (showingAngles) {
+            currentAngle = i;
+          } else {
+            index = i;
+          }
+          showingAngles = false;
+          updateImage();
+        });
+        dotContainer.appendChild(d);
+      });
+  }
+
+  function updateImage() {
+    viewerImg.classList.add('animate');
+    setTimeout(() => {
+      const imageSet    = showingAngles ? currentSet.angles : currentSet.skins;
+      const currentIndex= showingAngles ? currentAngle : index;
+      viewerImg.src     = imageSet[currentIndex];
+      if (lightbox.classList.contains('active')) lightboxImg.src = imageSet[currentIndex];
+      viewerImg.onload = () => viewerImg.classList.remove('animate');
+
+      if (showingAngles) {
+        currentCaption.textContent = nameSet[0] + ' – Angle ' + (currentAngle + 1);
+        imageCount    .textContent = (currentAngle + 1) + ' of 4';
+      } else {
+        currentCaption.textContent = nameSet[index];
+        imageCount    .textContent = (index + 1) + ' of ' + currentSet.skins.length;
+        currentName   .textContent = nameSet[index];
+        prevName      .textContent = nameSet[(index - 1 + nameSet.length) % nameSet.length];
+        nextName      .textContent = nameSet[(index + 1) % nameSet.length];
+      }
+      buildDots();
+    }, 100);
+  }
+
+  // ─── Carousel & angle buttons ───
+  prevBtn     .addEventListener('click', () => { index = (index - 1 + currentSet.skins.length) % currentSet.skins.length; showingAngles = false; updateImage(); });
+  nextBtn     .addEventListener('click', () => { index = (index + 1) % currentSet.skins.length; showingAngles = false; updateImage(); });
+  angleLeftBtn.addEventListener('click', () => { currentAngle = (currentAngle - 1 + 4) % 4; showingAngles = true; updateImage(); });
+  angleRightBtn.addEventListener('click', () => { currentAngle = (currentAngle + 1) % 4; showingAngles = true; updateImage(); });
+  prevName    .addEventListener('click', () => prevBtn.click());
+  currentName .addEventListener('click', updateImage);
+  nextName    .addEventListener('click', () => nextBtn.click());
+
+  // ─── Variant switch ───
+  document.querySelectorAll('input[name="glove"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      if (!radio.checked) return;
+      currentGlove = radio.value;
+      currentSet   = urls[currentGlove];
+      nameSet      = gloves[currentGlove];
+      index        = 0;
+      currentAngle = 0;
+      showingAngles= false;
+      updateImage();
+      document.querySelector('.glove-column').classList.remove('pandora','vice','hedge');
+      document.querySelector('.glove-column').classList.add(currentGlove);
+    });
+  });
+
+  // ─── Free delivery message toggle ───
+  const deliveryMessage = document.querySelector('.free-delivery-message');
+  if (deliveryMessage) {
+    deliveryMessage.addEventListener('click', () => {
+      deliveryMessage.classList.toggle('clicked');
+    });
+  }
+
+  // Add redirect logic for preorder buttons
+  var preorderBtn = document.querySelector('.btn-preorder');
+  var cryptoBtn = document.querySelector('.btn-crypto');
+  if (preorderBtn) {
+    preorderBtn.addEventListener('click', function() {
+      window.location.href = '/cart';
+    });
+  }
+  if (cryptoBtn) {
+    cryptoBtn.addEventListener('click', function() {
+      window.location.href = '/pages/crypto-payment-confirmation';
+    });
+  }
+
+  // ─── Init gallery ───
+  updateImage();
+  buildDots();
+});
+</script>
